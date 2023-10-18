@@ -12,6 +12,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/bootstrap/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/header.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/dashboard.css') }}" rel="stylesheet">
 
 </head>
 
@@ -30,11 +31,9 @@
                     <li class="list-item" onclick="location.href='{{url('about') }}'"><a>ABOUT </a></li>
                     <span class="vl"></span>
 
-                    <li class="list-item" onclick="location.href='{{ url('howitworks') }}'"><a>HOW IT WORKS</a></li>
+                    <li class="list-item" onclick="location.href='{{ url('howitworks')}}'"><a>HOW IT WORKS</a></li>
                     <span class="vl"></span>
                     <li class="list-item"><a>CONTACT</a></li>
-
-
                 </div>
                 {{-- </div> --}}
                 <div class="ul">
@@ -53,13 +52,27 @@
             <div class="toggle">
                 <i class="bi bi-list"></i>
             </div>
-
-
-
         </nav>
     </header>
-    <div class="master-container">
-        @yield('content')
+    <div class="container">
+        <div class="row p-3">
+            <div class="col-md-3 mb-2">
+                <div class="admin-sidebar">
+                    <li class="sidebar-item"><a href="#">My Tickets</a></li>
+                    <li class="sidebar-item"><a href="#">Create Raffle</a></li>
+                    <li class="sidebar-item"><a href="#">Dashboard</a></li>
+                    <li class="sidebar-item"><a href="#">Raffles</a></li>
+                    <li class="sidebar-item"><a href="#">Addresses</a></li>
+                    <li class="sidebar-item"><a href="#">Account Details</a></li>
+                    <li class="sidebar-item"><a href="#">Payment Method</a></li>
+                    <li class="sidebar-item"><a href="#">Logout</a></li>
+                </div>
+            </div>
+            <div class="col-md-9 mb-2">
+                @yield('content')
+            </div>
+        </div>
+    </div>
     </div>
     <footer>
         <div class="container-fluid-ft">
