@@ -85,7 +85,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="javascrip:void(0)">
+                            <a href="javascript:void(0)">
                                 Raffleit provides opportunities to raise funds for business, non-profit organization or
                                 even to give persons a wide range of opportunity to raffle items or own items once you
                                 have taken part in the raffle.
