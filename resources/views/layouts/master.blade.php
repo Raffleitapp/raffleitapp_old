@@ -62,7 +62,7 @@
         @yield('content')
     </div>
     <footer>
-        <div class="container-fluid-ft">
+        <div class="container-fluid-ft p-3">
             <div class="row justify-start">
                 <div class="col-12 col-sm-6 col-md-4 col-lg-4">
                     <ul class="footer-list">
@@ -178,6 +178,8 @@
                     </ul>
                 </div>
             </div>
+            <div class="hr"></div>
+            <p class="copy">All Right Resvered Reffleit @ 2023</p>
         </div>
     </footer>
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
