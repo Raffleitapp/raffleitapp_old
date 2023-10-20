@@ -58,14 +58,14 @@
         <div class="row p-3">
             <div class="col-md-3 mb-2">
                 <div class="admin-sidebar">
+                    <li class="sidebar-item"><a href="{{ url('dashboard')}}">Dashboard</a></li>
                     <li class="sidebar-item"><a href="#">My Tickets</a></li>
                     <li class="sidebar-item"><a href="#">Create Raffle</a></li>
-                    <li class="sidebar-item"><a href="#">Dashboard</a></li>
-                    <li class="sidebar-item"><a href="#">Raffles</a></li>
+                    <li class="sidebar-item"><a href="{{ url('raffles')}}">Raffles</a></li>
                     <li class="sidebar-item"><a href="#">Addresses</a></li>
-                    <li class="sidebar-item"><a href="#">Account Details</a></li>
+                    <li class="sidebar-item"><a href="{{ url('accdetails')}}">Account Details</a></li>
                     <li class="sidebar-item"><a href="#">Payment Method</a></li>
-                    <li class="sidebar-item"><a href="#">Logout</a></li>
+                    <li class="sidebar-item"><a href="{{ url('logout')}}">Logout</a></li>
                 </div>
             </div>
             <div class="col-md-9 mb-2">

@@ -5,15 +5,23 @@ body {
 }
 
 .form-control,
-.form-control:focus {
+.form-control:focus,
+.form-select,
+select:focus,
+option {
     border: 1px solid #55C595 !important;
-    box-shadow: none;
+    box-shadow: none !important;
+    outline: none !important;
+    background-color: none !important;
 }
 
 input[type="password"],
 input[type="email"],
 input[type="text"],
-textarea {
+textarea,
+option,
+select,
+select:focus {
     margin-top: 0.3rem;
     margin-bottom: 1rem;
 }
@@ -30,6 +38,11 @@ textarea {
     background: #55C595;
     color: #FDFDFD;
     margin-bottom: 1rem;
+}
+
+.form-check-input:checked {
+    background-color: #55C595;
+    border: none;
 }
 
 .form-check-input,
