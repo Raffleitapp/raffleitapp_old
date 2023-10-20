@@ -28,6 +28,7 @@ Route::get('/contact', function () {
 });
 Route::get('/raffles', function () {
     return view('allraffle');
+});
 
 
 Route::get('dashboard', function () {
