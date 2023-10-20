@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('index');
 });
+
 Route::get('/about', function () {
     return view('about');
 });
@@ -27,4 +28,29 @@ Route::get('/contact', function () {
 });
 Route::get('/raffles', function () {
     return view('allraffle');
+
+
+Route::get('dashboard', function () {
+    return view('dashboard');
+});
+
+Route::get('login', function () {
+    return view('login');
+});
+
+Route::get('register', function () {
+    return view('register');
+});
+
+Route::get('yourself', function () {
+    return view('yourself');
+});
+
+Route::get('accdetails', function () {
+    return view('accdetails');
+});
+
+Route::get('addresses', function () {
+    return view('addresses');
+
 });
