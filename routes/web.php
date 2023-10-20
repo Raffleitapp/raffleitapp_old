@@ -17,6 +17,19 @@ Route::get('/', function () {
     return view('index');
 });
 
+Route::get('/about', function () {
+    return view('about');
+});
+Route::get('/howitworks', function () {
+    return view('howitwork');
+});
+Route::get('/contact', function () {
+    return view('contact');
+});
+Route::get('/raffles', function () {
+    return view('allraffle');
+
+
 Route::get('dashboard', function () {
     return view('dashboard');
 });
@@ -39,4 +52,5 @@ Route::get('accdetails', function () {
 
 Route::get('addresses', function () {
     return view('addresses');
+
 });

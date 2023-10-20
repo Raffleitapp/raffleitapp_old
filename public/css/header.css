@@ -3,6 +3,7 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
+    list-style: none;
 }
 
 #my-account{
@@ -75,7 +76,7 @@ font-family: Poppins;
 font-size: 12px;
 font-style: normal;
 font-weight: 700;
-line-height: 140%; 
+line-height: 140%;
 padding: 10px 12px;
 }
 
@@ -92,7 +93,7 @@ font-family: Poppins;
 font-size: 12px;
 font-style: normal;
 font-weight: 700;
-line-height: 140%; 
+line-height: 140%;
 padding: 10px 12px;
 }
 
@@ -129,13 +130,20 @@ background: var(--Base-Color, #FDFDFD);
 }
 
 
+footer{
+    padding: 0;
+
+}
 footer .container-fluid-ft{
     width: 100%;
-    padding: 12px 20px;
+    padding: 12px 0px;
     background: var(--Primary-Color, #215273);
     list-style: none;
 }
-
+ul.footer-list, ul.footer-list li, .row {
+    margin: 0 !important;
+    list-style: none !important;
+}
 ul.footer-list li a{
     text-decoration: none;
     color: var(--Base-Color, #FDFDFD);
@@ -160,7 +168,7 @@ ul.footer-list li h3{
     font-size: 18px;
     font-style: normal;
     font-weight: 700;
-    line-height: 140%; 
+    line-height: 140%;
 }
 
 .social{
@@ -203,13 +211,14 @@ font-family: Poppins;
 font-size: 12px;
 font-style: normal;
 font-weight: 700;
-line-height: 140%; 
+line-height: 140%;
 
 
 }
 
 .master-container{
     min-height: 60vh;
+    overflow: hidden;
 }
 
 div.hr{
@@ -232,7 +241,7 @@ line-height: 140%;
 
 
 @media screen and (max-width: 960px){
-    
+
     .axcou{
         display: none;
     }
@@ -243,12 +252,12 @@ line-height: 140%;
     .conta{
         display: none;
         height: 90vh;
-        background-color: rgba(0,0,0,0.5);
+        background-color: #215273;
         position: absolute;
         top: 70px;
         right: 0;
         width: 320px;
-        
+
         /* backdrop-filter: blur(75px); */
     }
     nav.header-bar div.ul li{
