@@ -6,7 +6,7 @@
         .top-bg {
             height: 20vh;
             background: linear-gradient(0deg, rgba(0, 0, 0, 0.63) 0%, rgba(0, 0, 0, 0.63) 100%),
-                url("{{ asset('img/how-it-work-bg.jpeg') }}"),
+                url("{{ asset('img/contact.png') }}"),
                 lightgray 50% / cover no-repeat;
             background-repeat: no-repeat;
             background-position: center;
@@ -240,6 +240,7 @@
             border-radius: 10px;
             border: 2px solid var(--Button-Color, #55C595);
         }
+
         #support-item ul li {
             color: var(--Body-text-color, #303030);
             /* H5 */
@@ -253,6 +254,49 @@
 
         #support-item ul li span {
             font-weight: 700;
+        }
+
+        .contact-detail h5 {
+            color: var(--Heading-Text-color, #161616);
+            /* H5 Bold */
+            font-family: Poppins;
+            font-size: 18px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 140%;
+            display: flex
+        }
+
+        .contact-detail h6 {
+            color: var(--Body-text-color, #303030);
+            /* H5 */
+            font-family: Poppins;
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 140%;
+        }
+
+        h5.link {
+            color: var(--Body-text-color, #303030);
+            /* H5 */
+            font-family: Poppins;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 140%;
+            margin: 12px 0px;
+        }
+
+        h5.link span{
+            cursor: pointer;
+            color: var(--Primary-Color, #215273);
+/* H5 */
+font-family: Poppins;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: 140%;
         }
     </style>
     <div class="top-bg">
@@ -277,167 +321,110 @@
                                 fill="#FDFDFD" />
                         </svg></span>
                 </li>
-                <li><span>How It Works</span></li>
+                <li><span>Contact</span></li>
             </div>
             <div class="flex  ">
                 <div class="vl mt-2 mr-2"></div>
-                <p class="custom-textext">How Raffleit Works</p>
+                <p class="custom-textext">How To Find Us</p>
             </div>
         </div>
     </div>
 
-    <div class="howitwork-container " style="width: 100vw">
-        <div class="" style="padding: 20px 40px;">
-            <h5 class="title-2 text-left">How <span>Raffles</span> works</h5>
-            <h6 class="desc">RaffleIt has several benefits</h6>
-        </div>
+    <div class="howitwork-container  p-3" style="width: 100vw">
+        <div class="row justify-center">
+            <div class="col-12 col-md-6">
 
-        <div class="row g-3">
-            <div class="col-12 flex justify-center col-md-3">
-                <div class="pre-work">
-                    <img src="{{ asset('img/icon/50.png') }}" alt="">
-                    <h3 class="head">50% of the total</h3>
-                    <p class="text">The winner gets the price, the person or company who issues the raffle
-                        receives 50% of the total</p>
+                <h5 class="title-2 text-left">Write <span>Us</span></h5>
+                <h6 class="desc">Alienum phaedrum torquatos nec eu, vis detraxit periculis ex, nihil expetendis in mei.
+                    Mei an pericula euripidis, hinc partem ei est</h6>
+
+                <div class="car w-100 mx-auto">
+                    <form>
+                        <div class="form-group mb-3">
+                            <label for="fname">Full Name</label>
+                            <input type="text" name="fname" id="fname" class="form-control">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="fname">Email</label>
+                            <input type="email" name="fname" id="fname" class="form-control">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="fname">Your Message</label>
+                            <textarea name="" class="form-control" id="" cols="30" rows="3"></textarea>
+                        </div>
+                        <div class="flex">
+                            <button class="btn-icon mr-3 px-3" style="font-size: 12px; flex-wrap: nowrap ">Send<span
+                                    class="ml-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none">
+                                        <path
+                                            d="M2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2C6.48 2 2 6.48 2 12ZM11.71 8.21L14.79 11.29C15.18 11.68 15.18 12.31 14.79 12.71L11.71 15.79C11.32 16.18 10.68 16.18 10.29 15.79C9.9 15.4 9.9 14.77 10.29 14.38L12.67 12L10.29 9.62C9.9 9.23 9.9 8.6 10.29 8.21C10.68 7.82 11.32 7.82 11.71 8.21Z"
+                                            fill="#215273" />
+                                    </svg></span></button>
+                            {{-- <button class="btn-icon white ml-3"
+                                style="font-size: 12px; flex-wrap: nowrap; margin-left:12px">Contact Team<span
+                                    class="ml-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none">
+                                        <path
+                                            d="M2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2C6.48 2 2 6.48 2 12ZM11.71 8.21L14.79 11.29C15.18 11.68 15.18 12.31 14.79 12.71L11.71 15.79C11.32 16.18 10.68 16.18 10.29 15.79C9.9 15.4 9.9 14.77 10.29 14.38L12.67 12L10.29 9.62C9.9 9.23 9.9 8.6 10.29 8.21C10.68 7.82 11.32 7.82 11.71 8.21Z"
+                                            fill="#215273" />
+                                    </svg></span></button> --}}
+                        </div>
+        <h5 class="link">Ready to raffle? <span>Click Here</span></h5>
+
+                    </form>
                 </div>
 
+
             </div>
-            <div class="col-12  flex justify-center col-md-3">
-                <div class="pre-work">
-                    <img src="{{ asset('img/icon/easy.png') }}" alt="">
-                    <h3 class="head">Easy Setup</h3>
-                    <p class="text">Set up is free and can be done in a few minutes from the comfort of your home or
-                        office </p>
+            <div class="col-12 col-md-6">
+                <div class="" style="padding: 20px 40px;">
+                    <h5 class="title-2 text-left">Contact <span>Us</span></h5>
+                    <h6 class="desc">Alienum phaedrum torquatos nec eu, vis detraxit periculis ex, nihil expetendis in
+                        mei. Mei an pericula euripidis, hinc partem ei est</h6>
                 </div>
 
-            </div>
-            <div class="col-12 flex justify-center col-md-3">
-                <div class="pre-work">
-                    <img src="{{ asset('img/icon/growth.png') }}" alt="">
-                    <h3 class="head">Ticket Growth</h3>
-                    <p class="text">You can watch your raffle grow as persons purchase tickets</p>
+                <div class="row justify-center align-items-center p-3 px-4">
+                    <div class="col-12 col-md-6">
+                        <div class="contact-detail">
+                            <h5><span><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                                        viewBox="0 0 30 30" fill="none">
+                                        <path
+                                            d="M15 2.5C10.1625 2.5 6.25 6.4125 6.25 11.25C6.25 17.8125 15 27.5 15 27.5C15 27.5 23.75 17.8125 23.75 11.25C23.75 6.4125 19.8375 2.5 15 2.5ZM15 14.375C13.275 14.375 11.875 12.975 11.875 11.25C11.875 9.525 13.275 8.125 15 8.125C16.725 8.125 18.125 9.525 18.125 11.25C18.125 12.975 16.725 14.375 15 14.375Z"
+                                            fill="#55C595" />
+                                    </svg></span> Address</h5>
+                            <h6>198 West 21th Street,Suite 721 New York,NY 10010</h6>
+                        </div>
+                        <div class="contact-detail">
+                            <h5><span><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                                        viewBox="0 0 30 30" fill="none">
+                                        <path
+                                            d="M8.275 13.4875C10.075 17.025 12.975 19.9125 16.5125 21.725L19.2625 18.975C19.6 18.6375 20.1 18.525 20.5375 18.675C21.9375 19.1375 23.45 19.3875 25 19.3875C25.6875 19.3875 26.25 19.95 26.25 20.6375V25C26.25 25.6875 25.6875 26.25 25 26.25C13.2625 26.25 3.75 16.7375 3.75 5C3.75 4.3125 4.3125 3.75 5 3.75H9.375C10.0625 3.75 10.625 4.3125 10.625 5C10.625 6.5625 10.875 8.0625 11.3375 9.4625C11.475 9.9 11.375 10.3875 11.025 10.7375L8.275 13.4875Z"
+                                            fill="#55C595" />
+                                    </svg></span> Phones</h5>
+                            <h6>Phone: +1 (758) 714-4919 <br>
+                                Cell: +1 (646) 600-3001</h6>
+                        </div>
+                        <div class="contact-detail">
+                            <h5><span><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                                        viewBox="0 0 30 30" fill="none">
+                                        <path
+                                            d="M25 5H5C3.625 5 2.5125 6.125 2.5125 7.5L2.5 22.5C2.5 23.875 3.625 25 5 25H25C26.375 25 27.5 23.875 27.5 22.5V7.5C27.5 6.125 26.375 5 25 5ZM25 10L15 16.25L5 10V7.5L15 13.75L25 7.5V10Z"
+                                            fill="#55C595" />
+                                    </svg></span> Email</h5>
+                            <h6>Gib@raffleit.com <br>
+                                Victordesign@raffleit.com</h6>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <img src="{{ asset('img/icon/map.jpeg') }}" alt="">
+                    </div>
                 </div>
-
             </div>
-            <div class="col-12 flex justify-center col-md-3">
-                <div class="pre-work">
-                    <img src="{{ asset('img/icon/winner.png') }}" alt="">
-                    <h3 class="head">Winners</h3>
-                    <p class="text">Winners are selected automatically</p>
-                </div>
-
-            </div>
-            <div class="col-12 flex justify-center col-md-3">
-                <div class="pre-work">
-                    <img src="{{ asset('img/icon/support.png') }}" alt="">
-                    <h3 class="head">Supports</h3>
-                    <p class="text">RaffleIt App ensures people everywhere, support your cause without taking part in the
-                        raffle.</p>
-                </div>
-
-            </div>
-            <div class="col-12 flex justify-center col-md-3">
-                <div class="pre-work">
-                    <img src="{{ asset('img/icon/deliver.png') }}" alt="">
-                    <h3 class="head">Doorstep Delivery</h3>
-                    <p class="text">Set up is free and can be done in a few minutes from the comfort of your home or
-                        office </p>
-                </div>
-
-            </div>
-            <div class="col-12 flex justify-center col-md-3">
-                <div class="pre-work">
-                    <img src="{{ asset('img/icon/ticket-print.png') }}" alt="">
-                    <h3 class="head">Electronic Tickets</h3>
-                    <p class="text">Tickets are electronic and can be shared through links and QR codes</p>
-                </div>
-
-            </div>
-            <div class="col-12 flex justify-center col-md-3">
-                <div class="pre-work">
-                    <img src="{{ asset('img/icon/easy.png') }}" alt="">
-                    <h3 class="head">Easy to Us</h3>
-                    <p class="text">Very Easy to Use: Paperless and Cashless</p>
-                </div>
-
-            </div>
-        </div>
-        <div class="flex p-3">
-            <button class="btn-icon mx-3" style="font-size: 12px; flex-wrap: nowrap ">Create Raffle <span
-                    class="ml-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                        fill="none">
-                        <path
-                            d="M2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2C6.48 2 2 6.48 2 12ZM11.71 8.21L14.79 11.29C15.18 11.68 15.18 12.31 14.79 12.71L11.71 15.79C11.32 16.18 10.68 16.18 10.29 15.79C9.9 15.4 9.9 14.77 10.29 14.38L12.67 12L10.29 9.62C9.9 9.23 9.9 8.6 10.29 8.21C10.68 7.82 11.32 7.82 11.71 8.21Z"
-                            fill="#215273" />
-                    </svg></span></button>
-            <button class="btn-icon white" style="font-size: 12px; flex-wrap: nowrap ">Contact Team <span
-                    class="ml-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                        fill="none">
-                        <path
-                            d="M2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2C6.48 2 2 6.48 2 12ZM11.71 8.21L14.79 11.29C15.18 11.68 15.18 12.31 14.79 12.71L11.71 15.79C11.32 16.18 10.68 16.18 10.29 15.79C9.9 15.4 9.9 14.77 10.29 14.38L12.67 12L10.29 9.62C9.9 9.23 9.9 8.6 10.29 8.21C10.68 7.82 11.32 7.82 11.71 8.21Z"
-                            fill="#215273" />
-                    </svg></span></button>
-        </div>
-    </div>
-
-
-    <div class="tab-section p-3">
-        <div class="tab-container my-3">
-            <div class="flex">
-                <span id="host-btn" class="active">For Host</span>
-                <span id="support-btn" class="">For Supporters</span>
-            </div>
-        </div>
-        <div id="host-item">
-            <h3 class="head">How to start a 50/50 raffle</h3>
-            <h6 class="desc">How to start a 50/50 raffle</h6>
-            <ul>
-                <li><span>Create</span> an account by clicking here or download the iOS or Android app</li>
-                <li><span>Click</span> here and Create Raffle</li>
-                <li><span>Get</span> a link and share with others that would like to support your raffle.</li>
-                <h6 class="desc">Don’t forget to add your run time</h6>
-
-            </ul>
-            <h3 class="head">Uses</h3>
-            <ul id="sec">
-                <li><span>To</span> raise funds for any cause at any time where ever you are</li>
-
-            </ul>
-            <h3 class="head">Pay out</h3>
-            <ul id="sec">
-                <li><span>Payment</span> is fully secured</li>
-                <li><span>As soon</span> as the winner confirms that the price has ben received the payout is done within 2
-                    to 7days depending on location and mode of cash transfer.</li>
-                <li><span>Payouts</span> are done after hosting and shipping fees are deducted</li>
-
-
-            </ul>
-            <h3 class="head">Other</h3>
-            <ul id="sec">
-                <li><span>Remember</span> to check the legal requirements in your country for such activities</li>
-                <li><span>Bank fees</span> (if the transfer is done via the bank) will also be deducted from the payout by
-                    the bank</li>
-
-
-            </ul>
-        </div>
-        <div id="support-item">
-            <h3 class="head">How It Works</h3>
-
-            <ul>
-                <li><span>Create</span> an account OR just support the cause by using the link or better yet down load the
-                    APP IOS or Android to give you a full experience.</li>
-                <li><span>Find</span> other agencies, organisations and raffles</li>
-                <li><span>Get</span> as many tickets as you can afford. The more tickets the greater the savings</li>
-                <li><span>Share</span> your raffle links with family, friends and colleagues</li>
-                <li><span>If you</span> are a winner your price will be shipped to you within two days. You will receive it
-                    within 5 to 14 days depending on location</li>
-
-            </ul>
-            <h6 class="desc">Remember to check the legal requirements in your country for such activities</h6>
-
         </div>
     </div>
+
+
+{{--
     <div class="fd">
         <div class="my-3 p-3 flex justify-between align-item-center">
             <h2 class="text-center title-2">Live <span>Raffle</span></h2>
@@ -662,7 +649,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
 
     <div class="home-la">
@@ -740,7 +727,7 @@
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-                $("#support-item").hide();
+        $("#support-item").hide();
 
         $(document).ready(function() {
             $("span#support-btn").click(() => {
