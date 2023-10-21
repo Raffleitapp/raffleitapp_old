@@ -17,12 +17,12 @@ return new class extends Migration
             $table->string('last_name');
             $table->string('email')->nullable();
             $table->string("company_name")->nullable();
-            $table->string('street');
+            $table->string('street')->nullable();
             $table->string("apartment")->nullable();
             $table->string("city")->nullable();
-            
-            $table->string('first_name');
-
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->tinyInteger('type')->comment("1: billing; 2: shipping");
+            $table->string("zip_code")->nullable();
             $table->timestamps();
         });
     }
