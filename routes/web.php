@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminRouteController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,4 +28,37 @@ Route::get('/contact', function () {
 });
 Route::get('/raffles', function () {
     return view('allraffle');
+});
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+});
+
+Route::get('/login', function () {
+    return view('login');
+});
+
+Route::get('register', function () {
+    return view('register');
+});
+
+Route::get('yourself', function () {
+    return view('yourself');
+});
+
+Route::get('accdetails', function () {
+    return view('accdetails');
+});
+
+Route::get('addresses', function () {
+    return view('addresses');
+});
+Route::group(['prefix' => 'admin'], function () {
+    Route::get('/', [AdminRouteController::class,'index']);
+    Route::get('dashboard', [AdminRouteController::class,'index'])->name('admin.dashboard');
+    Route::get('users', [AdminRouteController::class,'users'])->name('admin.users');
+    Route::get('admins', [AdminRouteController::class,'admins'])->name('admin.admins');
+
+
+
 });

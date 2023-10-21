@@ -1,7 +1,7 @@
 @extends('layouts/master')
 @section('title', 'Home')
 @section('content')
-    <link rel="stylesheet" href="{{ asset('css/index.css') }}">
+<link rel="stylesheet" href="{{ asset('css/index.css') }}">
     <style>
         .top-bg {
             height: 65vh;

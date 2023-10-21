@@ -6,22 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Roboto:wght@400;500;700;900&display=swap"
-        rel="stylesheet">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     {{-- link'resources/css/app.css' --}}
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/bootstrap/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/header.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/dashboard.css') }}" rel="stylesheet">
 
 </head>
 
@@ -40,11 +31,9 @@
                     <li class="list-item" onclick="location.href='{{url('about') }}'"><a>ABOUT </a></li>
                     <span class="vl"></span>
 
-                    <li class="list-item" onclick="location.href='{{ url('howitworks') }}'"><a>HOW IT WORKS</a></li>
+                    <li class="list-item" onclick="location.href='{{ url('howitworks')}}'"><a>HOW IT WORKS</a></li>
                     <span class="vl"></span>
-                    <li class="list-item" onclick="location.href='{{ url('contact') }}'"><a>CONTACT</a></li>
-
-
+                    <li class="list-item"><a>CONTACT</a></li>
                 </div>
                 {{-- </div> --}}
                 <div class="ul">
@@ -63,16 +52,30 @@
             <div class="toggle">
                 <i class="bi bi-list"></i>
             </div>
-
-
-
         </nav>
     </header>
-    <div class="master-container">
-        @yield('content')
+    <div class="container">
+        <div class="row p-3">
+            <div class="col-md-3 mb-2">
+                <div class="admin-sidebar">
+                    <li class="sidebar-item"><a href="#">My Tickets</a></li>
+                    <li class="sidebar-item"><a href="#">Create Raffle</a></li>
+                    <li class="sidebar-item"><a href="{{url('dashboard')}}">Dashboard</a></li>
+                    <li class="sidebar-item"><a href="#">Raffles</a></li>
+                    <li class="sidebar-item"><a href="#">Addresses</a></li>
+                    <li class="sidebar-item"><a href="#">Account Details</a></li>
+                    <li class="sidebar-item"><a href="#">Payment Method</a></li>
+                    <li class="sidebar-item"><a href="#">Logout</a></li>
+                </div>
+            </div>
+            <div class="col-md-9 mb-2">
+                @yield('content')
+            </div>
+        </div>
+    </div>
     </div>
     <footer>
-        <div class="container-fluid-ft p-3">
+        <div class="container-fluid-ft">
             <div class="row justify-start">
                 <div class="col-12 col-sm-6 col-md-4 col-lg-4">
                     <ul class="footer-list">
@@ -82,7 +85,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="javascrip:void(0)">
+                            <a href="javascript:void(0)">
                                 Raffleit provides opportunities to raise funds for business, non-profit organization or
                                 even to give persons a wide range of opportunity to raffle items or own items once you
                                 have taken part in the raffle.
@@ -188,8 +191,6 @@
                     </ul>
                 </div>
             </div>
-            <div class="hr"></div>
-            <p class="copy">All Right Resvered Reffleit @ 2023</p>
         </div>
     </footer>
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
