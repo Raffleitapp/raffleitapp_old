@@ -61,7 +61,12 @@
                     <li class="sidebar-item"><a href="{{ url('dashboard')}}">Dashboard</a></li>
                     <li class="sidebar-item"><a href="#">My Tickets</a></li>
                     <li class="sidebar-item"><a href="#">Create Raffle</a></li>
+
+                    <li class="sidebar-item"><a href="{{url('dashboard')}}">Dashboard</a></li>
+                    <li class="sidebar-item"><a href="#">Raffles</a></li>
+
                     <li class="sidebar-item"><a href="{{ url('raffles')}}">Raffles</a></li>
+
                     <li class="sidebar-item"><a href="#">Addresses</a></li>
                     <li class="sidebar-item"><a href="{{ url('accdetails')}}">Account Details</a></li>
                     <li class="sidebar-item"><a href="#">Payment Method</a></li>
