@@ -78,6 +78,7 @@ Route::get('organisation', function () {
 
 Route::get('fundraise', function () {
     return view('fundraise');
+});
 
 Route::group(['prefix' => 'admin'], function () {
     Route::get('/', [AdminRouteController::class,'index']);
