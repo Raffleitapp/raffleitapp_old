@@ -30,7 +30,8 @@ Route::get('/raffles', function () {
     return view('allraffle');
 });
 
-Route::get('/dashboard', function () {
+Route::get('dashboard', function () {
+
     return view('dashboard');
 });
 
@@ -52,6 +53,23 @@ Route::get('accdetails', function () {
 
 Route::get('addresses', function () {
     return view('addresses');
+
+});
+
+Route::get('billaddress', function () {
+    return view('billaddress');
+});
+
+Route::get('shipaddress', function () {
+    return view('shipaddress');
+});
+
+Route::get('raffles', function () {
+    return view('raffles');
+});
+
+Route::get('organisation', function () {
+    return view('organisation');
 });
 Route::group(['prefix' => 'admin'], function () {
     Route::get('/', [AdminRouteController::class,'index']);
