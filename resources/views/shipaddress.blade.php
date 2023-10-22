@@ -10,7 +10,7 @@
 
 <div class="regform p-3">
     <!-- <div class="text-center"> -->
-        <h5 class="fw-bold h5">Shipping address</h5>
+    <h5 class="fw-bold h5">Shipping address</h5>
     <!-- </div> -->
     <div class="card p-3 shadow">
         <div class="form">

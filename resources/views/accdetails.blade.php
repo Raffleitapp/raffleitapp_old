@@ -3,7 +3,7 @@
 @section('content')
 
 <style>
-    label{
+    label {
         font-weight: bold;
     }
 </style>

@@ -6,7 +6,8 @@
     label {
         font-weight: bold;
     }
-    .card .raft{
+
+    .card .raft {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -51,4 +52,5 @@
             </div>
         </div>
     </div>
-    @endsection
+</div>
+@endsection
