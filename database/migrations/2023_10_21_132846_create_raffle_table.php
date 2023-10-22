@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('raffle', function (Blueprint $table) {
             $table->id();
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('organisation_id')->references('id')->on('organisation');
+            $table->bigInteger('user_id');
+            $table->bigInteger('organisation_id');
             $table->string('host_name');
             $table->longText('description');
             $table->string('image1')->nullable();

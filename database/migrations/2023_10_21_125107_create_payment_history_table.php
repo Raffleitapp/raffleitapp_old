@@ -16,9 +16,8 @@ return new class extends Migration
             $table->string('payment_id');
             $table->string('txn_id');
             $table->string('payment_method');
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('order_id')->references('id')->on('orders');
-            $table->foreign('payment')->references('id')->on('users');
+            $table->integer('user_id');
+            $table->integer('order_id');
             $table->timestamps();
         });
     }

@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('street')->nullable();
             $table->string("apartment")->nullable();
             $table->string("city")->nullable();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->integer('user_id');
             $table->tinyInteger('type')->comment("1: billing; 2: shipping");
             $table->string("zip_code")->nullable();
             $table->timestamps();

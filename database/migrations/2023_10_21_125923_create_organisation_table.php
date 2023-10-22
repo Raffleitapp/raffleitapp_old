@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('organisation', function (Blueprint $table) {
             $table->id();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->bigInteger('user_id');
             $table->string('organisation_name');
             $table->string('cover_image');
-            $table->foreign('category_id')->references('id')->on('categorys');
+            $table->bigInteger('category_id');
             $table->string('nick_name')->nullable();
             $table->string('handle')->nullable();
             $table->string('website')->nullable();

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('ticket_price', function (Blueprint $table) {
             $table->id();
-            $table->foreign('raffle_id')->references('id')->on('raffle');
+            $table->bigInteger('raffle_id');
             $table->decimal('three', 10,2);
             $table->decimal('ten', 10,2);
             $table->decimal('twenty', 10,2);
