@@ -22,8 +22,8 @@ return new class extends Migration
             $table->string('profile_pix')->nullable();
             $table->text('about')->nullable();
             $table->tinyInteger('user_type')->comment('1: user, 2:admin');
-            $table->rememberToken();
             $table->tinyInteger('status')->default(0)->nullable();
+            $table->rememberToken();
             $table->timestamps();
         });
     }
