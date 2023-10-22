@@ -64,10 +64,18 @@ Route::get('shipaddress', function () {
     return view('shipaddress');
 });
 
+Route::get('createraffle', function () {
+    return view('createraffle');
+});
+
 Route::get('raffles', function () {
     return view('raffles');
 });
 
 Route::get('organisation', function () {
     return view('organisation');
+});
+
+Route::get('fundraise', function () {
+    return view('fundraise');
 });

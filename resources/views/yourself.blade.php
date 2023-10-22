@@ -8,6 +8,7 @@
     <div class="card p-3 shadow">
         <div class="form">
             <div class="row">
+                <img src="" alt="">
                 <div class="form-group col-md-6">
                     <label for="fname">First Name</label>
                     <input type="text" required id="fname" class="form-control" placeholder="First Name">
