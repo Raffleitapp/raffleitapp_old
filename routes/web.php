@@ -2,7 +2,8 @@
 
 use App\Http\Controllers\AdminRouteController;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Auth;
+// Route::get("/", [AdminRouteController::class,"index"])->name("index");
 /*
 |--------------------------------------------------------------------------
 | Web Routes

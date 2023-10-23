@@ -18,6 +18,8 @@ option {
 input[type="password"],
 input[type="email"],
 input[type="text"],
+input[type="date"],
+input[type="time"],
 textarea,
 option,
 select,
