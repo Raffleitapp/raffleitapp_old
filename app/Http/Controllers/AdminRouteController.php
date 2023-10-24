@@ -15,4 +15,13 @@ class AdminRouteController extends Controller
     public function admins(){
         return view('admin.admin');
     }
+    public function category(){
+        if(session()->has('user_id') && session()->get('user_type') == 'admin'){
+        return view('admin.category');
+
+        }else {
+            session()->flush();
+            return redirect('/login');
+        }
+    }
 }

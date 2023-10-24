@@ -43,11 +43,11 @@
         <div class="custom-card">
             <h3 class="head">Steps In Creating Your Raffle</h3>
             <div class="row justify-center g-3">
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="cardf">
                         <div class="count">
                            1
-                                
+
                         </div>
                         <div class="title">
                             <h3>Setup Your  Organization</h3>
@@ -55,11 +55,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="cardf">
                         <div class="counts">
                            2
-                                
+
                         </div>
                         <div class="title">
                             <h3>Setup Host Payout Info</h3>
@@ -67,11 +67,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="cardf">
                         <div class="count">
                            3
-                                
+
                         </div>
                         <div class="title">
                             <h3>Create Your First Raffle</h3>
@@ -81,7 +81,7 @@
                 </div>
             </div>
             <div class="my-3 mx-auto p-2 flex justify-center">
-                <button class="proceed">Proceed</button>
+                <button onclick="location.href='{{url("user/choose_organisation")}}'" class="proceed">Proceed</button>
 
             </div>
         </div>

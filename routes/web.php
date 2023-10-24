@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminRouteController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\UserAuthController;
 // Route::get("/", [AdminRouteController::class,"index"])->name("index");
 /*
@@ -32,10 +33,6 @@ Route::get('raffles', function () {
     return view('allraffle');
 });
 
-// Route::get('dashboard', function () {
-
-//     return view('dashboard');
-// });
 
 Route::get('/login', function () {
     return view('login');
@@ -78,24 +75,33 @@ Route::get('organisation', function () {
     return view('organisation');
 });
 
+
+
 Route::get('fundraise', function () {
     return view('fundraise');
 });
-
 Route::post('create_account', [UserAuthController::class, 'createAccount'])->name('create_account');
 Route::get('complete_register', [UserAuthController::class, 'complete_register'])->name('complete_register');
 Route::post('update_register', [UserAuthController::class, 'update_register'])->name('update_register');
 Route::post('login_login',[UserAuthController::class,'loginAccount'])->name('login_login');
 Route::get('logout',[UserAuthController::class,'logout'])->name('logout');
+
+
 Route::group(['prefix' => 'admin'], function () {
     Route::get('/', [AdminRouteController::class,'index']);
     Route::get('dashboard', [AdminRouteController::class,'index'])->name('admin.dashboard');
     Route::get('users', [AdminRouteController::class,'users'])->name('admin.users');
     Route::get('admins', [AdminRouteController::class,'admins'])->name('admin.admins');
+    Route::get('category', [AdminRouteController::class,'category'])->name('admin.category');
+
 
 });
 
 Route::group(['prefix' => 'user'], function(){
     Route::get('dashboard',[UserAuthController::class,'dashboard'])->name('user.dashboard');
     Route::get('create_step',[UserAuthController::class,'walkthrough'])->name('user.create_step');
+    Route::get('choose_organisation',[UserAuthController::class,'chooseOrganisation'])->name('user.choose_organisation');
+    Route::post('admin/save_organisation', [UserAuthController::class, 'save_organisation']);
+
+
 });

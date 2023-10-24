@@ -24,6 +24,7 @@
 </head>
 
 <body>
+ 
     <div class="admin-layout">
         <div class="admin-sidebar">
             <div class="side-logo p-3 text-center">
@@ -31,7 +32,7 @@
             </div>
             <hr style="background: white; height:2px">
             <div class="side-item">
-
+               
                 <li class="{{ request()->is('admin/dashboard*') ? 'active' : ( request()->is('admin')  ? 'active' : '')}}">
                     <a href="{{ route('admin.dashboard') }}" class="link-text"><span style="margin: 0 12px 0 0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 30 30" fill="none">
                                 <path d="M6.25 13.75H11.25C12.625 13.75 13.75 12.625 13.75 11.25V6.25C13.75 4.875 12.625 3.75 11.25 3.75H6.25C4.875 3.75 3.75 4.875 3.75 6.25V11.25C3.75 12.625 4.875 13.75 6.25 13.75Z" fill="currentColor" />
@@ -40,8 +41,8 @@
                                 <path d="M18.75 26.25H23.75C25.125 26.25 26.25 25.125 26.25 23.75V18.75C26.25 17.375 25.125 16.25 23.75 16.25H18.75C17.375 16.25 16.25 17.375 16.25 18.75V23.75C16.25 25.125 17.375 26.25 18.75 26.25Z" fill="currentColor" />
                             </svg></span> <span>Dashboard</span></a>
                 </li>
-                <li class="{{ request()->is('admin/users*') ? 'active' : ''}}">
-                    <a href="{{ route('admin.users') }}" class="link-text" href=""><span style="margin: 0 12px 0 0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 30 30" fill="none">
+                <li class="{{ request()->is('admin/category*') ? 'active' : ''}}">
+                    <a href="{{ route('admin.category') }}" class="link-text" ><span style="margin: 0 12px 0 0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 30 30" fill="none">
                                 <circle cx="15" cy="12.5" r="3.75" stroke="#FDFDFD" stroke-width="2" stroke-linecap="round" />
                                 <circle cx="15" cy="15" r="11.25" stroke="#FDFDFD" stroke-width="2" />
                                 <path d="M22.2256 23.533C22.3846 23.4458 22.4597 23.2569 22.3925 23.0885C21.9105 21.8806 20.982 20.8168 19.7268 20.0415C18.3707 19.204 16.7093 18.75 15 18.75C13.2908 18.75 11.6293 19.204 10.2732 20.0415C9.01805 20.8168 8.0895 21.8806 7.60748 23.0885C7.54029 23.2569 7.61545 23.4458 7.77435 23.533C12.2746 26.0037 17.7254 26.0037 22.2256 23.533Z" fill="#FDFDFD" />
@@ -57,7 +58,7 @@
                                 <path d="M10 12H14" stroke="#FDFDFD" stroke-width="2" stroke-linecap="round" />
                             </svg></span> <span>Tickets</span></a></li>
                 <li class="{{ request()->is('admin/users*') ? 'active' : ''}}">
-                    <a href="{{ route('admin.users') }}" class="link-text" href=""><span style="margin: 0 12px 0 0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 30 30" fill="none">
+                    <a href="{{ url('admin/users') }}" class="link-text"><span style="margin: 0 12px 0 0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 30 30" fill="none">
                                 <circle cx="15" cy="12.5" r="3.75" stroke="#FDFDFD" stroke-width="2" stroke-linecap="round" />
                                 <circle cx="15" cy="15" r="11.25" stroke="#FDFDFD" stroke-width="2" />
                                 <path d="M22.2256 23.533C22.3846 23.4458 22.4597 23.2569 22.3925 23.0885C21.9105 21.8806 20.982 20.8168 19.7268 20.0415C18.3707 19.204 16.7093 18.75 15 18.75C13.2908 18.75 11.6293 19.204 10.2732 20.0415C9.01805 20.8168 8.0895 21.8806 7.60748 23.0885C7.54029 23.2569 7.61545 23.4458 7.77435 23.533C12.2746 26.0037 17.7254 26.0037 22.2256 23.533Z" fill="#FDFDFD" />

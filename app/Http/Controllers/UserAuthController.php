@@ -9,48 +9,67 @@ use Illuminate\Support\Facades\Validator;
 
 class UserAuthController extends Controller
 {
-    function dashboard(){
-        if(session()->has('user_id') && (session()->get('user_type') == 'user')){
-             $data = DB::table('users')->where('id', session()->get('user_id'))->exists();
-             if($data){
-                 return view('dashboard');
+    function dashboard()
+    {
+   
+        if (session()->has('user_id') && (session()->get('user_type') == 'user')) {
+            $data = DB::table('users')->where('id', session()->get('user_id'))->exists();
+            if ($data) {
+                return view('dashboard');
+            } else {
+                //to clear all the session already stored
+                session()->flush();
 
-             }else{
-                 session()->flush();
-                 return redirect('/login');
-
-             }
-            // return view('admin.dashboard',compact('data'));
-        }else{
+                //  redirect me
+                return redirect('/login');
+            }
+            // return view('admin.dashboard',compact('data')); return array of object
+        } else {
             return redirect('/login');
         }
     }
-    function walkThrough(){
-        if(session()->has('user_id') && (session()->get('user_type') == 'user')){
+    function walkThrough()
+    {
+        if (session()->has('user_id') && (session()->get('user_type') == 'user')) {
             $data = DB::table('users')->where('id', session()->get('user_id'))->exists();
-            if($data){
+            if ($data) {
                 return view('host.workthrough');
-
-            }else{
+            } else {
                 session()->flush();
                 return redirect('/login');
-
             }
             // return view('admin.dashboard',compact('data'));
-        }else{
+        } else {
             return redirect('/login');
         }
     }
 
 
-    function createAccount(Request $request){
+    function chooseOrganisation()
+    {
+        if (session()->has('user_id') && (session()->get('user_type') == 'user')) {
+            $data = DB::table('users')->where('id', session()->get('user_id'))->exists();
+            if ($data) {
+                return view('host.listorganisation');
+            } else {
+                session()->flush();
+                return redirect('/login');
+            }
+        } else {
+            return redirect('/login');
+        }
+    }
+
+
+    function createAccount(Request $request)
+    {
         $check = DB::table("users")->where("email", $request->email)->exists();
-        if($check){
+        if ($check) {
             return response()->json([
                 'code' => 405,
                 'message' => 'Email already exist'
             ]);
-        }else{
+        } else {
             $user = DB::table("users")->insert([
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
@@ -58,8 +77,8 @@ class UserAuthController extends Controller
                 'status' => 1
             ]);
 
-            if($user){
-                $data = DB::table('users')->where('email',$request->email)->first();
+            if ($user) {
+                $data = DB::table('users')->where('email', $request->email)->first();
                 $request->session()->put('user_id', $data->id);
                 $request->session()->put('user_type', 'user');
 
@@ -68,8 +87,8 @@ class UserAuthController extends Controller
                     'message' => 'Account created successfully',
                     // "user" => $data
                 ]);
-            }else{
-                   return response()->json([
+            } else {
+                return response()->json([
                     'code' => 405,
                     'message' => 'Unable to create account, please try again later'
                 ]);
@@ -77,71 +96,80 @@ class UserAuthController extends Controller
         }
     }
 
-    public function loginAccount(Request $req){
+    public function loginAccount(Request $req)
+    {
         $check = DB::table("users")->where("email", $req->email);
-        if($check->exists()){
+        if ($check->exists()) {
             $ch = $check->first();
-            if(Hash::check($req->password,$ch->password)){
-                if($ch->status == 0){
+            if (Hash::check($req->password, $ch->password)) {
+                if ($ch->status == 0) {
                     return response()->json([
-                        'code'=>401,
-                        'message'=>"Sorry you can't login, please contact System Admin"
+                        'code' => 401,
+                        'message' => "Sorry you can't login, please contact System Admin"
                     ]);
-                }else{
+                } else {
                     $user_type = $ch->user_type == 1 ? 'user' : 'admin';
+
+                    //Store into session fields
                     $req->session()->put('user_id', $ch->id);
                     $req->session()->put('user_type', $user_type);
 
                     return response()->json([
-                        'code'=>201,
-                        'message' =>"You have successfully logged in",
-                        'type'=>  $ch->user_type == 1 ? 'user' : 'admin',
+                        'code' => 201,
+                        'message' => "You have successfully logged in",
+                        'type' =>  $ch->user_type == 1 ? 'user' : 'admin',
                         'u_status' => $ch->reg_status
                     ]);
-
                 }
-            }else{
+            } else {
                 return response()->json([
-                    'code'=>405,
-                    'message'=>"Invalid email or password"
+                    'code' => 405,
+                    'message' => "Invalid email or password"
                 ]);
             }
-        }else{
+        } else {
 
-                   return response()->json([
-                    'code' => 405,
-                    'message' => 'Invalid email or password'
-                ]);
+            return response()->json([
+                'code' => 405,
+                'message' => 'Invalid email or password'
+            ]);
         }
     }
 
-    public function logout(){
-        if(session()->has('user_id')){
+    public function logout()
+    {
+        if (session()->has('user_id')) {
             session()->flush();
             return redirect('/login');
         }
         return redirect('/login');
-
     }
 
-    public function complete_register(){
-        if(session()->has('user_id') && (session()->get('user_type') == 'user')){
-            $data = DB::table('users')->where('id', session()->get('user_id'))->first();
-            $data = $data->email;
-            return view('yourself',get_defined_vars());
-        }else{
+    public function complete_register()
+    {
+        if (session()->has('user_id') && (session()->get('user_type') == 'user')) {
+            $data = DB::table('users')->where('id', session()->get('user_id'));
+            if ($data->exists()) {
+                $datas = $data->first();
+                $dt = $datas->email;
+                
+                return view('yourself', get_defined_vars());
+            } else {
+                return redirect('/login');
+            }
+        } else {
             return redirect('/login');
         }
-
     }
 
-    public function update_register(Request $request){
-        if(session()->has('user_id')){
-           $file = $request->file('image');
-           $fileName = time().$file->getClientOriginalName();;
-           $file->storeAs('uploads',$fileName);
-           $path = $file->store("public/images");
-           $imageNames = basename($path);
+    public function update_register(Request $request)
+    {
+        if (session()->has('user_id')) {
+            $file = $request->file('image');
+            $fileName = time() . $file->getClientOriginalName();;
+            $file->storeAs('uploads', $fileName);
+            $path = $file->store("public/images");
+            $imageNames = basename($path);
             $user = DB::table('users')->where('id', session()->get('user_id'))->update([
                 'first_name' => $request->first_name,
                 'last_name' => $request->last_name,
@@ -151,16 +179,51 @@ class UserAuthController extends Controller
                 'reg_status' => 1
 
             ]);
-            if($user){
+            if ($user) {
                 return response()->json([
                     'code' => 201,
                     'message' => "Account successfully updated"
                 ]);
-            }else{
-                 return response()->json([
-                        'code' => 405,
-                        'message' => "Unable to update your profile"
-                    ]);
+            } else {
+                return response()->json([
+                    'code' => 405,
+                    'message' => "Unable to update your profile"
+                ]);
+            }
+        }
+    }
+
+    function save_oranganisation(Request $req)
+    {
+        if (session()->has('uid') && (session()->get('user_type') == 'user')) {
+            $validator = Validator::make($req->all(), [
+                'image' => 'max:4000',
+            ]);
+            if ($validator->fails()) {
+                return back()->with('error', $validator->getMessageBag());
+            } else {
+
+                $file = $req->file('image');
+                $fileName = time() . $file->getClientOriginalName();;
+                $file->storeAs('uploads', $fileName);
+                $path = $file->store("public/images");
+                $imageNames = basename($path);
+
+                $data = DB::table('organisation')->insert([
+                    'organisation_name' => $req->title,
+                    'category_id' => $req->description,
+                    'description' => $req->project_type,
+                    'cover_image' => $imageNames,
+                    'website' => $req->website,
+                    'handle' => $req->handle,
+                    'status' => 1
+                ]);
+                if ($data) {
+
+                    return  redirect()->back()->with('success', "Organisation successfully created");
+                } else {
+                    return redirect()->back()->with('error', "Something went wrong! Please try again");
+                }
             }
         }
     }

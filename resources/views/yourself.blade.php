@@ -72,7 +72,7 @@
                     </div>
                     <div class="form-group">
                         <label for="email">Email Address</label>
-                        <input type="email" required id="email" class="form-control" value="{{ $data }}"
+                        <input type="email" required id="email" class="form-control" value="{{ $dt }}"
                             readonly placeholder="Enter Email">
                     </div>
                     <div class="form-group">
