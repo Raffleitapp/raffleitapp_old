@@ -14,12 +14,12 @@
         <div class="col-md-6">
             <h5 class="fw-bold mt-4">Billing Addresses</h5>
             <h6>You have not set up this type of address yet.</h6>
-            <button class="btn fw-bold">Add</button>
+            <button onclick="location.href='{{url('billaddress')}}'" class="btn fw-bold">Add</button>
         </div>
         <div class="col-md-6">
             <h5 class="fw-bold mt-4">Shipping Addresses</h5>
             <h6>You have not set up this type of address yet.</h6>
-            <button class="btn fw-bold">Add</button>
+            <button onclick="location.href='{{url('shipaddress')}}'" class="btn fw-bold">Add</button>
         </div>
     </div>
 </div>

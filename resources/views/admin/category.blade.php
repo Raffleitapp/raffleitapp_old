@@ -49,6 +49,20 @@
 
 </div>
 <div class="card p-3">
+  
+    @if (Session::has('success'))
+
+    <div class="alert alert-success text-center fw-bolder" role="alert">
+        {{Session::get('success')}}
+      </div>
+    @endif
+
+    @if (Session::has('error'))
+
+    <div class="alert alert-danger text-center fw-bolder" role="alert">
+        {{Session::get('error')}}
+      </div>
+    @endif
   <div class="row justify-between my-3">
     <div class="col-12 col-md-6">
         <h2 class="head">All Category</h2>
@@ -57,6 +71,8 @@
        <button class="btn btn-outline-success btn-sm float-end" data-bs-toggle="modal" data-bs-target="#myModal">Add New</button>
     </div>
   </div>
+
+  {{-- List all category --}}
     <div class="table-responsive my-3">
         <table class="table table-striped table-hover table-responsive">
             <thead>
@@ -69,22 +85,28 @@
                 </tr>
             </thead>
             <tbody>
+                @foreach ($data as $index => $item )
+                    
+          
                 <tr class="text-center">
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>{{$index + 1}}</td>
+                    <td>{{$item->category_name}}</td>
+                    <td> <button class='btn {{$item->category_status == 1 ? 'btn-success': 'btn-danger'}}  btn-sm'>{{$item->category_status == 1 ? 'Active': 'Deactive'}}</button></td>
                     <td class="flex justify-center">
 
-                        <span class="mx-2 text-success text-xl"><i class="bi bi-eye-fill" style="font-size:1rem"></i></span>
+                        <span  class="mx-2 text-success text-xl" id="view" data-id="{{$item->id}}"><i class="bi bi-eye-fill" style="font-size:1.3rem"></i></span>
 
                         <span class="mx-2 text-danger text-xl"><i class="bi bi-trash-fill" style="font-size:1rem"></i></span>
 
                     </td>
                 </tr>
+                @endforeach
             </tbody>
         </table>
     </div>
 
+
+    {{-- Add new category modal --}}
     <div class="modal fade" id="myModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
         <div class="modal-dialog" >
             <div class="modal-content">
@@ -98,11 +120,11 @@
                 <!-- Modal body -->
                 <div class="modal-body">
                     <div>
-                        <form id="project_type" action="#">
+                        <form id="project_type" method="POST" action="{{url('admin/addCategory')}}">
                             @csrf
                             <div class="mb-3">
                                 <label for="name">Category name</label>
-                                <input type="text" name="name" id="name" required class="form-control">
+                                <input type="text" name="category_name" id="name" required class="form-control">
                             </div>
                             <div class="mb-3">
                                 <input type="submit" class="form-control btn btn-outline-success btn-sm"
@@ -120,46 +142,53 @@
             </div>
         </div>
     </div>
+    {{-- End of modal --}}
 </div>
 <script src="{{asset("js/jquery.min.js")}}"></script>
 <script src="{{asset("js/sweetalert.js")}}"></script>
 <script>
     $(document).ready(function() {
 
-        $("#project_type").submit(function(e) {
 
-            e.preventDefault();
+        $("span#view").click(()=>{
+          let id =  $(this).attr('data-id');
+            console.log(id)
+        })
 
-            $.ajax({
-                type: "post",
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                url: "{{ url('admin/save_category') }}",
-                data: $(this).serialize(),
-                dataType: "json",
-                success: function(response) {
-                    if (response.status == 401) {
-                        Swal.fire({
-                            icon: 'error',
-                            title: response.error,
-                            showConfirmButton: false,
-                            timer: 1500
-                        })
-                        // $(".spinner-border").css("display", "none");
-                        // $(".login_btn").css("display", "block");
-                    } else {
-                        Swal.fire({
-                            icon: 'success',
-                            title: response.message,
-                            showConfirmButton: false,
-                            timer: 1000
-                        });
-                        window.location = "{{ url('admin/dashboard') }}"
-                    }
-                }
-            });
-        });
+        // $("#project_type").submit(function(e) {
+
+        //     e.preventDefault();
+
+        //     $.ajax({
+        //         type: "post",
+        //         headers: {
+        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //         },
+        //         url: "{{ url('admin/save_category') }}",
+        //         data: $(this).serialize(),
+        //         dataType: "json",
+        //         success: function(response) {
+        //             if (response.status == 401) {
+        //                 Swal.fire({
+        //                     icon: 'error',
+        //                     title: response.error,
+        //                     showConfirmButton: false,
+        //                     timer: 1500
+        //                 })
+        //                 // $(".spinner-border").css("display", "none");
+        //                 // $(".login_btn").css("display", "block");
+        //             } else {
+        //                 Swal.fire({
+        //                     icon: 'success',
+        //                     title: response.message,
+        //                     showConfirmButton: false,
+        //                     timer: 1000
+        //                 });
+        //                 window.location = "{{ url('admin/dashboard') }}"
+        //             }
+        //         }
+        //     });
+        // });
 
 
 
