@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
+    <title>@yield('title')</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,7 +20,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/bootstrap/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/header.css') }}" rel="stylesheet">
-
+    @vite(['resources/scss/app.scss'])
 </head>
 
 <body>
@@ -47,12 +47,12 @@
                 {{-- </div> --}}
                 <div class="ul">
 
-                    <div class="axcou">
+                    <div class="axcou" onclick="location.href='{{ url('user/dashboard') }}'">
                         <img src="{{ asset('img/account_circle.png') }}" alt="">
                     </div>
-                    <li class="list-item"><a class="view-btn">VIEW LIVE RAFFLES</a></li>
+                    <li class="list-item" onclick="location.href='{{ url('raffles') }}'"><a class="view-btn">VIEW LIVE RAFFLES</a></li>
 
-                    <li id="my-account" class="list-item"><a class="view-btn btn-primary">Account</a></li>
+                    <li id="my-account" onclick="location.href='{{ url('user/dashboard') }}'" class="list-item"><a class="view-btn btn-primary">Account</a></li>
 
 
                 </div>
@@ -187,7 +187,7 @@
                 </div>
             </div>
             <div class="hr"></div>
-            <p class="copy">All Right Resvered Reffleit @ 2023</p>
+            <p class="copy">All Right Resvered Reffleit @ <script>document.write(new Date().getFullYear())</script></p>
         </div>
     </footer>
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>

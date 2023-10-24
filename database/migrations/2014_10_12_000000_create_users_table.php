@@ -23,6 +23,7 @@ return new class extends Migration
             $table->text('about')->nullable();
             $table->tinyInteger('user_type')->comment('1: user, 2:admin');
             $table->tinyInteger('status')->default(0)->nullable();
+            $table->tinyInteger('reg_status')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

@@ -1,3 +1,6 @@
+
+
+
 <!doctype html>
 <html>
 
@@ -17,6 +20,15 @@
 </head>
 
 <body>
+@if(!session()->has('user_id'))
+    @php
+        return redirect('/login');
+    @endphp
+@elseif(session()->get('user_type') == 'admin')
+    @php
+        return redirect('admin/dashboard');
+    @endphp
+@endif
     <header>
         <nav class="header-bar">
             <div class="site-logo">
@@ -24,34 +36,37 @@
             </div>
             {{-- <div class="align-items-center"> --}}
 
-            <div class="conta">
-                <div class="ul">
-                    <li class="list-item" onclick="location.href='{{ url('/') }}'"><a>HOME</a></li>
-                    <span class="vl"></span>
-                    <li class="list-item" onclick="location.href='{{url('about') }}'"><a>ABOUT </a></li>
-                    <span class="vl"></span>
+                <div class="conta">
+                    <div class="ul">
+                        <li class="list-item" onclick="location.href='{{ url('/') }}'"><a>HOME</a></li>
+                        <span class="vl"></span>
+                        <li class="list-item" onclick="location.href='{{url('about') }}'"><a>ABOUT </a></li>
+                        <span class="vl"></span>
 
-                    <li class="list-item" onclick="location.href='{{ url('howitworks')}}'"><a>HOW IT WORKS</a></li>
-                    <span class="vl"></span>
-                    <li class="list-item"><a>CONTACT</a></li>
-                </div>
-                {{-- </div> --}}
-                <div class="ul">
+                        <li class="list-item" onclick="location.href='{{ url('howitworks') }}'"><a>HOW IT WORKS</a></li>
+                        <span class="vl"></span>
+                        <li class="list-item" onclick="location.href='{{ url('contact') }}'"><a>CONTACT</a></li>
 
-                    <div class="axcou">
-                        <img src="{{ asset('img/account_circle.png') }}" alt="">
+
                     </div>
-                    <li class="list-item"><a class="view-btn">VIEW LIVE RAFFLES</a></li>
+                    {{-- </div> --}}
+                    <div class="ul">
 
-                    <li id="my-account" class="list-item"><a class="view-btn btn-primary">Account</a></li>
+                        <div class="axcou" onclick="location.href='{{ url('user/dashboard') }}'">
+                            <img src="{{ asset('img/account_circle.png') }}" alt="">
+                        </div>
+                        <li class="list-item"><a class="view-btn">VIEW LIVE RAFFLES</a></li>
+
+                        <li id="my-account" class="list-item"><a class="view-btn btn-primary">Account</a></li>
 
 
+                    </div>
                 </div>
-            </div>
 
-            <div class="toggle">
-                <i class="bi bi-list"></i>
-            </div>
+                <div class="toggle">
+                    <i class="bi bi-list"></i>
+                </div>
+
         </nav>
     </header>
     <div class="container">
@@ -69,8 +84,8 @@
 
                     <li class="sidebar-item"><a href="#">Addresses</a></li>
                     <li class="sidebar-item"><a href="{{ url('accdetails')}}">Account Details</a></li>
-                    <li class="sidebar-item"><a href="#">Payment Method</a></li>
-                    <li class="sidebar-item"><a href="{{ url('logout')}}">Logout</a></li>
+                    <li class="sidebar-item" onclick="location.href='{{url('logout')}}'"><a href="jaavscript:void(0)">Payment Method</a></li>
+                    <li class="sidebar-item" onclick="location.href='{{url('logout')}}'"><a href="javascript:void(0)">Logout</a href="javascript:void"></li>
                 </div>
             </div>
             <div class="col-md-9 mb-2">

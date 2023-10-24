@@ -24,7 +24,7 @@
         <p class="text">Raffleit provides opportunities to raise funds for business, non-profit organization or even to
             give persons a wide range of opportunity to raffle items or own items once you have taken part in the
             raffle. </p>
-        <a href="" class="btn view-btn">HOW IT WORKS</a>
+        <a href="{{url('/howitworks')}}" class="btn view-btn">HOW IT WORKS</a>
     </div>
 </div>
 <div class="">
@@ -71,7 +71,7 @@
                         </div>
                     </div>
                 </div>
-                <a class="btn btn-success view-btn text-uppercase">Learn More</a>
+                <a href="{{url('howitworks')}}" class="btn btn-success view-btn text-uppercase">Learn More</a>
             </div>
         </div>
     </div>
@@ -418,7 +418,7 @@
         </div>
     </div>
 
-    <button class="btn-icon mx-auto">Start Raffling Today <span class="ml-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+    <button class="btn-icon mx-auto" onclick="location.href='{{ url('raffles') }}'">Start Raffling Today <span class="ml-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                 <path d="M2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2C6.48 2 2 6.48 2 12ZM11.71 8.21L14.79 11.29C15.18 11.68 15.18 12.31 14.79 12.71L11.71 15.79C11.32 16.18 10.68 16.18 10.29 15.79C9.9 15.4 9.9 14.77 10.29 14.38L12.67 12L10.29 9.62C9.9 9.23 9.9 8.6 10.29 8.21C10.68 7.82 11.32 7.82 11.71 8.21Z" fill="#215273" />
             </svg></span></button>
 </div>
@@ -490,11 +490,11 @@
     <div class="flex justify-center py-4 px-3">
         <div class="flex mx-auto">
 
-            <button class="btn-icon md:mx-3 ">Start Raffling Today <span class="ml-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <button class="btn-icon md:mx-3" onclick="location.href='{{ url('raffles') }}'">Start Raffling Today <span class="ml-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                         <path d="M2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2C6.48 2 2 6.48 2 12ZM11.71 8.21L14.79 11.29C15.18 11.68 15.18 12.31 14.79 12.71L11.71 15.79C11.32 16.18 10.68 16.18 10.29 15.79C9.9 15.4 9.9 14.77 10.29 14.38L12.67 12L10.29 9.62C9.9 9.23 9.9 8.6 10.29 8.21C10.68 7.82 11.32 7.82 11.71 8.21Z" fill="#215273" />
                     </svg></span></button>
 
-            <button class="btn-icon ml-2 white">Create Raffle <span class="ml-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <button class="btn-icon ml-2 white" onclick="location.href='{{ url('user/create_step') }}'">Create Raffle <span class="ml-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                         <path d="M2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2C6.48 2 2 6.48 2 12ZM11.71 8.21L14.79 11.29C15.18 11.68 15.18 12.31 14.79 12.71L11.71 15.79C11.32 16.18 10.68 16.18 10.29 15.79C9.9 15.4 9.9 14.77 10.29 14.38L12.67 12L10.29 9.62C9.9 9.23 9.9 8.6 10.29 8.21C10.68 7.82 11.32 7.82 11.71 8.21Z" fill="#215273" />
                     </svg></span></button>
 
