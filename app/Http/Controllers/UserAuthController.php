@@ -61,6 +61,21 @@ class UserAuthController extends Controller
     }
 
 
+     function address()
+    {
+        if (session()->has('user_id') && (session()->get('user_type') == 'user')) {
+            $data = DB::table('users')->where('id', session()->get('user_id'))->exists();
+            if ($data) {
+                return view('addresses');
+            } else {
+                session()->flush();
+                return redirect('/login');
+            }
+        } else {
+            return redirect('/login');
+        }
+    }
+
     function createAccount(Request $request)
     {
         $check = DB::table("users")->where("email", $request->email)->exists();

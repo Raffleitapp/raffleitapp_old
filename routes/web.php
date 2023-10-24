@@ -93,6 +93,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('users', [AdminRouteController::class,'users'])->name('admin.users');
     Route::get('admins', [AdminRouteController::class,'admins'])->name('admin.admins');
     Route::get('category', [AdminRouteController::class,'category'])->name('admin.category');
+    Route::post('addCategory',[AdminRouteController::class, 'saveCategory']);
 
 
 });
@@ -102,6 +103,7 @@ Route::group(['prefix' => 'user'], function(){
     Route::get('create_step',[UserAuthController::class,'walkthrough'])->name('user.create_step');
     Route::get('choose_organisation',[UserAuthController::class,'chooseOrganisation'])->name('user.choose_organisation');
     Route::post('admin/save_organisation', [UserAuthController::class, 'save_organisation']);
+    Route::get('addresses', [UserAuthController::class, 'address']);
 
 
 });
