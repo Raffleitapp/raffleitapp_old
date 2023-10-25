@@ -212,7 +212,7 @@
     </div>
 </div>
 
-<div class="container-fluid md:px-4">
+<div class="container md:px-4">
     <h3 class="top-head">Join Live <span>Raffle</span></h3>
     <div class="top-filter-dash">
         <div class="head">
@@ -237,7 +237,7 @@
 
     <div class="card-itemhj my-3 md:p-3 ">
         <div class="flex justify-between align-items-center">
-            <h5 class="search-text">Showing 1–9 of 55 raffles</h5>
+            <h5 class="search-text">Showing 1-9 of 55 raffles</h5>
             <h6>
                 <select name="" id="">
                     <option value="">Sort by popularity</option>

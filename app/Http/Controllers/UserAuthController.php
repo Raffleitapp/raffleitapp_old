@@ -11,7 +11,7 @@ class UserAuthController extends Controller
 {
     function dashboard()
     {
-   
+
         if (session()->has('user_id') && (session()->get('user_type') == 'user')) {
             $data = DB::table('users')->where('id', session()->get('user_id'))->exists();
             if ($data) {
@@ -28,6 +28,7 @@ class UserAuthController extends Controller
             return redirect('/login');
         }
     }
+
     function walkThrough()
     {
         if (session()->has('user_id') && (session()->get('user_type') == 'user')) {
@@ -61,7 +62,7 @@ class UserAuthController extends Controller
     }
 
 
-     function address()
+    function address()
     {
         if (session()->has('user_id') && (session()->get('user_type') == 'user')) {
             $data = DB::table('users')->where('id', session()->get('user_id'))->exists();
@@ -167,7 +168,7 @@ class UserAuthController extends Controller
             if ($data->exists()) {
                 $datas = $data->first();
                 $dt = $datas->email;
-                
+
                 return view('yourself', get_defined_vars());
             } else {
                 return redirect('/login');
@@ -239,6 +240,48 @@ class UserAuthController extends Controller
                 } else {
                     return redirect()->back()->with('error', "Something went wrong! Please try again");
                 }
+            }
+        }
+    }
+
+    public function billAddress(Request $request)
+    {
+        //check the authentication user
+        if (session()->has('user_id') && session()->get('user_type') == 'user') {
+            $validator = Validator::make($request->all(), [
+                'first_name' => 'required',
+                'last_name' => 'required',
+                'company_name' => 'required',
+                'region' => 'required',
+                'streetname' => 'required',
+                'town' => 'required',
+                'phone_number' => 'required',
+                'email' => 'required',
+                'zipcode' => 'required'
+            ]);
+
+            if ($validator->fails()) {
+                return back()->with('error', "All fields are required");
+            }
+
+            $data = DB::table('billaddress')->insert([
+                'first_name' => $request->category_name,
+                'last_name' => $request->last_name,
+                'company_name' => $request->company_name,
+                'region'=> $request->region,
+                'zipcode'=> $request->zipcode,
+                'town'=> $request->town,
+                'country'=> $request->country,
+                'email'=> $request->email,
+                'phone_number'=> $request->phone_number,
+                'apartment' => $request->apartment,
+                'street_name'=> $request->street_name,
+            ]);
+
+            if ($data) {
+                return redirect()->back()->with('success', 'Bill address added successfully');
+            } else {
+                return redirect()->back()->with('error', 'Something went wrong');
             }
         }
     }

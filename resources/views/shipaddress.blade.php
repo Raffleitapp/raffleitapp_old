@@ -1,6 +1,7 @@
 @extends('layouts.dashlayout')
 @section('title', 'Account Details')
 @section('content')
+<meta name="csrf-token" content="{{ csrf_token() }}" />
 
 <style>
     label {
