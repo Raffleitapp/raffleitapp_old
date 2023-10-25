@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\UserAuthController;
+use App\Http\Controllers\UserController;
 // Route::get("/", [AdminRouteController::class,"index"])->name("index");
 /*
 |--------------------------------------------------------------------------
@@ -58,9 +59,9 @@ Route::get('billaddress', function () {
     return view('billaddress');
 });
 
-Route::post('billaddress', function () {
-    return view('billaddress');
-});
+// Route::post('billaddress', function () {
+//     return view('billaddress');
+// });
 
 Route::get('shipaddress', function () {
     return view('shipaddress');

@@ -12,7 +12,7 @@
 <div class="regform p-3">
     <h5 class="fw-bold h5">Billing address</h5>
     <div class="card p-3 shadow">
-        <div class="form" id="project_type" method="POST" action="{{url('user/billAddress')}}">
+        <div class="form" id="project_type" method="POST" action="{{url('user/billaddress')}}">
             @csrf
             <div class="row">
                 <div class="form-group col-md-6">

@@ -268,18 +268,55 @@ class UserAuthController extends Controller
                 'first_name' => $request->category_name,
                 'last_name' => $request->last_name,
                 'company_name' => $request->company_name,
-                'region'=> $request->region,
-                'zipcode'=> $request->zipcode,
-                'town'=> $request->town,
-                'country'=> $request->country,
-                'email'=> $request->email,
-                'phone_number'=> $request->phone_number,
+                'region' => $request->region,
+                'zipcode' => $request->zipcode,
+                'town' => $request->town,
+                'country' => $request->country,
+                'email' => $request->email,
+                'phone_number' => $request->phone_number,
                 'apartment' => $request->apartment,
-                'street_name'=> $request->street_name,
+                'street_name' => $request->street_name,
             ]);
 
             if ($data) {
                 return redirect()->back()->with('success', 'Bill address added successfully');
+            } else {
+                return redirect()->back()->with('error', 'Something went wrong');
+            }
+        }
+    }
+    public function shipAddress(Request $request)
+    {
+        //check the authentication user
+        if (session()->has('user_id') && session()->get('user_type') == 'user') {
+            $validator = Validator::make($request->all(), [
+                'first_name' => 'required',
+                'last_name' => 'required',
+                'company_name' => 'required',
+                'region' => 'required',
+                'street_adress' => 'required',
+                'town' => 'required',
+                'zipcode' => 'required'
+            ]);
+
+            if ($validator->fails()) {
+                return back()->with('error', "All fields are required");
+            }
+
+            $data = DB::table('billaddress')->insert([
+                'first_name' => $request->category_name,
+                'last_name' => $request->last_name,
+                'company_name' => $request->company_name,
+                'region' => $request->region,
+                'zipcode' => $request->zipcode,
+                'town' => $request->town,
+                'street_address' => $request->country,
+                'apartment' => $request->apartment,
+                'country' => $request->country
+            ]);
+
+            if ($data) {
+                return redirect()->back()->with('success', 'Shipping address added successfully');
             } else {
                 return redirect()->back()->with('error', 'Something went wrong');
             }
