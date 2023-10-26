@@ -10,7 +10,7 @@
 
 <div class="regform p-3">
     <div class="card p-3 shadow">
-        <div class="form">
+        <form class="form">
             <div class="row">
                 <div class="form-group col-md-6">
                     <label for="">First Name</label>
@@ -43,7 +43,7 @@
                 <input type="password" required id="password" class="form-control" placeholder="Email Address">
             </div>
             <button class="btn">Save Changes</button>
-        </div>
+        </form>
     </div>
 </div>
 @endsection

@@ -100,12 +100,16 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('addCategory', [AdminRouteController::class, 'saveCategory']);
 });
 
+
 Route::group(['prefix' => 'user'], function () {
     Route::get('dashboard', [UserAuthController::class, 'dashboard'])->name('user.dashboard');
     Route::get('create_step', [UserAuthController::class, 'walkthrough'])->name('user.create_step');
     Route::get('choose_organisation', [UserAuthController::class, 'chooseOrganisation'])->name('user.choose_organisation');
     Route::post('admin/save_organisation', [UserAuthController::class, 'save_organisation']);
     Route::get('addresses', [UserAuthController::class, 'address']);
-    Route::post('billaddress', [UserAuthController::class, 'billAddress']);
-
+    Route::post('billAddress', [UserAuthController::class, 'billAddress'])->name('user.billaddress');
+    // Route::get('billAddress', [UserAuthController::class, 'billAddress'])->name('user.billaddress');
+    Route::post('shipAddress', [UserAuthController::class, 'shipAddress'])->name('user.shipaddress'); // Modified route for shipaddress
+    // Route::get('shipAddress', [UserAuthController::class, 'shipAddress'])->name('user.shipaddress'); // Modified route for shipaddress
 });
+

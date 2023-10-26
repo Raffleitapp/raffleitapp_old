@@ -246,18 +246,18 @@ class UserAuthController extends Controller
 
     public function billAddress(Request $request)
     {
-        //check the authentication user
+        // Check the authentication user
         if (session()->has('user_id') && session()->get('user_type') == 'user') {
             $validator = Validator::make($request->all(), [
                 'first_name' => 'required',
                 'last_name' => 'required',
                 'company_name' => 'required',
                 'region' => 'required',
-                'streetname' => 'required',
+                'street_name' => 'required',
                 'town' => 'required',
                 'phone_number' => 'required',
                 'email' => 'required',
-                'zipcode' => 'required'
+                'zipcode' => 'required',
             ]);
 
             if ($validator->fails()) {
@@ -265,54 +265,55 @@ class UserAuthController extends Controller
             }
 
             $data = DB::table('billaddress')->insert([
-                'first_name' => $request->category_name,
-                'last_name' => $request->last_name,
-                'company_name' => $request->company_name,
-                'region' => $request->region,
-                'zipcode' => $request->zipcode,
-                'town' => $request->town,
-                'country' => $request->country,
-                'email' => $request->email,
-                'phone_number' => $request->phone_number,
-                'apartment' => $request->apartment,
-                'street_name' => $request->street_name,
+                'first_name' => $request->input('first_name'),
+                'last_name' => $request->input('last_name'),
+                'company_name' => $request->input('company_name'),
+                'region' => $request->input('region'),
+                'zipcode' => $request->input('zipcode'),
+                'town' => $request->input('town'),
+                'country' => $request->input('country'),
+                'email' => $request->input('email'),
+                'phone_number' => $request->input('phone_number'),
+                'apartment' => $request->input('apartment'),
+                'street_name' => $request->input('street_name'),
             ]);
 
             if ($data) {
-                return redirect()->back()->with('success', 'Bill address added successfully');
+                return redirect()->back()->with('success', 'Billing address added successfully');
             } else {
                 return redirect()->back()->with('error', 'Something went wrong');
             }
         }
     }
+
     public function shipAddress(Request $request)
     {
-        //check the authentication user
+        // Check the authentication user
         if (session()->has('user_id') && session()->get('user_type') == 'user') {
             $validator = Validator::make($request->all(), [
                 'first_name' => 'required',
                 'last_name' => 'required',
                 'company_name' => 'required',
                 'region' => 'required',
-                'street_adress' => 'required',
+                'street_address' => 'required',
                 'town' => 'required',
                 'zipcode' => 'required'
             ]);
 
             if ($validator->fails()) {
-                return back()->with('error', "All fields are required");
+                return back()->with('error', 'All fields are required');
             }
 
-            $data = DB::table('billaddress')->insert([
-                'first_name' => $request->category_name,
-                'last_name' => $request->last_name,
-                'company_name' => $request->company_name,
-                'region' => $request->region,
-                'zipcode' => $request->zipcode,
-                'town' => $request->town,
-                'street_address' => $request->country,
-                'apartment' => $request->apartment,
-                'country' => $request->country
+            $data = DB::table('shipaddress')->insert([
+                'first_name' => $request->input('first_name'),
+                'last_name' => $request->input('last_name'),
+                'company_name' => $request->input('company_name'),
+                'region' => $request->input('region'),
+                'zipcode' => $request->input('zipcode'),
+                'town' => $request->input('town'),
+                'street_address' => $request->input('street_address'),
+                'apartment' => $request->input('apartment'),
+                'country' => $request->input('country')
             ]);
 
             if ($data) {
