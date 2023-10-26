@@ -125,6 +125,7 @@ div.vl {
         }
     }
 }
+
 .container-fluid {
     display: flex;
     justify-content: center;
@@ -209,7 +210,7 @@ div.vl {
             }
         }
 
-     
+
     }
 }
 
@@ -228,4 +229,307 @@ div.vl {
     line-height: 140%;
     border: none;
     outline: none;
+}
+
+
+.card-organ {
+    border-radius: 12px;
+    border: 2px solid #bebebe;
+    // padding: 10px;
+    width: 100%;
+    // min-height: 250px;
+    background-color: #215273;
+    color: white;
+    max-height: 350px;
+    max-width: 250px;
+
+    .img {
+        height: 70px;
+        width: 100%;
+        overflow: hidden;
+
+        img {
+            height: 100%;
+            width: 100%;
+        }
+    }
+
+    .title {
+        padding: 10px;
+
+        h3 {
+            font-size: 16px;
+            font-weight: 700;
+
+        }
+
+        p {
+            font-size: 12px;
+            width: 200px;
+            /* Set a fixed width for the container */
+            white-space: nowrap;
+            /* Prevent text from wrapping */
+            overflow: hidden;
+            /* Hide the overflowed text */
+            text-overflow: ellipsis;
+            line-height: 100%;
+            margin-top: -4px;
+        }
+    }
+}
+
+
+.card-organ:hover,
+.card-organs {
+    background-color: #55C595;
+    color: white;
+}
+
+
+.creat-raffle-container {
+    display: flex;
+    justify-content: center;
+
+    .raffle-form-card {
+        padding: 20px 12px;
+        max-width: 700px;
+        width: 100%;
+
+        h6.heading {
+            color: var(--Primary-Color, #215273);
+            text-align: center;
+            font-family: Prompt;
+            font-size: 34px;
+            font-style: normal;
+            font-weight: 900;
+            line-height: 96.5%;
+        }
+
+        h6.step {
+            color: var(--Body-text-color, #303030);
+            /* H5 Bold */
+            font-family: Poppins;
+            font-size: 13px;
+            font-style: normal;
+            font-weight: 700;
+            text-align: center;
+            line-height: 140%;
+        }
+
+        .form-card {
+            border-radius: 10px;
+            border: 1px solid var(--Primary-Color, #215273);
+            box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.25);
+            padding: 12px 20px;
+
+            form {
+                padding: 12px 20px;
+
+                .form-group {
+                    margin: 12px 0px;
+
+                    .gri {
+                        display: grid;
+                        grid-template-columns: repeat(auto-fill, minmax(120px, auto));
+                        grid-gap: 10px;
+                        justify-content: center;
+                        align-items: center;
+                    }
+
+                    label {
+                        color: var(--Body-text-color, #303030);
+                        /* H5 Bold */
+                        font-family: Poppins;
+                        font-size: 13px;
+                        font-style: normal;
+                        font-weight: 700;
+                        line-height: 140%;
+                    }
+
+                    .custom-form-control {
+                        width: 100%;
+                        border-radius: 10px;
+                        border: 1px solid var(--Primary-Color, #215273);
+                        background: #FFF;
+                        padding: 12px;
+
+                        &::placeholder {
+                            color: var(--Body-text-color, #303030);
+                            /* H5 */
+                            font-family: Poppins;
+                            font-size: 13px;
+                            font-style: normal;
+                            font-weight: 400;
+                            line-height: 140%;
+                        }
+                    }
+
+                    .price-section {
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        max-width: 300px;
+                        margin: 12px 0px;
+
+                        .price-insert {
+                            border-radius: 10px;
+                            border: 1px solid var(--Primary-Color, #215273);
+                            width: 120px;
+                            height: 50px;
+                            display: flex;
+                            align-items: center;
+                            overflow: hidden;
+
+                            span {
+                                width: 15%;
+                                font-size: 18px;
+                                text-align: center;
+
+                                color: white;
+                                height: 100%;
+                                font-weight: 800;
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+
+                                &:first-child {
+                                    background-color: #ec0b0b;
+                                }
+
+                                &:last-child {
+                                    background-color: #55C595;
+                                }
+                            }
+
+                            input {
+                                width: 70%;
+                                height: 100%;
+                                border: none;
+                                outline: none;
+                                font-size: 14px;
+                                font-weight: 600;
+                                text-align: center;
+                            }
+
+                            /* For Webkit (Chrome, Safari) */
+                            input[type="number"]::-webkit-inner-spin-button,
+                            input[type="number"]::-webkit-outer-spin-button {
+                                -webkit-appearance: none;
+                                margin: 0;
+                            }
+
+                            /* For Firefox */
+                            input[type="number"] {
+                                -moz-appearance: textfield;
+                            }
+                        }
+
+                        .fo {
+                            display: flex;
+                            align-items: center;
+
+                            p {
+                                color: var(--Body-text-color, #303030);
+                                /* H4 Bold */
+                                font-family: Poppins;
+                                font-size: 18px;
+                                font-style: normal;
+                                font-weight: 700;
+                                line-height: 140%;
+                            }
+                        }
+
+                        .price-label {
+                            height: 50px;
+                            width: 100px;
+                            border-radius: 10px;
+                            padding: 8px;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            border: 1px solid var(--Primary-Color, #215273);
+
+                            color: var(--Body-text-color, #303030);
+                            /* H5 Bold */
+                            font-family: Poppins;
+                            font-size: 12px;
+                            font-style: normal;
+                            font-weight: 700;
+                            line-height: 140%;
+
+                            p {}
+                        }
+                    }
+
+                    #image-container {
+                        border-radius: 20px;
+                        background: #D9D9D9;
+                        height: 120px;
+                        width: 120px;
+                        overflow: hidden;
+
+                        img {
+                            height: 100%;
+                            width: 100%;
+                            object-fit: cover;
+                            object-position: center;
+                        }
+                    }
+
+                    p.text {
+                        color: var(--text-primary-70000000, rgba(0, 0, 0, 0.70));
+                        /* H5 */
+                        font-family: Poppins;
+                        font-size: 13px;
+                        font-style: normal;
+                        font-weight: 400;
+                        line-height: 140%;
+                    }
+                }
+            }
+
+            .submit-raffle {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                border-radius: 10px;
+                background: var(--Button-Color, #55C595);
+                padding: 12px;
+                color: #FFF;
+
+                font-family: Poppins;
+                font-size: 12px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: 140%;
+                outline: none;
+                border: none;
+            }
+
+        }
+    }
+}
+
+
+@media screen and (max-width: 660px) {
+    .form-card {
+        .form-group {
+            .row {
+                overflow-x: scroll !important;
+                display: flex !important;
+                gap: 10px;
+                width: 100%;
+
+                .col-3 {
+                    #image-container {
+                        margin: 0px 12px;
+
+                    }
+
+                    margin: 0px 12px;
+                }
+            }
+        }
+    }
+
 }

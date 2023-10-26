@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('user_id');
             $table->bigInteger('organisation_id');
+            $table->bigInteger('fundraising_id');
             $table->string('host_name');
             $table->longText('description');
             $table->string('image1')->nullable();

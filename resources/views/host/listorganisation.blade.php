@@ -1,6 +1,7 @@
 @extends('layouts/master')
 @section('title', 'Create Raffle')
 @section('content')
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     @vite(['resources/scss/app.scss'])
     <style>
         .top-bg {
@@ -44,22 +45,23 @@
             z-index: 1;
         }
 
-        .img-head{
+        .img-head {
             color: var(--Body-text-color, #303030);
-font-family: Poppins;
-font-size: 18px;
-font-style: normal;
-font-weight: 700;
-line-height: 140%;
+            font-family: Poppins;
+            font-size: 18px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 140%;
         }
-        .img-text{
+
+        .img-text {
             color: var(--text-primary-70000000, rgba(0, 0, 0, 0.70));
-/* H5 */
-font-family: Poppins;
-font-size: 13px;
-font-style: normal;
-font-weight: 400;
-line-height: 140%;
+            /* H5 */
+            font-family: Poppins;
+            font-size: 13px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 140%;
         }
     </style>
     <div class="top-bg">
@@ -92,19 +94,20 @@ line-height: 140%;
             </div>
         </div>
     </div>
-    <div class="container-fluid ">
-        <div class="custom-cards">
+    <div class="container p-3">
+        <div class="custom-cards ">
             @if (Session::has('success'))
                 <div class="alert alert-success text-center">{{ Session::get('success') }}</div>
             @endif
             @if (Session::has('error'))
                 <div class="alert alert-danger text-center">{{ Session::get('error') }}</div>
             @endif
-            <div class="row justify-between">
+            <div class="row justify-between my-3">
                 <div class="col-6">
                     <h3 class="head">List of Organisation</h3>
 
                 </div>
+
                 <div class="col-6">
                     <div class="mx-auto">
                         <button class="btn float-end btn-outline-success" data-bs-toggle="modal"
@@ -113,41 +116,44 @@ line-height: 140%;
                     </div>
                 </div>
             </div>
-            <div class="row justify-center g-3">
-                <div class="col-12 col-md-4">
-                    <div class="card-organ">
+            <div class="row justify-content-center g-3">
+                @if (count($categoryData) < 1)
+                    <p class="text-center text-sm text-muted">No organisation yet, click on add new to creat an organisation
+                    </p>
+                @endif
 
-                        <div class="title">
-                            <h3>Setup Your Organization</h3>
-                            <p>Inform us about your organization. Setup information for your raffle Step 3 is where.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-4">
-                    <div class="card-organ">
+                @if (count($categoryData) > 0)
+                    @foreach ($categoryData as $item)
+                        <div class="col-12 sm:col-12 col-md-4">
+                            <div class="card-organ" id="organisation_select{{$item->id}}"
+                                onclick="location.href='{{url('user/createfundraise/'.$item->id)}}'" data-id="{{ $item->id }}">
+                                @if ($item->cover_image != null)
+                                    <div class="img text-center">
+                                        <img src="{{ asset('storage/images/' . $item->cover_image) }}" alt="">
+                                    </div>
+                                @endif
 
-                        <div class="title">
-                            <h3>Setup Your Organization</h3>
-                            <p>Inform us about your organization. Setup information for your raffle Step 3 is where.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-4">
-                    <div class="card-organ">
+                                <div class="title">
+                                    <h3>{{ $item->organisation_name }}</h3>
+                                    <p>{{ $item->description }}</p>
+                                    <p>{{ $item->handle }}</p>
+                                    <p>{{ $item->website }}</p>
 
-                        <div class="title">
-                            <h3>Setup Your Organization</h3>
-                            <p>Inform us about your organization. Setup information for your raffle Step 3 is where.</p>
+                                </div>
+
+                            </div>
                         </div>
-                    </div>
-                </div>
+                    @endforeach
+
+                @endif
 
             </div>
-            <div class="my-3 mx-auto p-2 flex justify-center">
-                <button onclick="location.href='{{ url('/choose_organisation') }}'" class="proceed">Proceed</button>
+            {{-- <div class="my-3 mx-auto p-2 flex justify-center">
+                <button id="organ_next" class="proceed">Proceed</button>
 
-            </div>
+            </div> --}}
         </div>
+
         {{-- Modal --}}
         <div class="modal fade " id="exampleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
             aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -163,7 +169,7 @@ line-height: 140%;
                         <div class="regform p-3">
 
                             <div class="cardi p-3">
-                                <form id="create-organ">
+                                <form id="create-organ" enctype="multipart/form-data" method="POST">
                                     <div class="form-group mb-3">
                                         <div class="row">
                                             <div class="col-12 col-md-9">
@@ -181,16 +187,24 @@ line-height: 140%;
                                     <div class="form-group mb-3">
                                         <label for="nickname">Organization Name
                                         </label>
-                                        <input type="text" required id="nickname" name="orgnization_name"
+                                        <input type="text" required id="nickname" name="organisation_name"
                                             class="form-control" placeholder="Organization Name">
                                     </div>
+                                    @php
+                                        $categoryData = DB::table('category')
+                                            ->where('category_status', 1)
+                                            ->get();
+                                    @endphp
                                     <div class="form-group mb-3">
                                         <label for="exampleInputEmail1">Category</label>
-                                        <select class="form-select" require name="category"
+                                        <select class="form-select" require name="category_id"
                                             aria-label="Default select example">
-                                            <option selected>Education</option>
-                                            <option>Charity</option>
-                                            <option>Fundraisers</option>
+                                            <option value="">Choose one</option>
+                                            @foreach ($categoryData as $item)
+                                                <option value="{{ $item->id }}">{{ $item->category_name }}</option>
+                                            @endforeach
+                                            <option value="0">Others</option>
+
                                         </select>
                                     </div>
 
@@ -207,11 +221,16 @@ line-height: 140%;
                                         </div>
                                         <div class="form-group mb-3">
                                             <label for="description">Description</label>
-                                            <textarea type="text" required id="" class="form-control" cols="5" rows="5"
+                                            <textarea type="text" name="description" class="form-control" cols="5" rows="5"
                                                 placeholder="Write something..."></textarea>
                                         </div>
-                                      
-                                        <button type="submit" class="btn proceed">Create</button>
+
+                                        <button type="submit" class="btn proceed login_btn">Create</button>
+                                        <div class="d-flex spin justify-content-center">
+                                            <div class="spinner-border text-primary" role="status">
+                                                <span class="">...</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </form>
                             </div>
@@ -226,11 +245,13 @@ line-height: 140%;
         <script src="{{ asset('js/alert.js') }}"></script>
         <script>
             $(document).ready(function() {
+                let selected;
                 $('#clickable-image').on('click', function() {
                     $('#image-input').click();
                 });
                 let image;
-
+                $(".spinner-border").css("display", "none");
+                $(".login_btn").css("display", "block");
                 $('#image-input').on('change', function() {
                     var file = this.files[0];
                     if (file) {
@@ -242,6 +263,22 @@ line-height: 140%;
                     }
                     image = this.files[0];
                 });
+
+                // $("div#organisation_select").click((e) => {
+                //     const id = $('div#organisation_select').data('id');
+                //     console.log(e)
+                //     selected = id;
+                //     $(this).addClass("card-organs");
+                // })
+
+                function changeSelectedOrgan(id) {
+                    selected = id;
+                    $("div#organisation_select" + id).addClass("card-organs")
+                }
+
+
+
+
             });
         </script>
     </div>

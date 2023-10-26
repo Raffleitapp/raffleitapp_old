@@ -192,7 +192,8 @@ div.j .row .col-6 .pre-work p.text {
 
 .raffle-card .img {
     height: 140px;
-    width: 25%;
+    width: 40%;
+    border-radius: 10px;
     overflow: hidden;
 }
 
@@ -237,15 +238,15 @@ div.j .row .col-6 .pre-work p.text {
     color: var(--Body-text-color, #303030);
     /* H5 Bold */
     font-family: Poppins;
-    font-size: 14px;
+    font-size: 10px;
     font-style: normal;
     font-weight: 700;
     line-height: 140%;
 }
 
-/* .raffle-card .last {
-    width:
-} */
+.raffle-card .last {
+    align-items: end;
+}
 
 .raffle-card .last span {
     /* text-align: right; */

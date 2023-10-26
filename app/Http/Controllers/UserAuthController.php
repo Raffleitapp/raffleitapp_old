@@ -11,11 +11,12 @@ class UserAuthController extends Controller
 {
     function dashboard()
     {
-   
+
         if (session()->has('user_id') && (session()->get('user_type') == 'user')) {
             $data = DB::table('users')->where('id', session()->get('user_id'))->exists();
             if ($data) {
-                return view('dashboard');
+                $getUser = DB::table('users')->where('id', session()->get('user_id'))->first();
+                return view('dashboard', compact('getUser'));
             } else {
                 //to clear all the session already stored
                 session()->flush();
@@ -50,7 +51,9 @@ class UserAuthController extends Controller
         if (session()->has('user_id') && (session()->get('user_type') == 'user')) {
             $data = DB::table('users')->where('id', session()->get('user_id'))->exists();
             if ($data) {
-                return view('host.listorganisation');
+                $categoryData = DB::table('organisation')->where('user_id', session()->get('user_id'))->get();
+
+                return view('host.listorganisation', compact('categoryData'));
             } else {
                 session()->flush();
                 return redirect('/login');
@@ -61,7 +64,7 @@ class UserAuthController extends Controller
     }
 
 
-     function address()
+    function address()
     {
         if (session()->has('user_id') && (session()->get('user_type') == 'user')) {
             $data = DB::table('users')->where('id', session()->get('user_id'))->exists();
@@ -72,6 +75,7 @@ class UserAuthController extends Controller
                 return redirect('/login');
             }
         } else {
+            session().flush();
             return redirect('/login');
         }
     }
@@ -167,7 +171,7 @@ class UserAuthController extends Controller
             if ($data->exists()) {
                 $datas = $data->first();
                 $dt = $datas->email;
-                
+
                 return view('yourself', get_defined_vars());
             } else {
                 return redirect('/login');
@@ -239,6 +243,155 @@ class UserAuthController extends Controller
                 } else {
                     return redirect()->back()->with('error', "Something went wrong! Please try again");
                 }
+            }
+        }
+    }
+
+
+    public function save_organisation(Request $request)
+    {
+        //check the authentication user
+        if (session()->has('user_id') && session()->get('user_type') == 'user') {
+            $validator = Validator::make($request->all(), [
+                'category_id' => 'required',
+                'organisation_name' => 'required',
+
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'code' => 405,
+                    'message' => $validator->errors()
+                ]);
+            }
+
+            if ($request->has('image')) {
+                $file = $request->file('image');
+                $fileName = time() . $file->getClientOriginalName();;
+                $file->storeAs('uploads', $fileName);
+                $path = $file->store("public/images");
+                $imageNames = basename($path);
+                $data = DB::table('organisation')->insert([
+                    'category_id' => $request->category_id,
+                    'organisation_name' => $request->organisation_name,
+                    'cover_image' => $imageNames,
+                    'user_id' => session()->get('user_id'),
+                    'handle' => $request->handle,
+                    'website' => $request->website,
+                    'description' => $request->description,
+                    'status' => 1
+                ]);
+
+                if ($data) {
+                    return response()->json([
+                        'code' => 201,
+                        'message' => 'Organisation created successfully'
+                    ]);
+                } else {
+                    return response()->json([
+                        'code' => 405,
+                        'message' => 'Unable to create organisation'
+                    ]);
+                }
+            }
+            $data = DB::table('organisation')->insert([
+                'category_id' => $request->category_id,
+                'organisation_name' => $request->organisation_name,
+                'cover_image' => '',
+                'user_id' => session()->get('user_id'),
+                'handle' => $request->handle,
+                'website' => $request->website,
+                'description' => $request->description,
+                'status' => 1
+            ]);
+
+            if ($data) {
+                return response()->json([
+                    'code' => 201,
+                    'message' => 'Organisation created successfully'
+                ]);
+            } else {
+                return response()->json([
+                    'code' => 405,
+                    'message' => 'Unable to create organisation'
+                ]);
+            }
+        }
+    }
+
+    public function createFundraise($id)
+    {
+        $data = DB::table('organisation')->where('id', $id)->first();
+        if ($data) {
+            return view('fundraise');
+        } else {
+            return redirect('/');
+        }
+    }
+
+    public function createRaffle()
+    {
+        if (session()->has('user_id') && (session()->get('user_type') == 'user')) {
+
+                return view('createraffle');
+
+        } else {
+            return redirect('/login');
+        }
+    }
+
+    public function getStateByCountryId(Request $request)
+    {
+        $data = DB::table('states')->where('country_id', $request->c_id)->orderBy('name', 'asc')->get();
+        if ($data) {
+            return response()->json([
+                'code' => 201,
+                'data' => $data
+            ]);
+        }
+    }
+
+    public function getCityByStateId(Request $request)
+    {
+        $data = DB::table('cities')->where('state_id', $request->s_id)->orderBy('name', 'asc')->get();
+        if ($data) {
+            return response()->json([
+                'code' => 201,
+                'data' => $data
+            ]);
+        }
+    }
+    public function addFundraising(Request $request)
+    {
+        if (session()->has('user_id') && session()->get('user_type') == 'user') {
+
+            $data = DB::table('fundraising_check')->insertGetId([
+                'user_id' => session()->get('user_id'),
+                'name' => $request->name,
+                'c_o' => $request->c_o,
+                'user_id' => session()->get('user_id'),
+                'address' => $request->address,
+                'address_2' => $request->address_s,
+                'city' => $request->city,
+                'state' => $request->state,
+                'country' => $request->country,
+                'zip_code' => $request->zip_code,
+                'phone_number' => $request->phone_no,
+
+            ]);
+
+            if ($data) {
+
+                return response()->json([
+                    'code' => 201,
+                    'message' => 'Fundraising submitted successfully',
+                    'data' => $data
+                ]);
+            } else {
+                return response()->json([
+                    'code' => 405,
+                    'message' => 'Unable to create fundraising check'
+                ]);
             }
         }
     }

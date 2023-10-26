@@ -1,0 +1,164 @@
+.creat-raffle-container {
+    padding: 12px;
+
+    .custom-grid {
+        // width: 90vw;
+        display: grid;
+        // padding: 12px;
+
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        justify-content: center;
+        gap: 10px;
+
+        .first-child {
+            background: red;
+        }
+
+        .second-child {
+            h4.title {
+                color: var(--Body-text-color, #303030);
+                /* H1 Bold */
+                font-family: Poppins;
+                font-size: 24px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: 140%;
+            }
+
+            .total-pot {
+                .title {
+                    color: var(--Body-text-color, #303030);
+                    /* H5 Bold */
+                    font-family: Poppins;
+                    font-size: 12px;
+                    font-style: normal;
+                    font-weight: 700;
+                    line-height: 140%;
+                }
+
+                .count {
+                    color: var(--Body-text-color, #303030);
+                    /* H3 Bold */
+                    font-family: Poppins;
+                    font-size: 14px;
+                    font-style: normal;
+                    font-weight: 700;
+                    line-height: 140%;
+                }
+            }
+
+            h6.spa {
+                color: var(--Heading-Text-color, #161616);
+                /* Title 3 Bold */
+                font-family: Poppins;
+                font-size: 12px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: 140%;
+            }
+
+            p.text {
+                color: var(--Body-text-color, #303030);
+                /* H5 */
+                font-family: Poppins;
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 140%;
+            }
+
+            .time-reader {
+                width: 100%;
+                padding: 10px;
+                border-radius: 10px;
+                background: rgba(33, 82, 115, 0.80);
+                color: #FFF;
+
+                /* H3 */
+                font-family: Poppins;
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 140%;
+            }
+
+            .support {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                p.msg {
+                    color: var(--Button-Color, #55C595);
+                    /* H5 Bold */
+                    font-family: Poppins;
+                    font-size: 14px;
+                    font-style: normal;
+                    font-weight: 700;
+                    line-height: 140%;
+                }
+
+                p.span_btn {
+                    color: var(--Base-Color, #FDFDFD);
+                    /* Title 4 Bold */
+                    font-family: Poppins;
+                    padding: 10px;
+                    font-size: 12px;
+                    font-style: normal;
+                    font-weight: 700;
+                    line-height: 140%;
+                    border-radius: 5px;
+                    background: var(--Button-Color, #55C595);
+                }
+            }
+
+            .price-select {
+                padding: 12px;
+                margin: 12px 0px;
+                overflow: auto;
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+                gap: 12px;
+
+                .price-item.yes{
+                    background-color: #55C595;
+                }
+                .price-item {
+                    // height: 70px;
+                    padding: 10px;
+                    border-radius: 5px;
+                    border: 1px solid #215273;
+                    background: rgba(33, 82, 115, 0.80);
+                    box-shadow: 0px 2px 20px 0px rgba(33, 82, 115, 0.30);
+
+                    span {
+                        display: block;
+                        color: var(--Base-Color, #FDFDFD);
+                        text-align: center;
+                        /* H3 */
+                        font-family: Poppins;
+                        font-size: 14px;
+                        font-style: normal;
+                        font-weight: 600;
+                        line-height: 140%;
+                    }
+                }
+
+
+            }
+            button.pay-money {
+                border-radius: 10px;
+                background: var(--Button-Color, #55C595);
+                color: var(--Base-Color, #FDFDFD);
+                /* Title 4 Bold */
+                font-family: Poppins;
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: 140%;
+                padding: 12px;
+                outline: none;
+                border: none;
+            }
+        }
+    }
+}

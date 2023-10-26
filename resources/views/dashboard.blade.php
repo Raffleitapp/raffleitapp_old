@@ -28,15 +28,15 @@
 
 <div class="regform col-md-8 p-3">
     <div class="prof">
-        <h5 class="fw-bold h5">Welcome Victor</h5>
-        <h6 class="h6 fw-normal h6">Victor Akinola</h6>
+        <h5 class="fw-bold h5">Welcome {{$getUser->username == '' ? $getUser->first_name :  $getUser->username}}</h5>
+        <h6 class="h6 fw-normal h6">{{$getUser->first_name.' '.$getUser->last_name}}</h6>
         <div class="container">
             <div class="profpic p-3 row">
                 <div class="col-md-3">
                     <img src="{{ asset('img/prof.png')}}" alt="">
                 </div>
                 <div class="txt1 col-md-9">
-                    <h5 class="fw-bold h6">Victor Akinola</h5>
+                    <h5 class="fw-bold h6">{{$getUser->first_name.' '.$getUser->last_name}}</h5>
                     <h6 class="h6 fw-normal h6">I love to raffle and help out organizations</h6>
                 </div>
             </div>

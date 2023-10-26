@@ -1,5 +1,5 @@
 @extends('layouts/master')
-@section('title', 'About')
+@section('title', 'All Raffle')
 @section('content')
 <link rel="stylesheet" href="{{ asset('css/index.css') }}">
 <style>
@@ -212,7 +212,7 @@
     </div>
 </div>
 
-<div class="container-fluid md:px-4">
+<div class="container md:px-4">
     <h3 class="top-head">Join Live <span>Raffle</span></h3>
     <div class="top-filter-dash">
         <div class="head">

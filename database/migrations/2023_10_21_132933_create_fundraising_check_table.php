@@ -13,14 +13,15 @@ return new class extends Migration
     {
         Schema::create('fundraising_check', function (Blueprint $table) {
             $table->id();
+            $table->integer('user_id');
             $table->string('name');
-            $table->string('c_o');
+            $table->string('c_o')->nullable();
             $table->string('address');
-            $table->string('address_2');
+            $table->string('address_2')->nullable();
             $table->string('city');
             $table->string('state');
             $table->string('country');
-            $table->string('zip_code');
+            $table->string('zip_code')->nullable();
             $table->string('phone_number');
             $table->timestamps();
         });

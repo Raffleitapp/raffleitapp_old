@@ -1,5 +1,5 @@
 @extends('layouts.reguser')
-@section('title', 'login')
+@section('title', 'Complete Profile')
 @section('content')
     @vite(['resources/scss/app.scss'])
     <meta name="csrf-token" content="{{ csrf_token() }}" />
@@ -53,7 +53,6 @@
                         <input type="file" id="image-input" name="image" accept="image/*" style="display:none;">
                     </div>
                     <div class="row">
-
                         <div class="form-group col-md-6">
                             <label for="fname">First Name</label>
                             <input type="text" required id="first_name" required name="first_name" class="form-control"
@@ -106,7 +105,7 @@
             $('#clickable-image').on('click', function() {
                 $('#image-input').click();
             });
-            let image;
+         
 
             $('#image-input').on('change', function() {
                 var file = this.files[0];
@@ -121,8 +120,20 @@
             });
             $("form#continue").on('submit', function(e) {
                 e.preventDefault(); // Prevent the default form submission
+                var imaghe = $("#image-input");
 
-                $(".spinner-border").css("display", "block");
+                if(imaghe.val() === ""){
+
+                    Swal.fire({
+                                icon: 'error',
+                                type:'error',
+                                title: 'Please upload your profile picture',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                    return;
+                }else{
+                    $(".spinner-border").css("display", "block");
                 $(".login_btn").css("display", "none");
                 var formData = new FormData(this);
 
@@ -174,6 +185,8 @@
                         console.log(data);
                     }
                 });
+                }
+
             })
         });
     </script>
