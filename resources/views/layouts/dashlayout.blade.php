@@ -1,6 +1,3 @@
-
-
-
 <!doctype html>
 <html>
 
@@ -76,7 +73,6 @@
                     <li class="sidebar-item"><a href="{{ url('dashboard')}}">Dashboard</a></li>
                     <li class="sidebar-item"><a href="#">My Tickets</a></li>
                     <li class="sidebar-item"><a href="#">Hosted Raffle</a></li>
-
                     <li onclick="location.href='{{ url('user/dashboard')}}'"  class="sidebar-item"><a href="javascript:void(0)">Dashboard</a></li>
                     {{-- <li class="sidebar-item"><a href="#">Raffles</a></li> --}}
                     <li onclick="location.href='{{ url('user/addresses')}}'" class="sidebar-item"><a href="javascript:void(0)">Addresses</a></li>

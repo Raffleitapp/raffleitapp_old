@@ -29,6 +29,7 @@ class UserAuthController extends Controller
             return redirect('/login');
         }
     }
+
     function walkThrough()
     {
         if (session()->has('user_id') && (session()->get('user_type') == 'user')) {
@@ -247,6 +248,7 @@ class UserAuthController extends Controller
         }
     }
 
+<<<<<<< dansco
 
     public function save_organisation(Request $request)
     {
@@ -315,10 +317,51 @@ class UserAuthController extends Controller
                     'code' => 405,
                     'message' => 'Unable to create organisation'
                 ]);
+=======
+    public function billAddress(Request $request)
+    {
+        // Check the authentication user
+        if (session()->has('user_id') && session()->get('user_type') == 'user') {
+            $validator = Validator::make($request->all(), [
+                'first_name' => 'required',
+                'last_name' => 'required',
+                'company_name' => 'required',
+                'region' => 'required',
+                'street_name' => 'required',
+                'town' => 'required',
+                'phone_number' => 'required',
+                'email' => 'required',
+                'zipcode' => 'required',
+            ]);
+
+            if ($validator->fails()) {
+                return back()->with('error', "All fields are required");
+            }
+
+            $data = DB::table('billaddress')->insert([
+                'first_name' => $request->input('first_name'),
+                'last_name' => $request->input('last_name'),
+                'company_name' => $request->input('company_name'),
+                'region' => $request->input('region'),
+                'zipcode' => $request->input('zipcode'),
+                'town' => $request->input('town'),
+                'country' => $request->input('country'),
+                'email' => $request->input('email'),
+                'phone_number' => $request->input('phone_number'),
+                'apartment' => $request->input('apartment'),
+                'street_name' => $request->input('street_name'),
+            ]);
+
+            if ($data) {
+                return redirect()->back()->with('success', 'Billing address added successfully');
+            } else {
+                return redirect()->back()->with('error', 'Something went wrong');
+>>>>>>> main
             }
         }
     }
 
+<<<<<<< dansco
     public function createFundraise($id)
     {
         $data = DB::table('organisation')->where('id', $id)->first();
@@ -392,6 +435,42 @@ class UserAuthController extends Controller
                     'code' => 405,
                     'message' => 'Unable to create fundraising check'
                 ]);
+=======
+    public function shipAddress(Request $request)
+    {
+        // Check the authentication user
+        if (session()->has('user_id') && session()->get('user_type') == 'user') {
+            $validator = Validator::make($request->all(), [
+                'first_name' => 'required',
+                'last_name' => 'required',
+                'company_name' => 'required',
+                'region' => 'required',
+                'street_address' => 'required',
+                'town' => 'required',
+                'zipcode' => 'required'
+            ]);
+
+            if ($validator->fails()) {
+                return back()->with('error', 'All fields are required');
+            }
+
+            $data = DB::table('shipaddress')->insert([
+                'first_name' => $request->input('first_name'),
+                'last_name' => $request->input('last_name'),
+                'company_name' => $request->input('company_name'),
+                'region' => $request->input('region'),
+                'zipcode' => $request->input('zipcode'),
+                'town' => $request->input('town'),
+                'street_address' => $request->input('street_address'),
+                'apartment' => $request->input('apartment'),
+                'country' => $request->input('country')
+            ]);
+
+            if ($data) {
+                return redirect()->back()->with('success', 'Shipping address added successfully');
+            } else {
+                return redirect()->back()->with('error', 'Something went wrong');
+>>>>>>> main
             }
         }
     }

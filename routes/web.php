@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\UserAuthController;
+use App\Http\Controllers\UserController;
 // Route::get("/", [AdminRouteController::class,"index"])->name("index");
 /*
 |--------------------------------------------------------------------------
@@ -53,12 +54,15 @@ Route::get('accdetails', function () {
 
 Route::get('addresses', function () {
     return view('addresses');
-
 });
 
 Route::get('billaddress', function () {
     return view('billaddress');
 });
+
+// Route::post('billaddress', function () {
+//     return view('billaddress');
+// });
 
 Route::get('shipaddress', function () {
     return view('shipaddress');
@@ -89,6 +93,7 @@ Route::get('fundraise', function () {
 Route::post('create_account', [UserAuthController::class, 'createAccount'])->name('create_account');
 Route::get('complete_register', [UserAuthController::class, 'complete_register'])->name('complete_register');
 Route::post('update_register', [UserAuthController::class, 'update_register'])->name('update_register');
+
 Route::post('login_login',[UserAuthController::class,'loginAccount'])->name('login_login');
 Route::get('logout',[UserAuthController::class,'logout'])->name('logout');
 Route::post("getStateByCountryId",[UserAuthController::class,'getStateByCountryId']);
@@ -96,16 +101,16 @@ Route::post("getCityByStateId",[UserAuthController::class,'getCityByStateId']);
 
 
 
+
 Route::group(['prefix' => 'admin'], function () {
-    Route::get('/', [AdminRouteController::class,'index']);
-    Route::get('dashboard', [AdminRouteController::class,'index'])->name('admin.dashboard');
-    Route::get('users', [AdminRouteController::class,'users'])->name('admin.users');
-    Route::get('admins', [AdminRouteController::class,'admins'])->name('admin.admins');
-    Route::get('category', [AdminRouteController::class,'category'])->name('admin.category');
-    Route::post('addCategory',[AdminRouteController::class, 'saveCategory']);
-
-
+    Route::get('/', [AdminRouteController::class, 'index']);
+    Route::get('dashboard', [AdminRouteController::class, 'index'])->name('admin.dashboard');
+    Route::get('users', [AdminRouteController::class, 'users'])->name('admin.users');
+    Route::get('admins', [AdminRouteController::class, 'admins'])->name('admin.admins');
+    Route::get('category', [AdminRouteController::class, 'category'])->name('admin.category');
+    Route::post('addCategory', [AdminRouteController::class, 'saveCategory']);
 });
+
 
 Route::group(['prefix' => 'user'], function(){
     Route::get('dashboard',[UserAuthController::class,'dashboard'])->name('user.dashboard');
@@ -117,9 +122,10 @@ Route::group(['prefix' => 'user'], function(){
     Route::post("addFundraising",[UserAuthController::class,'addFundraising']);
     Route::get('createraffle',[UserAuthController::class,'createRaffle']);
     Route::post('saveRaffle',[RaffleController::class,'createRaffle']);
+ Route::post('billAddress', [UserAuthController::class, 'billAddress'])->name('user.billaddress');
+Route::post('shipAddress', [UserAuthController::class, 'shipAddress'])->name('user.shipaddress'); 
 
 
 
 
 
-});
