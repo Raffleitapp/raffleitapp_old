@@ -1,0 +1,481 @@
+body {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.form-control,
+.form-control:focus,
+.form-select,
+select:focus,
+option {
+    border: 1px solid #55C595 !important;
+    box-shadow: none !important;
+    outline: none !important;
+    background-color: none !important;
+}
+
+input[type="password"],
+input[type="email"],
+input[type="text"],
+input[type="date"],
+input[type="time"],
+textarea,
+option,
+select,
+select:focus {
+    margin-top: 0.3rem;
+    margin-bottom: 1rem;
+}
+
+.card {
+    outline: none;
+}
+
+.btn,
+.btn:focus,
+.btn:hover {
+    box-shadow: none;
+    outline: none;
+    background: #55C595;
+    color: #FDFDFD;
+    margin-bottom: 1rem;
+}
+
+.form-check-input:checked {
+    background-color: #55C595;
+    border: none;
+}
+
+.form-check-input,
+.form-check-input:focus {
+    box-shadow: none;
+    outline: #55C595;
+    color: #FDFDFD;
+    margin-bottom: 1rem;
+}
+
+.regform a {
+    text-decoration: none;
+    color: #55C595;
+}
+
+.container {
+    padding: 0;
+}
+
+.admin-main-container {
+    min-height: 60vh;
+    /* background-color: white; */
+}
+
+.admin-main-container .admin-sidebar {
+    width: 100%;
+    padding: 12px 0px;
+}
+
+.admin-main-container row .col-12.col-md-3 {
+    margin: 0;
+    border-radius: 10px;
+    overflow: hidden;
+
+}
+
+.admin-sidebar .sidebar-item {
+    background: #215273;
+    padding: .5rem 1rem;
+    list-style: none;
+    margin: 0;
+    border: #215273 1px solid;
+    /* border-bottom: 1px solid white; */
+}
+
+.sidebar-item:first-child {
+    border-radius: .2rem .2rem 0 0;
+}
+
+.sidebar-item:last-child {
+    border-radius: 0px 0px .2rem .2rem;
+}
+
+.sidebar-item a {
+    text-decoration: none !important;
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.sidebar-item:hover {
+    background: #ffffff;
+    /* opacity: 0.5; */
+    cursor: pointer;
+}
+
+.sidebar-item:hover>a {
+    color: #215273;
+}
+
+.sidebar-item.active {
+    background: white;
+}
+
+.sidebar-item.active>a {
+    color: #215273;
+}
+
+.bread {
+    padding: 40px 20px;
+}
+
+.bread p,
+.bread p a {
+    font-size: 12px;
+    color: white;
+    font-weight: 500;
+    align-items: center;
+}
+
+.bread p i {
+    font-size: 14px;
+
+}
+
+h2.name-address {
+    color: #000;
+
+    /* H5 */
+    font-family: Poppins;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%;
+}
+
+.address-container .address-title {
+    color: #000;
+
+    /* H3 Bold */
+    font-family: Poppins;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 140%;
+}
+
+.address-container .address-name {
+    color: var(--Body-text-color, #303030);
+    /* Title 1 */
+    font-family: Poppins;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%;
+}
+
+h3.head-title {
+    color: #000;
+
+    /* H3 Bold */
+    font-family: Poppins;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 140%;
+}
+
+.add-billing-form,
+#add-billing-form,
+#add-shipping-form {
+    display: none;
+}
+
+.pay-card {
+    min-height: 100px;
+    max-height: 100px;
+    height: auto;
+    border-radius: 10px;
+    display: flex;
+    padding: 8px 0px;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid rgba(33, 82, 115, 0.30);
+    background: var(--Base-Color, #FDFDFD);
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.25);
+}
+
+.pay-card:hover {
+    background: #ccc;
+}
+
+.pay-card .text-center img {
+    width: 60px;
+    height: 45px;
+
+}
+
+.pay-card .text-center p.name {
+    color: #000;
+
+    /* H5 Bold */
+    font-family: Poppins;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 140%;
+}
+
+p.sub-title {
+    color: #000;
+
+    /* Title 1 */
+    font-family: Poppins;
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%;
+}
+
+.raffle-card {
+    min-width: 240px;
+    max-width: 400px;
+    /* width: 100%; */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-radius: 10px;
+    background: #FFF;
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.25);
+}
+
+.raffle-card .first-section {
+    display: flex;
+    width: 80%;
+    align-items: center;
+}
+
+.raffle-card .first-section .img-div {
+    height: 120px;
+    width: 120px;
+
+}
+
+.raffle-card .first-section .img-div img {
+    height: 100%;
+    width: 100%;
+}
+
+.text-div {
+    margin-left: 10px;
+    flex-direction: column;
+    justify-content: space-between;
+
+}
+
+.text-div h4.head {
+    color: var(--Body-text-color, #303030);
+    /* H4 Bold */
+    font-family: Poppins;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 140%;
+}
+
+.text-div p.des {
+    color: var(--Body-text-color, #303030);
+    /* text-align: center; */
+    /* H5 */
+    font-family: Poppins;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%;
+    margin: -5px 0px;
+}
+
+.text-div p.search-tag {
+    color: var(--Body-text-color, #303030);
+    /* text-align: center; */
+    /* Title 1 */
+    font-family: Poppins;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%;
+    margin: 5px 0px;
+}
+
+.text-div .foot {
+    display: flex;
+}
+
+.text-div .foot h5 {
+    color: #F44343;
+
+    /* Title 3 Bold */
+    font-family: Poppins;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 140%;
+}
+
+.text-div .foot a {
+    color: #55C595;
+
+    /* Title 3 Bold */
+    font-family: Poppins;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 140%;
+    margin: 0 8px;
+}
+
+.raffle-card {
+    margin: 12px 0px;
+}
+
+.raffle-card .second-section .person-no {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.raffle-card .second-section {
+    flex: 1;
+    flex-direction: column;
+    align-items: end;
+    justify-content: space-between;
+
+
+}
+
+.raffle-card .second-section .person-no img {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.raffle-card .second-section .person-no span {
+    color: var(--Body-text-color, #303030);
+    /* Title 4 Bold */
+    font-family: Poppins;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 140%;
+}
+
+.win-text {
+    color: #55C595;
+
+    /* H5 Bold */
+    font-family: Poppins;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 140%;
+}
+
+
+
+h2.title {
+    color: #000;
+
+    font-family: Prompt;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 140%;
+}
+
+h2.title span {
+    color: #55C595;
+}
+
+.pin-head-text h3 {
+    color: #000;
+
+    /* H3 Bold */
+    font-family: Poppins;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 140%;
+    margin: 0px 0px;
+
+}
+
+.pin-head-text p {
+    color: #000;
+
+    /* H3 Bold */
+    font-family: Poppins;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%;
+}
+
+#spin-table .row table thead tr {
+    background-color: #215273;
+    color: white;
+    font-weight: 700;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 20px 20px 0px 0px !important;
+}
+
+#spin-table .row table tbody tr {
+    border-top: 1.5px solid rgba(33, 82, 115, 0.10);
+    border-bottom: 1.5px solid rgba(33, 82, 115, 0.10);
+    background: #FFF;
+    color: var(--bold-black-color, #262626);
+    /* Title 3 Bold */
+    font-family: Poppins;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 140%;
+}
+
+#spin-table .row table tbody tr span {
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%;
+}
+
+#spin-table .row table tbody tr td:last-child {
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    color: #215273;
+    line-height: 140%;
+}
+
+.btn-success {
+    background-color: #55C595 !important;
+    padding: 10px;
+}
+
+@media screen and (max-width:500px) {
+    .admin-main-container {
+        padding: 10px;
+    }
+}
+
+
+@media screen and (max-width:400px) {
+    .pay-card .text-center img {
+        width: 50px;
+        height: auto;
+
+    }
+
+    .pay-card .text-center p.name {
+        font-size: 10px;
+    }
+}
