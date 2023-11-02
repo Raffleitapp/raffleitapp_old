@@ -112,7 +112,7 @@ class RaffleController extends Controller
     {
         $data =  DB::table("raffle")->where('approve_status', 1)
             ->leftJoin('organisation', 'raffle.organisation_id', 'organisation.id')
-            ->select('raffle.*', 'organisation.organisation_name', 'organisation.cover_image', 'organisation.handle')
+            ->select('raffle.*', 'organisation.organisation_name', 'organisation.cover_image', 'organisation.handle','organisation.website')
             ->paginate(7);
         return view('allraffle', compact('data'));
     }

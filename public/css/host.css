@@ -109,9 +109,112 @@ text-align: center;
 
 /* H3 Bold */
 font-family: Poppins;
-font-size: 33px;
+font-size: 24px;
+font-style: normal;
+font-weight: 700;
+line-height: 140%;
+margin: 12px 0;
+
+}
+
+.raffle-group .raffle-cardz{
+    border-radius: 10px;
+background: #FFF;
+box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.25);
+max-width: 400px;
+/* height: 150px; */
+padding: 4px;
+display: flex;
+justify-content: flex-start;
+align-items: center;
+margin-bottom: 12px;
+}
+.raffle-cardz .img{
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.raffle-cardz .img img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+
+}
+
+.raffle-cardz .text{
+    margin-left: 10px;
+    width: calc(100% - 150px);
+}
+.raffle-cardz .text h3.title{
+    color: var(--Body-text-color, #303030);
+/* H4 Bold */
+font-family: Poppins;
+font-size: 16px;
 font-style: normal;
 font-weight: 700;
 line-height: 140%;
 }
 
+.raffle-cardz .text h4.purpose{
+    color: var(--Body-text-color, #303030);
+/* text-align: center; */
+
+/* H5 */
+font-family: Poppins;
+font-size: 12px;
+font-style: normal;
+font-weight: 400;
+line-height: 100%; /* 32.2px */
+}
+.raffle-cardz .text .handle{
+    color: var(--Body-text-color, #303030);
+/* text-align: center; */
+/* Title 1 */
+font-family: Poppins;
+font-size: 11px;
+font-style: normal;
+font-weight: 400;
+line-height: 100%;
+}
+
+
+.raffle-cardz .text .bottom-text h6{
+    color: var(--Body-text-color, #303030);
+/* H5 Bold */
+font-family: Poppins;
+font-size: 12px;
+font-style: normal;
+font-weight: 700;
+line-height: 140%;
+}
+
+
+@media screen and (max-width:480px) {
+    .raffle-group .raffle-cardz{
+        display: block;
+        max-width: 300px;
+
+    }
+    .raffle-cardz .img{
+        width: 100%;
+        height: 200px;
+        /* height: auto; */
+        overflow: hidden;
+        border-radius: 10px;
+        margin-bottom: 12px;
+    }
+
+    .raffle-cardz .img img{
+     object-fit: cover;
+     object-position: center;
+    }
+
+    .raffle-cardz .text{
+        margin-left: 0px;
+        width: 100%;
+        padding: 5px;
+    }
+
+}

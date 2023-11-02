@@ -286,6 +286,7 @@
 
         // initialize();
         checkStatus();
+        const customer = localStorage
         $.ajax({
             type: "POST",
             headers: {

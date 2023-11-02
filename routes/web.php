@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminRouteController;
+use App\Http\Controllers\HostController;
 use App\Http\Controllers\RaffleController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -78,7 +79,7 @@ Route::get('shipaddress', function () {
 //     return view('raffles');
 // });
 
-Route::get('/stripe-payment', function () {
+Route::get('/make-payment', function () {
     return view('stripe');
 });
 
@@ -148,11 +149,10 @@ Route::group(['prefix' => 'user'], function () {
     Route::get('accdetails', function () {
         return view('accdetails');
     });
+    Route::post('saveAddress',[UserAuthController::class, 'saveAddress'])->name('user.saveAddress');
 });
 
 
 Route::group(['prefix' => 'host'], function () {
-    Route::get("dashboard",function(){
-        return view('host.dashboard');
-    });
+    Route::get("dashboard",[HostController::class,'getDashboard']);
 });

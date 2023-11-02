@@ -505,4 +505,52 @@ class UserAuthController extends Controller
         }
 
     }
+
+    public function saveAddress(Request $request){
+        if (session()->has('user_id') && session()->get('user_type') == 'user') {
+            $validator = Validator::make($request->all(),[
+                'first_name' => 'required',
+                'last_name' => 'required',
+                'email' => 'required',
+                'phone_no' => 'required',
+                'street' => 'required',
+                'type' => 'required',
+                'country_id' => 'required',
+
+            ]);
+
+            if($validator->fails()){
+                // return response()->json([
+                //     'code' => 404,
+                //     'message' => "Please make sure you fill in the required"
+                // ]);
+                return redirect()->back()->with('error','Please make sure you fill in the required');
+            }
+            $data = DB::table('addresses')->insert([
+                'first_name' => $request['first_name'],
+                'last_name' => $request->last_name,
+                'email' => $request['email'],
+                'phone_no' => $request['phone_no'],
+                'company_name' => $request['company_name'],
+                'street' => $request['street'],
+                'apartment' => $request['apartment'],
+                'city' => $request['city'],
+                'country_id' => $request['country_id'],
+                'state_id' => $request['state_id'],
+                'type' => $request['type'],
+                'user_id'  => session()->get("user_id")
+            ]);
+            if($data){
+                // return response()->json([
+                //     'code' => 201,
+                //     'message' => $request->type == 1 ? 'Billing Address Successfully Added' : 'Shipping Address successfully Added'
+                // ]);
+                return redirect('/user/addresses')->with('success',$request->type == 1 ? 'Billing Address Successfully Added' : 'Shipping Address successfully Added');
+            }else{
+                return redirect()->back()->with('error','Something went wrong');
+            }
+        }else{
+            return redirect('/login');
+        }
+    }
 }

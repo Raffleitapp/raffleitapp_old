@@ -35,13 +35,13 @@
 
         .carouselsd-item {
             display: block;
-            height: 300px;
+            height: 400px;
             max-width: 300px;
             margin: 0px auto;
             /* Add styles for individual carousel items as needed */
         }
 
-        .carousel-item img {
+        .carouselsd-item img {
             height: 100%;
             width: 100%;
             border-radius: 12px;
@@ -59,7 +59,8 @@
             height: 80px;
             width: 80px;
             overflow: hidden;
-            border-radius: 12px
+            border-radius: 12px;
+            margin: 0 10px;
         }
 
         .thumbnail-item img {
@@ -222,6 +223,7 @@
             ->sum('amount');
         $formattedPrice = Lang::get('money', ['amount' => $totalPos]);
 
+        $check_if = DB::table('raffle_order')->where('raffle_id', $data->id)->where('user_id', session()->get('user_id'));
         // echo $da;
         // $imageData = DB::table('')
 
@@ -321,8 +323,10 @@
                     <div class="justify-center" id="me">
 
                     </div>
-
+                    @if (!$check_if->exists())
                     <button class="pay-money" id="pay_now">Get Ticket</button>
+
+                    @endif
                 </div>
 
             </div>
@@ -594,10 +598,18 @@
                     }else{
 
                         const id = {{$raff_id}}
-                        console.log(selectedCard, selectedPrice, id)
+                        const param = {
+                            raffle_id: id,
+                            amount: selectedPrice,
+                            total_raffle: selectedCard
+                        }
+                        console.log(param);
+                        localStorage.setItem('myData', JSON.stringify(param));
+                        window.location.href = "{{url('/make-payment')}}"
                     }
 
                 });
+
             });
 
 
