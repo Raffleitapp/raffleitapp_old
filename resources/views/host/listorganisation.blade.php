@@ -378,6 +378,7 @@
                         contentType: false,
                         processData: false,
                         success: function(response) {
+                            console.log(response)
                             $(".spinner-border").css("display", "none");
                             $(".login_btn").css("display", "block");
                             if (response.code === 201) {
@@ -387,7 +388,7 @@
                                     showConfirmButton: false,
                                     timer: 1000
                                 });
-                                window.location = "{{ url('user/choose_organisation') }}"
+                                window.location = "/user/createfundraise/"+response.data
 
                             } else {
                                 Swal.fire({

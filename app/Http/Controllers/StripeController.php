@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Stripe;
 
 class StripeController extends Controller
 {
-    function createPay(Request $resquest)
+    function createPay(Request $request)
     {
         $stripe = new \Stripe\StripeClient("sk_test_51HIb63EFkSOsWovihAgvTLfBDmMm4IAXuUvQ9PCeNdJhiNj8uRwpC34f8tX4QtKBIOTTkzyVECBwWRpWFilyZ38z00DUBhGP4o");
 
@@ -16,17 +17,20 @@ class StripeController extends Controller
             // $jsonStr = file_get_contents('php://input');
             // $jsonObj = json_decode($jsonStr);
 
+            $amount = $request['amount'];
+            $new_amount = ((double)$amount * 100);
             // Create a PaymentIntent with amount and currency
             $paymentIntent = $stripe->paymentIntents->create([
-                'amount' => 100 * 100,
+                'amount' => $new_amount,
                 'currency' => 'usd',
                 'automatic_payment_methods' => [
                     'enabled' => true,
                 ],
                 // 'payment_method_types' => ['card'],
                 'metadata' => [
-                    'order_id' => '6735',
-                 'business' => 'Danscotech'
+                    'raffle_id' => $request->raffle_id,
+                    'total_raffle' => $request->total_raffle,
+                    'pay_type' => $request->pay_type
                 ],
             ]);
 
@@ -34,9 +38,12 @@ class StripeController extends Controller
                 'clientSecret' => $paymentIntent->client_secret,
             ];
 
-            return response()->json($output);
+            $request->session()->put('raffle_id', $request->raffle_id);
+            $request->session()->put('total_raffle', $request->total_raffle);
+            $request->session()->put('pay_type', $request->pay_type);
+            $request->session()->put('amount', $request->amount);
 
-       
+            return response()->json($output);
         } catch (Error $e) {
             return response()->json([
                 'code' => 405,
@@ -55,11 +62,35 @@ class StripeController extends Controller
             []
         );
 
-        // $ed = $stripe->charges->retrieve(
-        //     $res->latest_charge,
-        //     []
-        //   );
-        // dd($ed->billing_details);
-        dd($res);
+
+        $ed = $stripe->charges->retrieve(
+            $res->latest_charge,
+            []
+          );
+
+          $insert_order = DB::table('raffle_order')->insertGetId([
+            'raffle_id' => session()->get('raffle_id'),
+            'amount' => session()->get('amount'),
+            'total' => session()->get('total_raffle'),
+            'user_id' => session()->get('user_id'),
+            'date_purchase' => now(),
+            'payment_reason' => session()->get('pay_type') == 'purchase' ? 1 : 2
+          ]);
+          if($insert_order){
+            $dat = DB::table('payment_history')->insert([
+                'payment_id' => $ed->id,
+                'payment_method' => $ed->payment_method,
+                'txn_id' => $ed->balance_transaction,
+                'user_id' => session()->get('user_id'),
+                'order_id' => $insert_order,
+
+            ]);
+
+            if($dat){
+                return view('payment-success');
+            }
+          }
+        // dd($ed);
+        // dd($res);
     }
 }

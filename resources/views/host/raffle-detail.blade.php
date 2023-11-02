@@ -164,6 +164,153 @@
             display: flex;
             align-items: center;
         }
+
+        .extend-con h5.message {
+            color: var(--Body-text-color, #303030);
+            /* H5 */
+            font-family: Poppins;
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 140%;
+        }
+
+        .extend-con .show-extend {
+            border-radius: 10px;
+            background: var(--Primary-Color, #215273);
+            color: var(--Base-Color, #FDFDFD);
+            /* H5 Bold */
+            font-family: Poppins;
+            font-size: 14px;
+            padding: 10px 12px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 140%;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        /* Modal content */
+        .modal-content {
+            background-color: #fff;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            min-width: 300px;
+            max-width: 400px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+            border-radius: 5px;
+            position: relative;
+        }
+
+        /* Close button */
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        .modal-content h2 {
+            color: var(--Body-text-color, #303030);
+            /* H3 Bold */
+            font-family: Poppins;
+            font-size: 18px;
+            text-align: center;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 140%;
+        }
+
+        .modal-content div.msg {
+            border-radius: 5px;
+            padding: 8px 10px;
+            align-items: center;
+            background: rgba(179, 212, 246, 0.40);
+        }
+
+        .modal-content div.msg span {
+            color: #2B94DA;
+
+            /* Title 4 Bold */
+            font-family: Poppins;
+            font-size: 10px;
+            text-align: center;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 140%;
+        }
+
+        .modal-content input.days {
+            border-radius: 10px;
+            border: 1px solid var(--Primary-Color, #215273);
+            width: 50%;
+            padding: 10px 12px;
+        }
+
+        .modal-content label.day-label {
+            color: var(--Body-text-color, #303030);
+            /* H5 Bold */
+            display: block;
+            font-family: Poppins;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 140%;
+        }
+
+        #old_date,
+        #new_date {
+            color: #666565;
+
+            font-family: Poppins;
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 140%;
+        }
+
+        #extend {
+            color: #FFF;
+            padding: 10px;
+            font-family: Poppins;
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 140%;
+            border-radius: 10px;
+            background: var(--Button-Color, #55C595);
+            border: none;
+            outline: none;
+        }
+
+        #cancel, #closeModal {
+            color: #161616;
+            padding: 10px;
+            font-family: Poppins;
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 140%;
+            margin-right: 20px;
+            border-radius: 10px;
+            border: 1px solid var(--Button-Color, #55C595);
+            border: none;
+            outline: none;
+        }
     </style>
 
     @php
@@ -206,7 +353,7 @@
     </div>
     @php
 
-    $raff_id = $data->id;
+        $raff_id = $data->id;
         $da = DB::table('ticket_price')
             ->where('raffle_id', $data->id)
             ->first();
@@ -223,7 +370,6 @@
             ->sum('amount');
         $formattedPrice = Lang::get('money', ['amount' => $totalPos]);
 
-        $check_if = DB::table('raffle_order')->where('raffle_id', $data->id)->where('user_id', session()->get('user_id'));
         // echo $da;
         // $imageData = DB::table('')
 
@@ -253,13 +399,13 @@
                             @endif
                             @if ($image3 != '')
                                 <div class="thumbnail-item">
-                                    <img src="{{ asset( $image4) }}" alt="...">
+                                    <img src="{{ asset($image4) }}" alt="...">
 
                                 </div>
                             @endif
                             @if ($image4 != '')
                                 <div class="thumbnail-item">
-                                    <img src="{{asset($image4) }}" alt="...">
+                                    <img src="{{ asset($image4) }}" alt="...">
 
                                 </div>
                             @endif
@@ -296,7 +442,7 @@
                     </div>
                     <div class="support flex">
                         <p class="msg">Do Good. Support Our Cause Today!</p>
-                         <p class="span_btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">SUPPORT</p>
+                        {{-- <p class="span_btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">SUPPORT</p> --}}
                     </div>
                     {{-- <div class="price-select">
                     <div class="price-item">
@@ -323,10 +469,17 @@
                     <div class="justify-center" id="me">
 
                     </div>
-                    @if (!$check_if->exists())
+                    {{-- @if (!$check_if->exists())
                     <button class="pay-money" id="pay_now">Get Ticket</button>
 
-                    @endif
+                    @endif --}}
+                    <div class="extend-con">
+                        <h5 class="message">Did’t meet up with your raffle target? Make use of the extend button to extend
+                            the raffle time.</h5>
+
+                        <button class="show-extend" id="openModal">EXTEND RAFFLE</button>
+
+                    </div>
                 </div>
 
             </div>
@@ -384,8 +537,7 @@
                                 <div class="host-img">
                                     {{-- <img src="{{ asset('storage/images/' . $organisationData->cover_image) }}"
                                         alt=""> --}}
-                                        <img src="{{ asset( $organisationData->cover_image) }}"
-                                        alt="">
+                                    <img src="{{ asset($organisationData->cover_image) }}" alt="">
                                 </div>
                                 <div class="profile-detail">
                                     <h4>{{ $organisationData->organisation_name }}</h4>
@@ -400,52 +552,58 @@
                     </div>
                     <div class="tab-pane">
                         <div class="card p-3" style="width:85vw">
-                           <div class="table-responsive">
-                            <table class="table table-striped table-responsive">
-                                <thead>
-                                    <tr >
-                                        <th style="min-width: 150px">Date </th>
-                                        <th style="min-width: 150px">User</th>
-                                    </tr>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-responsive">
+                                    <thead>
+                                        <tr>
+                                            <th style="min-width: 150px">Date </th>
+                                            <th style="min-width: 150px">User</th>
+                                        </tr>
 
 
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
 
-                                    </tr>
-                                </tbody>
-                            </table>
-                           </div>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
 
                     </div>
 
-                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h6 class="modal-title fs-5 text-sm " id="staticBackdropLabel">Support {{$data->host_name}}</h6>
-                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <form>
-                                    <div class="form-group mb-3">
-                                        <label for="" style="font-size: 12px; font-weight:700" >Amount you want to support with</label>
-                                        <input type="number" name="support-amount" id="support-amount" required class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <button type="submit" class="pay-money btn btn-success btn-sm" id="support-pay">Make payment</button>
-                                    </div>
-                                </form>
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h6 class="modal-title fs-5 text-sm " id="staticBackdropLabel">Support
+                                        {{ $data->host_name }}</h6>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form>
+                                        <div class="form-group mb-3">
+                                            <label for="" style="font-size: 12px; font-weight:700">Amount you want
+                                                to support with</label>
+                                            <input type="number" name="support-amount" id="support-amount" required
+                                                class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="submit" class="pay-money btn btn-success btn-sm"
+                                                id="support-pay">Make payment</button>
+                                        </div>
+                                    </form>
+
+                                </div>
 
                             </div>
-
-                          </div>
                         </div>
-                      </div>
+                    </div>
                     {{-- <div class="tab-pane">
                         <div class="card p-3" style="">
                             <div class="host-detail flex align-items-center">
@@ -467,7 +625,70 @@
                 </div>
             </div>
         </div>
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                {{-- <span id="closeModal" class="close">&times;</span> --}}
+                <h2>Request: Extend Raffle End Time</h2>
+                <div class="flex msg">
+                    <span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            fill="none">
+                            <path
+                                d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 17C11.45 17 11 16.55 11 16V12C11 11.45 11.45 11 12 11C12.55 11 13 11.45 13 12V16C13 16.55 12.55 17 12 17ZM13 9H11V7H13V9Z"
+                                fill="#4FA9E6" />
+                        </svg></span>
+                    <span>Sometimes you need more time, to meet your goals. But keep in mind this can affect users
+                        expectations.</span>
+                </div>
+                <div class="form-group mb-3 mt-3">
+                    <label for="" class="day-label">How many days do you want to add?</label>
+                    <input type="number" id="dayssss" class="days">
+                </div>
 
+                <div class="d-flex align-items-center">
+                    <h5>
+                        <span
+                            style="
+                            color: #666565;
+
+font-family: Poppins;
+font-size: 13px;
+display:block;
+font-style: normal;
+font-weight: 500;
+line-height: 140%;
+                            ">Original
+                            date</span>
+                        <span id="old_date">{{ $data->ending_date }}</span>
+                    </h5>
+                    <h5><svg xmlns="http://www.w3.org/2000/svg" width="50" height="30" viewBox="0 0 50 50"
+                            fill="none">
+                            <path
+                                d="M33.5814 22.9736H10.6439C9.49805 22.9736 8.56055 23.8849 8.56055 24.9986C8.56055 26.1124 9.49805 27.0237 10.6439 27.0237H33.5814V30.6484C33.5814 31.5597 34.7064 32.0052 35.3522 31.3572L41.1439 25.7074C41.5397 25.3024 41.5397 24.6746 41.1439 24.2696L35.3522 18.6198C34.7064 17.9718 33.5814 18.4376 33.5814 19.3286V22.9736Z"
+                                fill="#666565" />
+                        </svg></h5>
+                    <h5>
+                        <span
+                            style="
+                            color:  #161616;
+font-family: Poppins;
+font-size: 13px;
+display:block;
+font-style: normal;
+font-weight: 500;
+line-height: 140%;
+                            ">New
+                            date</span>
+                        <span id="new_date">13 June 2023</span>
+                    </h5>
+                </div>
+
+                <div class="flex justify-end">
+                    <button id="closeModal">Cancel</button>
+                    <button id="extend">Extend Time</button>
+
+                </div>
+            </div>
+        </div>
         <script src="{{ asset('js/jquery.min.js') }}"></script>
         <script src="{{ asset('js/sweetalert.js') }}"></script>
         <script src="{{ asset('js/alert.js') }}"></script>
@@ -512,7 +733,7 @@
             document.getElementById("instagramShare").addEventListener("click", function() {
                 // Share on Instagram
                 var url = encodeURIComponent(window.location.href);
-                window.open("https://telegram.me/share/url?url="+ url, "_blank");
+                window.open("https://telegram.me/share/url?url=" + url, "_blank");
             });
 
             document.getElementById("whatsappShare").addEventListener("click", function() {
@@ -619,9 +840,9 @@
                     // console.log(selectedCard, selectedPrice)
                     if (selectedCard === '') {
                         showErrorMsg("Please choose the number of ticket you want to purchase");
-                    }else{
+                    } else {
 
-                        const id = {{$raff_id}}
+                        const id = {{ $raff_id }}
                         const param = {
                             raffle_id: id,
                             amount: selectedPrice,
@@ -630,7 +851,7 @@
                         }
                         // console.log(param);
                         localStorage.setItem('myData', JSON.stringify(param));
-                        window.location.href = "{{url('/make-payment')}}"
+                        window.location.href = "{{ url('/make-payment') }}"
                     }
 
                 });
@@ -640,9 +861,9 @@
                     e.preventDefault();
                     // console.log(selectedCard, selectedPrice)
                     let amount = $("#support-amount").val();
-                    if (amount >  0) {
+                    if (amount > 0) {
 
-                        const id = {{$raff_id}}
+                        const id = {{ $raff_id }}
                         const param = {
                             raffle_id: id,
                             amount: amount,
@@ -651,11 +872,50 @@
                         }
                         // console.log(param);
                         localStorage.setItem('myData', JSON.stringify(param));
-                        window.location.href = "{{url('/make-payment')}}"
+                        window.location.href = "{{ url('/make-payment') }}"
                     }
 
                 });
 
+                var originalDateTime = "{{ $data->ending_date }}";
+
+                // Create a Date object from the original date and time string
+                var dateObj = new Date(originalDateTime);
+
+                // Format the date as "yyyy-mm-d"
+                var formattedDate = dateObj.getFullYear() + '-' + (dateObj.getMonth() + 1) + '-' + dateObj.getDate();
+
+                $("#old_date").text(formattedDate);
+                $("#new_date").text(formattedDate);
+
+                function updateDate() {
+                    console.log('Update Date')
+                    var originalDate = new Date('{{ $data->ending_date }}');
+                    var daysToAdd = parseInt($("#dayssss").val());
+
+                    // Add days to the original date
+                    originalDate.setDate(originalDate.getDate() + daysToAdd);
+
+                    // Format the updated date
+                    var updatedDate = originalDate;
+
+                    var options = {
+                        weekday: 'long', // Display the full weekday name
+                        year: 'numeric', // Display the full year
+                        month: 'long', // Display the full month name
+                        day: 'numeric' // Display the day of the month
+                    };
+
+                    // Format the date as "day, month name, year"
+                    var formattedDate = originalDate.toLocaleString(undefined, options);
+                    $("#new_date").text(formattedDate);
+                }
+
+                // Trigger the updateDate function on input change
+                $("#dayssss").on('input', updateDate);
+
+                // Call the function on page load
+                updateDate();
             });
 
 
@@ -691,6 +951,20 @@
                 // Set the first tab as active by default
                 $('.tab-item:first').click();
             });
+
+            document.getElementById('openModal').addEventListener('click', function() {
+    document.getElementById('myModal').style.display = 'block';
+});
+
+document.getElementById('closeModal').addEventListener('click', function() {
+    document.getElementById('myModal').style.display = 'none';
+});
+
+window.addEventListener('click', function(event) {
+    if (event.target == document.getElementById('myModal')) {
+        document.getElementById('myModal').style.display = 'none';
+    }
+});
         </script>
     </div>
 @endsection

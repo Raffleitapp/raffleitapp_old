@@ -143,7 +143,26 @@
 
                     </div>
                     <div class="form-group">
+                        <label for="">Raffle Target</label>
+                        <input type="number" name="raffle_target" placeholder="Enter raffle target"
+                            class="custom-form-control" id="host_name">
+
+                    </div>
+                    <div class="form-group">
                         <label for="">Raffle Ticket Prices</label>
+                        <div class="price-section">
+                            <div class="price-insert">
+                                <span id="decreaseButton0">-</span>
+                                <input type="number" required name="one_ticket" id="numberField0" value="0">
+                                <span id="increaseButton0">+</span>
+                            </div>
+                            <div class="fo">
+                                For
+                            </div>
+                            <div class="price-label">
+                                3 Ticket
+                            </div>
+                        </div>
                         <div class="price-section">
                             <div class="price-insert">
                                 <span id="decreaseButton1">-</span>
@@ -167,7 +186,7 @@
                                 For
                             </div>
                             <div class="price-label">
-                                10 Ticket
+                                5 Ticket
                             </div>
                         </div>
                         <div class="price-section">
@@ -180,7 +199,7 @@
                                 For
                             </div>
                             <div class="price-label">
-                                20 Ticket
+                                10 Ticket
                             </div>
                         </div>
                         <div class="price-section">
@@ -193,7 +212,7 @@
                                 For
                             </div>
                             <div class="price-label">
-                                120 Ticket
+                                15 Ticket
                             </div>
                         </div>
                         <div class="price-section">
@@ -207,7 +226,7 @@
                                 For
                             </div>
                             <div class="price-label">
-                                200 Ticket
+                                20 Ticket
                             </div>
                         </div>
                         <p class="text">The above preset value will be applied and can’t be changed. <br> By proceeding you agree with this terms</p>
@@ -323,6 +342,29 @@
                     }
 
                 });
+
+                $('#increaseButton0').click(function() {
+                    var numberField = $('#numberField0');
+                    var currentValue = parseInt(numberField.val(), 10); // Parse the current value as an integer
+                    var incrementAmount = 1; // You can change this value to the desired increment amount
+
+                    // Increment the value by the specified amount
+                    numberField.val(currentValue + incrementAmount);
+                });
+                $('#decreaseButton0').click(function() {
+                    var numberField = $('#numberField0');
+                    if(numberField.val() == 0){
+                        return;
+                    }else{
+                        var currentValue = parseInt(numberField.val(), 10); // Parse the current value as an integer
+                    var incrementAmount = 1; // You can change this value to the desired increment amount
+
+                    // Increment the value by the specified amount
+                    numberField.val(currentValue - incrementAmount);
+                    }
+
+                });
+
 
                 $('#increaseButton2').click(function() {
                     var numberField = $('#numberField2');
@@ -459,7 +501,7 @@
                                         timer: 1000
                                     });
                                     localStorage.clear();
-                                    window.location = "{{ url('user/dashboard') }}"
+                                    window.location = "{{ url('host/dashboard') }}"
 
                                 } else {
                                     Swal.fire({

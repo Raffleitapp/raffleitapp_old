@@ -32,7 +32,7 @@ class UserAuthController extends Controller
 
     function walkThrough()
     {
-        if (session()->has('user_id') && (session()->get('user_type') == 'user')) {
+        if (session()->has('user_id') && (session()->get('user_type') == 'host')) {
             $data = DB::table('users')->where('id', session()->get('user_id'))->exists();
             if ($data) {
                 return view('host.workthrough');
@@ -49,7 +49,7 @@ class UserAuthController extends Controller
 
     function chooseOrganisation()
     {
-        if (session()->has('user_id') && (session()->get('user_type') == 'user')) {
+        if (session()->has('user_id') && (session()->get('user_type') == 'host')) {
             $data = DB::table('users')->where('id', session()->get('user_id'))->exists();
             if ($data) {
                 $categoryData = DB::table('organisation')->where('user_id', session()->get('user_id'))->get();
@@ -222,7 +222,7 @@ class UserAuthController extends Controller
 
     function save_oranganisation(Request $req)
     {
-        if (session()->has('uid') && (session()->get('user_type') == 'user')) {
+        if (session()->has('uid') && (session()->get('user_type') == 'host')) {
             $validator = Validator::make($req->all(), [
                 'image' => 'max:4000',
             ]);
@@ -259,7 +259,7 @@ class UserAuthController extends Controller
     public function save_organisation(Request $request)
     {
         //check the authentication user
-        if (session()->has('user_id') && session()->get('user_type') == 'user') {
+        if (session()->has('user_id') && session()->get('user_type') == 'host') {
             $validator = Validator::make($request->all(), [
                 'category_id' => 'required',
                 'organisation_name' => 'required',
@@ -279,7 +279,7 @@ class UserAuthController extends Controller
                 $file->storeAs('uploads', $fileName);
                 $path = $file->store("public/images");
                 $imageNames = basename($path);
-                $data = DB::table('organisation')->insert([
+                $data = DB::table('organisation')->insertGetId([
                     'category_id' => $request->category_id,
                     'organisation_name' => $request->organisation_name,
                     'cover_image' => $imageNames,
@@ -293,7 +293,8 @@ class UserAuthController extends Controller
                 if ($data) {
                     return response()->json([
                         'code' => 201,
-                        'message' => 'Organisation created successfully'
+                        'message' => 'Organisation created successfully',
+                        'data' => $data
                     ]);
                 } else {
                     return response()->json([
@@ -302,7 +303,7 @@ class UserAuthController extends Controller
                     ]);
                 }
             }
-            $data = DB::table('organisation')->insert([
+            $data = DB::table('organisation')->insertGetId([
                 'category_id' => $request->category_id,
                 'organisation_name' => $request->organisation_name,
                 'cover_image' => '',
@@ -316,7 +317,8 @@ class UserAuthController extends Controller
             if ($data) {
                 return response()->json([
                     'code' => 201,
-                    'message' => 'Organisation created successfully'
+                    'message' => 'Organisation created successfully',
+                    'data' => $data
                 ]);
             } else {
                 return response()->json([
@@ -382,7 +384,7 @@ class UserAuthController extends Controller
 
     public function createRaffle()
     {
-        if (session()->has('user_id') && (session()->get('user_type') == 'user')) {
+        if (session()->has('user_id') && (session()->get('user_type') == 'host')) {
 
                 return view('createraffle');
 
@@ -414,7 +416,7 @@ class UserAuthController extends Controller
     }
     public function addFundraising(Request $request)
     {
-        if (session()->has('user_id') && session()->get('user_type') == 'user') {
+        if (session()->has('user_id') && session()->get('user_type') == 'host') {
 
             $data = DB::table('fundraising_check')->insertGetId([
                 'user_id' => session()->get('user_id'),

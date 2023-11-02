@@ -444,7 +444,7 @@
                 const timeRemaining = targetDateTime - now;
 
                 if (timeRemaining <= 0) {
-                    element.innerHTML = "Countdown expired!";
+                    element.innerHTML = "Raffle Ended!";
                 } else {
                     const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
                     const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));

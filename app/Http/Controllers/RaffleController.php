@@ -125,6 +125,15 @@ class RaffleController extends Controller
         }
     }
 
+    public function extendDate(Request $request){
+
+        $data = DB::table('raffle')->where('id', $request->id)->update([
+        'ending_date' => $request->ending_date,
+        ]);
+        if($data){
+            return redirect()->back()->with('message', 'Ending Date updated successfully.');
+        }
+    }
 
 
 

@@ -155,4 +155,5 @@ Route::group(['prefix' => 'user'], function () {
 
 Route::group(['prefix' => 'host'], function () {
     Route::get("dashboard",[HostController::class,'getDashboard']);
+    Route::get("raffle-detail/{id}",[HostController::class,'goRaffleDetails']);
 });

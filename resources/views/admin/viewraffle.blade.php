@@ -144,8 +144,8 @@ box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.25);
 
             @if ($data->approve_status == 2)
             <div class="flex mb-3">
-                <button class="btn btn-success btn-sm p-2 mr-3">Accept</button>
-                <button class="btn btn-danger btn-sm p-2 mx-5">Reject</button>
+                <button onclick="convertUser('accept')" class="btn btn-success btn-sm p-2 mr-3">Accept</button>
+                <button onclick="convertUser('reject')" class="btn btn-danger btn-sm p-2 mx-5">Reject</button>
             </div>
             @endif
 
@@ -338,6 +338,7 @@ box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.25);
 
     </div>
     <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <script src="{{asset("js/sweetalert.js")}}"></script>
     <script>
         $("#support-item").hide();
         $("#completed-item").hide();
@@ -385,5 +386,48 @@ box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.25);
             // Set the first tab as active by default
             $('.tab-item:first').click();
         });
+
+
+        function convertUser() {
+            Swal.fire({
+                title: '<strong>Are you sure you want to become a host?</strong>',
+                icon: 'info',
+                html: "You won't be able to <b>revert</b> this ",
+                // '<a href="//sweetalert2.github.io">links</a> ' +
+                // 'and other HTML tags',
+                showCloseButton: true,
+                showCancelButton: true,
+                focusConfirm: false,
+                confirmButtonText: '<i class="fa fa-thumbs-up"></i> Yes',
+                confirmButtonAriaLabel: 'Thumbs up, great!',
+                cancelButtonText: '<i class="fa fa-thumbs-down"></i> No',
+                cancelButtonAriaLabel: 'Thumbs down'
+            }).then((result) => {
+                if (result.value) {
+                    console.log(result);
+                    $.ajax({
+                        type: "post",
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        url: "{{url("user/changeUser")}}",
+                        data: {},
+                        dataType: 'json',
+                        success: function (response) {
+                            console.log(response);
+                            if(response.code === 201){
+                                showSuccessMsg(response.message);
+                                window.location.href = "/host/dashboard"
+                            }else{
+                                showErrorMsg(response.message);
+                            }
+                        }
+                    });
+
+                }
+            }).catch((err) => {
+
+            });
+        }
     </script>
 @endsection

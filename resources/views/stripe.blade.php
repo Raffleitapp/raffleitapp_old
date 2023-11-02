@@ -286,7 +286,15 @@
 
         // initialize();
         checkStatus();
-        const customer = localStorage
+        const customer = JSON.parse(localStorage.getItem('myData'));
+
+        const param ={
+            amount: customer.amount,
+                total_raffle: customer.total_raffle,
+                raffle_id: customer.raffle_id,
+                pay_type: customer.type
+        }
+        $("#button-text").text(`Pay $${customer.amount} Now`)
         $.ajax({
             type: "POST",
             headers: {
@@ -294,7 +302,7 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             url: "{{ url('/createPay') }}",
-            data: {},
+            data: JSON.stringify(param),
             dataType: "json",
             success: function (response) {
 

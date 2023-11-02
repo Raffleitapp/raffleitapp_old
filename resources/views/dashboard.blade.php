@@ -160,17 +160,20 @@
             </div>
             <div class="ongoing-card-container">
                 @php
-                    $raffle = DB::table('raffle')
-                        ->where('approve_status', 1)
+                    // $raffle = DB::table('raffle')
+                    //     ->where('approve_status', 1)
+                    //     ->leftJoin('organisation', 'raffle.organisation_id', 'organisation.id')
+                    //     ->select('raffle.*', 'organisation.organisation_name', 'organisation.cover_image', 'organisation.handle', 'organisation.website')
+                    //     ->limit(6)
+                    //     ->get();
+                        $raffle = DB::table('raffle_order')->where('raffle_order.user_id', session()->get('user_id'))->join('raffle','raffle_order.raffle_id','raffle.id')
                         ->leftJoin('organisation', 'raffle.organisation_id', 'organisation.id')
-                        ->select('raffle.*', 'organisation.organisation_name', 'organisation.cover_image', 'organisation.handle', 'organisation.website')
-                        ->limit(6)
-                        ->get();
+                        ->select('raffle.*', 'organisation.organisation_name', 'organisation.cover_image', 'organisation.handle', 'organisation.website')->get();
                 @endphp
                 <div class="">
                     <div class="raffle-group">
                         @foreach ($raffle as $item)
-                            <div class="mx-auto raffle-cardz">
+                            <div class="mx-auto raffle-cardz" onclick="location.href='{{ url('raffle_detail/' . $item->state_raffle_hosted) }}'">
                                 <div class="img">
                                     <img src="{{ asset($item->cover_image) }}" alt="">
                                 </div>
