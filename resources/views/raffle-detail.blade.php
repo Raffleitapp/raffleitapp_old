@@ -237,7 +237,7 @@
                         <div class="main-carouselsd">
                             <div class="carouselsd-item">
                                 {{-- <img src="{{ asset('storage/images/' . $data->image1) }}" alt="..."> --}}
-                                <img src="{{ asset($data->image1) }}" alt="...">
+                                <img src="{{ asset('uploads/images/'.$data->image1) }}" alt="...">
 
 
                             </div>
@@ -245,24 +245,26 @@
                         </div>
                         <div class="thumbnail-carouselsd">
 
+
                             @if ($image2 != '')
                                 <div class="thumbnail-item">
-                                    <img src="{{ asset($image2) }}" alt="...">
+                                    <img src="{{ asset('uploads/images/'.$image2) }}" alt="...">
 
                                 </div>
                             @endif
                             @if ($image3 != '')
                                 <div class="thumbnail-item">
-                                    <img src="{{ asset( $image4) }}" alt="...">
+                                    <img src="{{ asset('uploads/images/'.$image3) }}" alt="...">
 
                                 </div>
                             @endif
                             @if ($image4 != '')
                                 <div class="thumbnail-item">
-                                    <img src="{{asset($image4) }}" alt="...">
+                                    <img src="{{ asset('uploads/images/'.$image4) }}" alt="...">
 
                                 </div>
                             @endif
+
 
 
 
@@ -277,6 +279,10 @@
                     <div class="total-pot">
                         <span class="title">Total Pot:</span>
                         <span class="count">{{ '$' . $totalPos }}</span>
+                    </div>
+                    <div class="total-pot">
+                        <span class="title">Raffle Target:</span>
+                        <span class="count">{{ '$' . number_format($data->target,2, '.', ',') }}</span>
                     </div>
                     <h6 class="spa">Description</h6>
                     <p class="text">{{ $data->description }}</p>
@@ -384,7 +390,7 @@
                                 <div class="host-img">
                                     {{-- <img src="{{ asset('storage/images/' . $organisationData->cover_image) }}"
                                         alt=""> --}}
-                                        <img src="{{ asset( $organisationData->cover_image) }}"
+                                        <img src="{{ asset('uploads/images/'. $organisationData->cover_image) }}"
                                         alt="">
                                 </div>
                                 <div class="profile-detail">
@@ -400,25 +406,61 @@
                     </div>
                     <div class="tab-pane">
                         <div class="card p-3" style="width:85vw">
-                           <div class="table-responsive">
-                            <table class="table table-striped table-responsive">
-                                <thead>
-                                    <tr >
-                                        <th style="min-width: 150px">Date </th>
-                                        <th style="min-width: 150px">User</th>
-                                    </tr>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-responsive">
+                                    <thead>
+                                        @php
+                                            $purchase = DB::table('raffle_order')
+                                                ->where('raffle_id', $data->id)
+                                                ->join('users', 'raffle_order.user_id', 'users.id')
+                                                ->orderBy('raffle_order.date_purchase', 'desc')
+                                                ->select('raffle_order.date_purchase', 'users.first_name')
+                                                ->get();
+
+                                            function convertDate($originalDatetime)
+                                            {
+
+                                                // Convert the datetime string to a DateTime object
+                                                $datetime = new DateTime($originalDatetime);
+
+                                                // Get the current time as a DateTime object
+                                                $currentTime = new DateTime();
+
+                                                // Calculate the time difference
+                                                $interval = $currentTime->diff($datetime);
+
+                                                // Format the result
+                                                if ($interval->h > 0) {
+                                                    $result = $interval->h . ' hr ago';
+                                                } elseif ($interval->i > 0) {
+                                                    $result = $interval->i . ' min ago';
+                                                } else {
+                                                    $result = 'just now';
+                                                }
+
+                                                return $result;
+                                            }
+                                        @endphp
+
+                                        <tr>
+                                            <th style="min-width: 150px">Date </th>
+                                            <th style="min-width: 150px">User</th>
+                                        </tr>
 
 
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($purchase as $item)
+                                            <tr>
+                                                <td>{{ convertDate($item->date_purchase) }}</td>
+                                                <td>{{ $item->first_name }}</td>
 
-                                    </tr>
-                                </tbody>
-                            </table>
-                           </div>
+                                            </tr>
+                                        @endforeach
+
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
 
                     </div>

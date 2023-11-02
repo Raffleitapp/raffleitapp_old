@@ -160,7 +160,7 @@
                                 For
                             </div>
                             <div class="price-label">
-                                3 Ticket
+                                1 Ticket
                             </div>
                         </div>
                         <div class="price-section">

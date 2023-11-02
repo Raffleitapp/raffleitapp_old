@@ -444,7 +444,7 @@
     <div class="col-12">
         <div class="raffle-card" onclick="location.href='{{url('raffle_detail/'.$item->state_raffle_hosted)}}'">
             <div class="img">
-                <img src="{{ asset('storage/images/'.$item->cover_image) }}" alt="">
+                <img src="{{ asset('uploads/images/'.$item->cover_image) }}" alt="">
             </div>
             <div class="d">
                 <h3 class="head">{{$item->host_name}}</h3>
@@ -571,7 +571,7 @@
         const timeRemaining = targetDateTime - now;
 
         if (timeRemaining <= 0) {
-            element.innerHTML = "Countdown expired!";
+            element.innerHTML = "Raffle Ended!";
         } else {
             const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
             const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));

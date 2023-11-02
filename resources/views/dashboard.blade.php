@@ -15,7 +15,7 @@
             <div class="row justify-between g-2 gy-3">
                 <div class="col-12 col-md-9">
                     <div class="profile-pix flex items-center">
-                        <img src="{{ asset('storage/images/' . $getUser->profile_pix) }}" class="profile-img" alt="">
+                        <img src="{{ asset('uploads/images/' . $getUser->profile_pix) }}" class="profile-img" alt="">
                         <h5 class="welcome-name ml-4">
                             {{ $getUser->first_name . ' ' . $getUser->last_name }}
                             <span>{{ $getUser->about }}</span>
@@ -175,7 +175,7 @@
                         @foreach ($raffle as $item)
                             <div class="mx-auto raffle-cardz" onclick="location.href='{{ url('raffle_detail/' . $item->state_raffle_hosted) }}'">
                                 <div class="img">
-                                    <img src="{{ asset($item->cover_image) }}" alt="">
+                                    <img src="{{ asset('uploads/images/'.$item->cover_image) }}" alt="">
                                 </div>
                                 <div class="text" style="position: relative">
                                     <div class="" style="width:70%">
@@ -230,7 +230,7 @@
             const timeRemaining = targetDateTime - now;
 
             if (timeRemaining <= 0) {
-                element.innerHTML = "Countdown expired!";
+                element.innerHTML = "Raffle Ended!";
             } else {
                 const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
                 const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));

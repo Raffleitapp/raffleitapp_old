@@ -323,7 +323,7 @@
     <div class="col-12">
         <div class="raffle-card" onclick="location.href='{{url('raffle_detail/'.$item->state_raffle_hosted)}}'">
             <div class="img">
-                <img src="{{ asset('storage/images/'.$item->cover_image) }}" alt="">
+                <img src="{{ asset('uploads/images/'.$item->cover_image) }}" alt="">
             </div>
             <div class="d">
                 <h3 class="head">{{$item->host_name}}</h3>

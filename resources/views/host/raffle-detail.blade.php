@@ -196,6 +196,7 @@
             width: 100%;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.7);
+            transition: display ease-in-out 10s
         }
 
         /* Modal content */
@@ -297,7 +298,8 @@
             outline: none;
         }
 
-        #cancel, #closeModal {
+        #cancel,
+        #closeModal {
             color: #161616;
             padding: 10px;
             font-family: Poppins;
@@ -383,7 +385,7 @@
                         <div class="main-carouselsd">
                             <div class="carouselsd-item">
                                 {{-- <img src="{{ asset('storage/images/' . $data->image1) }}" alt="..."> --}}
-                                <img src="{{ asset($data->image1) }}" alt="...">
+                                <img src="{{ asset('uploads/images/'.$data->image1) }}" alt="...">
 
 
                             </div>
@@ -393,19 +395,19 @@
 
                             @if ($image2 != '')
                                 <div class="thumbnail-item">
-                                    <img src="{{ asset($image2) }}" alt="...">
+                                    <img src="{{ asset('uploads/images/'.$image2) }}" alt="...">
 
                                 </div>
                             @endif
                             @if ($image3 != '')
                                 <div class="thumbnail-item">
-                                    <img src="{{ asset($image4) }}" alt="...">
+                                    <img src="{{ asset('uploads/images/'.$image3) }}" alt="...">
 
                                 </div>
                             @endif
                             @if ($image4 != '')
                                 <div class="thumbnail-item">
-                                    <img src="{{ asset($image4) }}" alt="...">
+                                    <img src="{{ asset('uploads/images/'.$image4) }}" alt="...">
 
                                 </div>
                             @endif
@@ -555,6 +557,39 @@
                             <div class="table-responsive">
                                 <table class="table table-striped table-responsive">
                                     <thead>
+                                        @php
+                                            $purchase = DB::table('raffle_order')
+                                                ->where('raffle_id', $data->id)
+                                                ->join('users', 'raffle_order.user_id', 'users.id')
+                                                ->orderBy('raffle_order.date_purchase', 'desc')
+                                                ->select('raffle_order.date_purchase', 'users.first_name')
+                                                ->get();
+
+                                            function convertDate($originalDatetime)
+                                            {
+
+                                                // Convert the datetime string to a DateTime object
+                                                $datetime = new DateTime($originalDatetime);
+
+                                                // Get the current time as a DateTime object
+                                                $currentTime = new DateTime();
+
+                                                // Calculate the time difference
+                                                $interval = $currentTime->diff($datetime);
+
+                                                // Format the result
+                                                if ($interval->h > 0) {
+                                                    $result = $interval->h . ' hr ago';
+                                                } elseif ($interval->i > 0) {
+                                                    $result = $interval->i . ' min ago';
+                                                } else {
+                                                    $result = 'just now';
+                                                }
+
+                                                return $result;
+                                            }
+                                        @endphp
+
                                         <tr>
                                             <th style="min-width: 150px">Date </th>
                                             <th style="min-width: 150px">User</th>
@@ -563,11 +598,14 @@
 
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
+                                        @foreach ($purchase as $item)
+                                            <tr>
+                                                <td>{{ convertDate($item->date_purchase) }}</td>
+                                                <td>{{ $item->first_name }}</td>
 
-                                        </tr>
+                                            </tr>
+                                        @endforeach
+
                                     </tbody>
                                 </table>
                             </div>
@@ -639,54 +677,60 @@
                     <span>Sometimes you need more time, to meet your goals. But keep in mind this can affect users
                         expectations.</span>
                 </div>
-                <div class="form-group mb-3 mt-3">
-                    <label for="" class="day-label">How many days do you want to add?</label>
-                    <input type="number" id="dayssss" class="days">
-                </div>
+                <form action="{{url('host/extendRaffle')}}" method="POST">
+                    @csrf
+                    <div class="form-group mb-3 mt-3">
+                        <label for="" class="day-label">How many days do you want to add?</label>
+                        <input type="number" name="day_no" id="dayssss" class="days">
+                    </div>
+                    <input type="text" name="current_date" hidden readonly value="{{ $data->ending_date }}">
+                    <input type="text" name="raffle_id" hidden readonly value="{{ $data->id }}">
 
-                <div class="d-flex align-items-center">
-                    <h5>
-                        <span
-                            style="
-                            color: #666565;
+                    <div class="d-flex align-items-center">
+                        <h5>
+                            <span
+                                style="
+                                color: #666565;
 
-font-family: Poppins;
-font-size: 13px;
-display:block;
-font-style: normal;
-font-weight: 500;
-line-height: 140%;
-                            ">Original
-                            date</span>
-                        <span id="old_date">{{ $data->ending_date }}</span>
-                    </h5>
-                    <h5><svg xmlns="http://www.w3.org/2000/svg" width="50" height="30" viewBox="0 0 50 50"
-                            fill="none">
-                            <path
-                                d="M33.5814 22.9736H10.6439C9.49805 22.9736 8.56055 23.8849 8.56055 24.9986C8.56055 26.1124 9.49805 27.0237 10.6439 27.0237H33.5814V30.6484C33.5814 31.5597 34.7064 32.0052 35.3522 31.3572L41.1439 25.7074C41.5397 25.3024 41.5397 24.6746 41.1439 24.2696L35.3522 18.6198C34.7064 17.9718 33.5814 18.4376 33.5814 19.3286V22.9736Z"
-                                fill="#666565" />
-                        </svg></h5>
-                    <h5>
-                        <span
-                            style="
-                            color:  #161616;
-font-family: Poppins;
-font-size: 13px;
-display:block;
-font-style: normal;
-font-weight: 500;
-line-height: 140%;
-                            ">New
-                            date</span>
-                        <span id="new_date">13 June 2023</span>
-                    </h5>
-                </div>
+    font-family: Poppins;
+    font-size: 13px;
+    display:block;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 140%;
+                                ">Original
+                                date</span>
+                            <span id="old_date">{{ $data->ending_date }}</span>
+                        </h5>
+                        <h5><svg xmlns="http://www.w3.org/2000/svg" width="50" height="30" viewBox="0 0 50 50"
+                                fill="none">
+                                <path
+                                    d="M33.5814 22.9736H10.6439C9.49805 22.9736 8.56055 23.8849 8.56055 24.9986C8.56055 26.1124 9.49805 27.0237 10.6439 27.0237H33.5814V30.6484C33.5814 31.5597 34.7064 32.0052 35.3522 31.3572L41.1439 25.7074C41.5397 25.3024 41.5397 24.6746 41.1439 24.2696L35.3522 18.6198C34.7064 17.9718 33.5814 18.4376 33.5814 19.3286V22.9736Z"
+                                    fill="#666565" />
+                            </svg></h5>
+                        <h5>
+                            <span
+                                style="
+                                color:  #161616;
+    font-family: Poppins;
+    font-size: 13px;
+    display:block;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 140%;
+                                ">New
+                                date</span>
+                            <span id="new_date">13 June 2023</span>
+                        </h5>
+                    </div>
 
-                <div class="flex justify-end">
-                    <button id="closeModal">Cancel</button>
-                    <button id="extend">Extend Time</button>
+                    <div class="flex justify-end">
+                        <button id="closeModal">Cancel</button>
+                        <button type="submit" id="extend">Extend Time</button>
 
-                </div>
+                    </div>
+                </form>
+
             </div>
         </div>
         <script src="{{ asset('js/jquery.min.js') }}"></script>
@@ -953,18 +997,18 @@ line-height: 140%;
             });
 
             document.getElementById('openModal').addEventListener('click', function() {
-    document.getElementById('myModal').style.display = 'block';
-});
+                document.getElementById('myModal').style.display = 'block';
+            });
 
-document.getElementById('closeModal').addEventListener('click', function() {
-    document.getElementById('myModal').style.display = 'none';
-});
+            document.getElementById('closeModal').addEventListener('click', function() {
+                document.getElementById('myModal').style.display = 'none';
+            });
 
-window.addEventListener('click', function(event) {
-    if (event.target == document.getElementById('myModal')) {
-        document.getElementById('myModal').style.display = 'none';
-    }
-});
+            window.addEventListener('click', function(event) {
+                if (event.target == document.getElementById('myModal')) {
+                    document.getElementById('myModal').style.display = 'none';
+                }
+            });
         </script>
     </div>
 @endsection

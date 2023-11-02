@@ -55,7 +55,7 @@
                     </div>
                     <li class="list-item" onclick="location.href='{{ url('raffles') }}'"><a class="view-btn">VIEW LIVE RAFFLES</a></li>
 
-                    <li id="my-account" onclick="location.href='{{ url('user/dashboard') }}'" class="list-item"><a class="view-btn btn-primary">Account</a></li>
+                    <li id="my-account"onclick="location.href='{{ session()->get('user_type') == 'user' ? url('user/dashboard') :  url('host/dashboard') }}'" class="list-item"><a class="view-btn btn-primary">Account</a></li>
 
 
                 </div>

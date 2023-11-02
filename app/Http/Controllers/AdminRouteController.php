@@ -87,7 +87,7 @@ class AdminRouteController extends Controller
         if (session()->has('user_id') && session()->get('user_type') == 'admin') {
             $data = DB::table("raffle")->where('raffle.id', $id)->leftJoin('users', 'raffle.user_id', 'users.id')->select('raffle.*', 'users.first_name', 'users.last_name', 'users.email', 'users.profile_pix', 'users.about', 'users.username')->first();
             if ($data) {
-                return view('admin.viewraffle', compact('data'));
+                return view('admin.viewraffle', get_defined_vars());
             }
         } else {
             session()->flush();
@@ -148,6 +148,26 @@ class AdminRouteController extends Controller
         }
     }
 
+    public function acceptRaffle($id, $val)
+    {
+        if (session()->has("user_id") && session()->get("user_type") == "admin") {
+            $data = DB::table('raffle')->where("id", $id)->update([
+                'approve_status' => $val
+            ]);
+            if($data){
+                return response()->json([
+                    'code' => 201,
+                    'message' => 'updated',
+
+
+                ]);
+            }
+
+        } else {
+            session()->flush();
+            return redirect("/login");
+        }
+    }
     // public function saveMultiple(Request $request)
     // {
 

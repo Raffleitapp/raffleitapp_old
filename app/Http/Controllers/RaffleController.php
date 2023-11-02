@@ -32,40 +32,45 @@ class RaffleController extends Controller
         if ($req->has('image1')) {
             $file = $req->file('image1');
             $fileName = time() . $file->getClientOriginalName();;
-            $file->storeAs('uploads', $fileName);
-            $path = $file->store("public/images");
-            $imageNames = basename($path);
+            // $file->storeAs('uploads', $fileName);
+            // $path = $file->store("public/images");
+            $file->move(public_path('uploads/images'), $fileName);
+            // $imageNames = basename($path);
             global $image1;
-            $image1 = $imageNames;
+            $image1 = $fileName;
         }
 
         if ($req->has('image2')) {
             $file = $req->file('image2');
             $fileName = time() . $file->getClientOriginalName();;
-            $file->storeAs('uploads', $fileName);
-            $path = $file->store("public/images");
-            $imageNames = basename($path);
+            // $file->storeAs('uploads', $fileName);
+            // $path = $file->store("public/images");
+            // $imageNames = basename($path);
+            $file->move(public_path('uploads/images'), $fileName);
             global $image2;
-            $image2 = $imageNames;
+            $image2 = $fileName;
         }
         if ($req->has('image3')) {
             $file = $req->file('image3');
             $fileName = time() . $file->getClientOriginalName();;
-            $file->storeAs('uploads', $fileName);
-            $path = $file->store("public/images");
-            $imageNames = basename($path);
+            // $file->storeAs('uploads', $fileName);
+            // $path = $file->store("public/images");
+            // $imageNames = basename($path);
+            $file->move(public_path('uploads/images'), $fileName);
             global $image3;
-            $image3 = $imageNames;
+            $image3 = $fileName;
         }
 
         if ($req->has('image4')) {
             $file = $req->file('image4');
             $fileName = time() . $file->getClientOriginalName();;
-            $file->storeAs('uploads', $fileName);
-            $path = $file->store("public/images");
-            $imageNames = basename($path);
+            // $file->storeAs('uploads', $fileName);
+            // $path = $file->store("public/images");
+            // $imageNames = basename($path);
+            $file->move(public_path('uploads/images'), $fileName);
+
             global $image4;
-            $image4 = $imageNames;
+            $image4 = $fileName;
         }
 
 
@@ -81,6 +86,7 @@ class RaffleController extends Controller
             'image2' => $image2,
             'image3' => $image3,
             'image4' => $image4,
+            'target' => $req->raffle_target,
             'starting_date' => $req->starting_date,
             'ending_date' => $req->ending_date,
             'state_raffle_hosted' => $link,
@@ -90,6 +96,7 @@ class RaffleController extends Controller
 
             DB::table("ticket_price")->insert([
                 'raffle_id' => $data,
+                'one' => $req->one_ticket,
                 'three' => $req->three_ticket,
                 'ten' => $req->ten_ticket,
                 'twenty' => $req->twenty_ticket,
@@ -112,7 +119,7 @@ class RaffleController extends Controller
     {
         $data =  DB::table("raffle")->where('approve_status', 1)
             ->leftJoin('organisation', 'raffle.organisation_id', 'organisation.id')
-            ->select('raffle.*', 'organisation.organisation_name', 'organisation.cover_image', 'organisation.handle','organisation.website')
+            ->select('raffle.*', 'organisation.organisation_name', 'organisation.cover_image', 'organisation.handle', 'organisation.website')
             ->paginate(7);
         return view('allraffle', compact('data'));
     }
@@ -125,13 +132,17 @@ class RaffleController extends Controller
         }
     }
 
-    public function extendDate(Request $request){
+    public function extendDate(Request $request)
+    {
 
-        $data = DB::table('raffle')->where('id', $request->id)->update([
-        'ending_date' => $request->ending_date,
+        $update = date("Y-m-d H:i:s", strtotime($request->current_date . "+" . $request->day_no . "days"));
+        $data = DB::table('raffle')->where('id', $request->raffle_id)->update([
+            'ending_date' => $update,
         ]);
-        if($data){
+        if ($data) {
             return redirect()->back()->with('message', 'Ending Date updated successfully.');
+        } else {
+            return redirect()->back()->with('error', 'Unable to update ending date');
         }
     }
 
@@ -139,7 +150,8 @@ class RaffleController extends Controller
 
     //pay
 
-    public function createStripeToken(Request $request){
+    public function createStripeToken(Request $request)
+    {
         try {
             $validator = Validator::make($request->all(), [
                 'card_email' => 'required',
@@ -152,7 +164,7 @@ class RaffleController extends Controller
                 $response = [
                     'success' => false,
                     'message' => 'Validation Error.', $validator->errors(),
-                    'status'=> 500
+                    'status' => 500
                 ];
                 return response()->json($response, 404);
             }
@@ -192,25 +204,22 @@ class RaffleController extends Controller
             ];
             return response()->json($response, 200);
         } catch (Exception $e) {
-            return response()->json($e->getMessage(),200);
+            return response()->json($e->getMessage(), 200);
         }
-
     }
 
     public function handlePost(Request $request)
     {
         Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
-        Stripe\Charge::create ([
-                "amount" => 100 * 150,
-                "currency" => "inr",
-                "source" => $request->stripeToken,
-                "description" => "Making test payment."
+        Stripe\Charge::create([
+            "amount" => 100 * 150,
+            "currency" => "inr",
+            "source" => $request->stripeToken,
+            "description" => "Making test payment."
         ]);
 
         Session::flash('success', 'Payment has been successfully processed.');
 
         return back();
-
-
     }
 }

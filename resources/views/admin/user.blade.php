@@ -78,7 +78,7 @@
                 <tr class="text-center align-middle">
                     <td>{{$index + 1}}</td>
                     <td>
-                        <img class="profile-image mx-auto" src="{{asset("img/icon/user.png")}}" alt="">
+                        <img class="profile-image mx-auto" src="{{asset('uploads/images/'.$item->profile_pix)}}" alt="">
                     </td>
                     <td>{{$item->first_name.' '.$item->last_name}}</td>
                     <td>{{$item->email}}</td>
@@ -98,7 +98,7 @@
 
             </tbody>
         </table>
-   
+
     </div>
     {{ $user->links('vendor.pagination.bootstrap-5') }}
 
