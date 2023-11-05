@@ -15,7 +15,7 @@
             <div class="row justify-between g-2 gy-3">
                 <div class="col-12 col-md-9">
                     <div class="profile-pix flex items-center">
-                        <img src="{{ asset('storage/images/' . $getUser->profile_pix) }}" class="profile-img" alt="">
+                        <img src="{{ asset('storage/app/public/images/' . $getUser->profile_pix) }}" class="profile-img" alt="">
                         <h5 class="welcome-name ml-4">
                             {{ $getUser->first_name . ' ' . $getUser->last_name }}
                             <span>{{ $getUser->about }}</span>

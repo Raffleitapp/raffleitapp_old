@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\UserAuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\StripeController;
+use Illuminate\Auth\Events\PasswordReset;
 
 // Route::get("/", [AdminRouteController::class,"index"])->name("index");
 /*
@@ -124,12 +125,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('deleteCategory', [AdminRouteController::class, 'deleteCategory']);
 
     //Admin
-    Route::get('new-admin',[AdminRouteController::class, 'newAdmin']);
+    Route::get('new-admin', [AdminRouteController::class, 'newAdmin']);
     Route::post("addAdmin", [AdminRouteController::class, 'addAdmin']);
     Route::get("admin/{id}", [AdminRouteController::class, 'getAdminById']);
-
-
-
 });
 
 
@@ -149,11 +147,31 @@ Route::group(['prefix' => 'user'], function () {
     Route::get('accdetails', function () {
         return view('accdetails');
     });
-    Route::post('saveAddress',[UserAuthController::class, 'saveAddress'])->name('user.saveAddress');
+    Route::post('saveAddress', [UserAuthController::class, 'saveAddress'])->name('user.saveAddress');
 });
 
 
 Route::group(['prefix' => 'host'], function () {
-    Route::get("dashboard",[HostController::class,'getDashboard']);
-    Route::get("raffle-detail/{id}",[HostController::class,'goRaffleDetails']);
+    Route::get("dashboard", [HostController::class, 'getDashboard']);
+    Route::get("raffle-detail/{id}", [HostController::class, 'goRaffleDetails']);
+});
+
+Route::get('/passwordReset', function () {
+    return new App\Mail\passwordReset();
+});
+
+Route::get('/paymentSuccessful', function () {
+    return new App\Mail\paymentSuccessful();
+});
+
+Route::get('/raffleApproved', function () {
+    return new App\Mail\raffleApproved();
+});
+
+Route::get('/raffleWinner', function () {
+    return new App\Mail\raffleWinner();
+});
+
+Route::get('/registration', function () {
+    return new App\Mail\registration();
 });
