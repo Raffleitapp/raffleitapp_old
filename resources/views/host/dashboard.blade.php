@@ -97,7 +97,7 @@
                 <h5 class="head">Raffles Hosted (live raffles)</h5>
                 @php
                        $raffle = DB::table('raffle')
-                        ->where('approve_status', 1)
+                        ->where('approve_status', 1)->where('raffle.user_id',session()->get('user_id'))
                         ->leftJoin('organisation', 'raffle.organisation_id', 'organisation.id')
                         ->select('raffle.*', 'organisation.organisation_name', 'organisation.cover_image', 'organisation.handle', 'organisation.website')
                         ->limit(6)
@@ -105,8 +105,9 @@
 
                 @endphp
                 <div class="raffle-group">
+                    @if (count($raffle) > 0)
                     @foreach ($raffle as $item)
-                    <div class="mx-auto raffle-cardz" onclick="location.href='{{ url('host/raffle-detail/' . $item->state_raffle_hosted) }}'">
+                    <div class=" raffle-cardz" onclick="location.href='{{ url('host/raffle-detail/' . $item->state_raffle_hosted) }}'">
                         <div class="img">
                             <img src="{{ asset('uploads/images/'.$item->cover_image) }}" alt="">
                         </div>
@@ -142,7 +143,12 @@
                         </div>
 
                     </div>
+
                 @endforeach
+                    @else
+                    <p class="text-center">No live raffle yet</p>
+                    @endif
+
 
                 </div>
             </div>
@@ -152,13 +158,14 @@
                 @php
 
                         $raffle_pend = DB::table('raffle')
-                        ->where('approve_status', 2)
+                        ->where('approve_status', 2)->where('raffle.user_id',session()->get('user_id'))
                         ->leftJoin('organisation', 'raffle.organisation_id', 'organisation.id')
                         ->select('raffle.*', 'organisation.organisation_name', 'organisation.cover_image', 'organisation.handle', 'organisation.website')
                         ->limit(6)
                         ->get();
                 @endphp
                 <div class="raffle-group">
+                    @if (count($raffle_pend) > 0)
                     @foreach ($raffle_pend as $item)
                     <div class="mx-auto raffle-cardz" onclick="location.href='{{ url('host/raffle-detail/' . $item->state_raffle_hosted) }}'">
                         <div class="img">
@@ -197,6 +204,10 @@
 
                     </div>
                 @endforeach
+                    @else
+                    <p class="text-center">You don't have pending raffle </p>
+                    @endif
+
 
                 </div>
             </div>

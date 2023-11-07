@@ -21,31 +21,40 @@
 <body>
     <header>
         <nav class="header-bar">
-            <div class="site-logo">
+            <div class="site-logo" onclick="location.href='{{url('/')}}'">
                 <img src="{{ asset('img/logo.png') }}">
             </div>
             {{-- <div class="align-items-center"> --}}
 
-            <div class="conta">
-                <div class="ul">
+            <div class="conta" style="z-index: 1000">
+                <div class="ul animate__animated animate__bounce animate__slower">
                     <li class="list-item" onclick="location.href='{{ url('/') }}'"><a>HOME</a></li>
                     <span class="vl"></span>
                     <li class="list-item" onclick="location.href='{{url('about') }}'"><a>ABOUT </a></li>
                     <span class="vl"></span>
 
-                    <li class="list-item" onclick="location.href='{{ url('howitworks')}}'"><a>HOW IT WORKS</a></li>
+                    <li class="list-item" onclick="location.href='{{ url('howitworks') }}'"><a>HOW IT WORKS</a></li>
                     <span class="vl"></span>
-                    <li class="list-item"><a>CONTACT</a></li>
+                    <li class="list-item" onclick="location.href='{{ url('contact') }}'"><a>CONTACT</a></li>
+
+
                 </div>
                 {{-- </div> --}}
                 <div class="ul">
 
-                    <div class="axcou">
+                    @if (session()->has('user_id'))
+                    <div class="axcou" onclick="location.href='{{ session()->get('user_type') == 'user' ? url('user/dashboard') :  url('host/dashboard') }}'">
                         <img src="{{ asset('img/account_circle.png') }}" alt="">
                     </div>
-                    <li class="list-item"><a class="view-btn">VIEW LIVE RAFFLES</a></li>
+                    @else
+                    <li class="list-item" onclick="location.href='{{url('login') }}'">
+                       <a style="text-decoration: none; color:white; font-weight:700" href="javascript:void(0)">Login</a>
+                    </li>
+                    @endif
 
-                    <li id="my-account" class="list-item"><a class="view-btn btn-primary">Account</a></li>
+                    <li class="list-item" onclick="location.href='{{ url('raffles') }}'"><a class="view-btn">VIEW LIVE RAFFLES</a></li>
+
+                    <li id="my-account"onclick="location.href='{{ session()->get('user_type') == 'user' ? url('user/dashboard') :  url('host/dashboard') }}'" class="list-item"><a class="view-btn btn-primary">Account</a></li>
 
 
                 </div>
@@ -54,6 +63,9 @@
             <div class="toggle">
                 <i class="bi bi-list"></i>
             </div>
+
+
+
         </nav>
     </header>
     <div class="container p-3" style="display: flex; justify-content:center; align-items: center;">

@@ -26,6 +26,7 @@ class UserAuthController extends Controller
             }
             // return view('admin.dashboard',compact('data')); return array of object
         } else {
+ session()->flush();
             return redirect('/login');
         }
     }
@@ -42,6 +43,7 @@ class UserAuthController extends Controller
             }
             // return view('admin.dashboard',compact('data'));
         } else {
+ session()->flush();
             return redirect('/login');
         }
     }
@@ -76,7 +78,7 @@ class UserAuthController extends Controller
                 return redirect('/login');
             }
         } else {
-            session().flush();
+            session()->flush();
             return redirect('/login');
         }
     }
@@ -557,6 +559,15 @@ class UserAuthController extends Controller
             }
         }else{
             return redirect('/login');
+        }
+    }
+
+    public function raffles(){
+        if(session()->has('user_id') && session()->get('user_type') == 'user'){
+            return view('ticket');
+        }else{
+            session()->flush();
+            return redirect('login');
         }
     }
 }

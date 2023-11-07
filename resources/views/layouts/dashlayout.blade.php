@@ -137,10 +137,11 @@
                             class="sidebar-item {{ request()->is('user/dashboard*') ? 'active' : '' }}"><a
                                 href="javascript:void(0)">Dashboard</a></li>
                         <li onclick="convertUser()" class="sidebar-item"><a href="javascript:void(0)">Become a Host</a></li>
-                        {{-- <li class="sidebar-item"><a href="#">Raffles</a></li> --}}
+                        <li onclick="location.href='{{ url('user/raffles') }}'" class="sidebar-item {{ request()->is('user/raffles*') ? 'active' : '' }}"><a href="javascript:void(0)">Raffles</a></li>
                         <li onclick="location.href='{{ url('user/addresses') }}'"
                             class="sidebar-item {{ request()->is('user/addresses*') ? 'active' : '' }}"><a
                                 href="javascript:void(0)">Addresses</a></li>
+
                         <li class="sidebar-item {{ request()->is('user/accdetails*') ? 'active' : '' }}"><a
                                 href="{{ url('user/accdetails') }}">Account Details</a></li>
                         {{-- <li class="sidebar-item " onclick="location.href='{{url('')}}'"><a href="jaavscript:void(0)">Payment Method</a></li> --}}
@@ -162,11 +163,11 @@
                                 href="javascript:void(0)">Dashboard</a></li>
 
                         {{-- <li class="sidebar-item"><a href="#">Raffles</a></li> --}}
-                        <li onclick="location.href='{{ url('user/addresses') }}'"
-                            class="sidebar-item {{ request()->is('user/addresses*') ? 'active' : '' }}"><a
+                        <li onclick="location.href='{{ url('host/live-raffle') }}'"
+                            class="sidebar-item {{ request()->is('host/live-raffle*') ? 'active' : '' }}"><a
                                 href="javascript:void(0)">Live Raffle</a></li>
-                        <li class="sidebar-item {{ request()->is('user/accdetails*') ? 'active' : '' }}"><a
-                                href="{{ url('user/accdetails') }}">Completed Raffle</a></li>
+                        <li class="sidebar-item {{ request()->is('host/completed*') ? 'active' : '' }}"><a
+                                href="{{ url('host/completed') }}">Completed Raffle</a></li>
                         {{-- <li class="sidebar-item " onclick="location.href='{{url('')}}'"><a href="jaavscript:void(0)">Payment Method</a></li> --}}
                         <li class="sidebar-item" onclick="location.href='{{ url('logout') }}'"><a
                                 href="javascript:void(0)">Logout</a href="javascript:void"></li>

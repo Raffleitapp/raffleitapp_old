@@ -16,37 +16,61 @@
             ->where('user_id', session()->get('user_id'))
             ->where('type', 2);
 
-            if($check_billing->exists()){
-                $bill  = $check_billing->first();
-                $b_first_name = $bill->first_name;
-                $b_last_name = $bill->last_name;
-                $b_email = $bill->email;
-                $b_street = $bill->street;
-                $b_apartment = $bill->apartment;
-                $c = DB::table('cities')->where('id', $bill->city)->first();
+        if ($check_billing->exists()) {
+            $bill = $check_billing->first();
+            $b_first_name = $bill->first_name;
+            $b_last_name = $bill->last_name;
+            $b_email = $bill->email;
+            $b_street = $bill->street;
+            $b_apartment = $bill->apartment;
+            if (!is_null($bill->city)) {
+                $c = DB::table('cities')
+                    ->where('id', $bill->city)
+                    ->first();
                 $b_city = $c->name;
-                $s = DB::table('states')->where('id', $bill->state_id)->first();
-                $country = DB::table('countries')->where('id', $bill->country_id)->first();
-                $b_state = $s->name;
-                $b_country = $country->name;
-
+            } else {
+                $b_city = '';
             }
 
-            if($check_shipping->exists()){
-                $ship  = $check_shipping->first();
-                $s_first_name = $ship->first_name;
-                $s_last_name = $ship->last_name;
-                $s_email = $ship->email;
-                $s_street = $ship->street;
-                $s_apartment = $ship->apartment;
-                $c = DB::table('cities')->where('id', $ship->city)->first();
+            $s = DB::table('states')
+                ->where('id', $bill->state_id)
+                ->first();
+            $country = DB::table('countries')
+                ->where('id', $bill->country_id)
+                ->first();
+            $b_state = $s->name;
+            $b_country = $country->name;
+        }
+
+        if ($check_shipping->exists()) {
+            $ship = $check_shipping->first();
+            $s_first_name = $ship->first_name;
+            $s_last_name = $ship->last_name;
+            $s_email = $ship->email;
+            $s_street = $ship->street;
+            $s_apartment = $ship->apartment;
+            $c = DB::table('cities')
+                ->where('id', $ship->city)
+                ->first();
+            // $s_city = $c->name;
+            if (!is_null($ship->city)) {
+                $c = DB::table('cities')
+                    ->where('id', $bill->city)
+                    ->first();
                 $s_city = $c->name;
-                $s = DB::table('states')->where('id', $ship->state_id)->first();
-                $country = DB::table('countries')->where('id', $ship->country_id)->first();
-                $s_state = $s->name;
-                $s_country = $country->name;
-
+            } else {
+                $c_city = '';
             }
+
+            $s = DB::table('states')
+                ->where('id', $ship->state_id)
+                ->first();
+            $country = DB::table('countries')
+                ->where('id', $ship->country_id)
+                ->first();
+            $s_state = $s->name;
+            $s_country = $country->name;
+        }
     @endphp
     <div class="address">
         <!-- all-address -->
@@ -56,14 +80,14 @@
 
                 @if (session()->has('error'))
                     <div class="alert alert-danger text-center" role="alert">
-                       {{session()->get('error')}}
+                        {{ session()->get('error') }}
                     </div>
                 @endif
                 @if (session()->has('success'))
-                <div class="alert alert-success text-center" role="alert">
-                   {{session()->get('success')}}
-                </div>
-            @endif
+                    <div class="alert alert-success text-center" role="alert">
+                        {{ session()->get('success') }}
+                    </div>
+                @endif
                 <div class="row my-3">
                     <div class="col-6 col-md-6">
                         <div class="address-container">
@@ -73,16 +97,13 @@
                             @if (!$check_billing->exists())
                                 <p class="address-name">You have not set up this type of address yet.</p>
                                 <button class="btn btn-sm btn-success" id="add-billing">Add</button>
-
-
                             @else
+                                <p class="address-name">{{ $b_first_name . ' ' . $b_last_name }}</p>
+                                <p class="address-name">{{ $b_email }}</p>
+                                <p class="address-name">{{ $b_apartment . ' , ' . $b_street }}</p>
+                                <p class="address-name">{{ $b_city . ', ' . $b_state . ', ' . $b_country }}</p>
 
-                            <p class="address-name">{{$b_first_name.' '.$b_last_name}}</p>
-                            <p class="address-name">{{$b_email}}</p>
-                            <p class="address-name">{{$b_apartment.' , '.$b_street}}</p>
-                            <p class="address-name">{{$b_city.', '.$b_state.', '.$b_country}}</p>
-
-                            {{-- <button class="btn btn-sm btn-success" id="add-billing">Edit</button> --}}
+                                {{-- <button class="btn btn-sm btn-success" id="add-billing">Edit</button> --}}
                             @endif
 
 
@@ -97,10 +118,10 @@
                                 <p class="address-name">You have not set up this type of address yet.</p>
                                 <button class="btn btn-sm btn-success" id="add-ship">Add</button>
                             @else
-                            <p class="address-name">{{$s_first_name.' '.$s_last_name}}</p>
-                            <p class="address-name">{{$s_email}}</p>
-                            <p class="address-name">{{$s_apartment.' , '.$s_street}}</p>
-                            <p class="address-name">{{$s_city.', '.$s_state.', '.$s_country}}</p>
+                                <p class="address-name">{{ $s_first_name . ' ' . $s_last_name }}</p>
+                                <p class="address-name">{{ $s_email }}</p>
+                                <p class="address-name">{{ $s_apartment . ' , ' . $s_street }}</p>
+                                <p class="address-name">{{ $s_city . ', ' . $s_state . ', ' . $s_country }}</p>
                             @endif
 
                         </div>
@@ -142,7 +163,7 @@
 
                         <div class="form-group mb-3">
                             <label for="email">Street Address</label>
-                            <input type="text"  id="email" name="street" required>
+                            <input type="text" id="email" name="street" required>
                         </div>
 
                         @php

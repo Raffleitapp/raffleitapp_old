@@ -18,6 +18,7 @@
             border: 1px solid var(--Primary-Color, #215273);
             box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.25);
             padding: 20px;
+            z-index: 0 !important;
         }
 
         .regform form .form-group label {

@@ -1,7 +1,7 @@
 @extends('layouts.reguser')
 @section('title', 'Complete Profile')
 @section('content')
-    <meta name="csrf-token" content="{{ csrf_token() }}"/>
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://js.stripe.com/v3/"></script>
@@ -88,22 +88,22 @@
         }
 
         /* body {
-                      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-                      font-size: 16px;
-                      -webkit-font-smoothing: antialiased;
-                      display: flex;
-                      justify-content: center;
-                      align-content: center;
-                      height: 100vh;
-                      width: 100vw;
-                    } */
+                          font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+                          font-size: 16px;
+                          -webkit-font-smoothing: antialiased;
+                          display: flex;
+                          justify-content: center;
+                          align-content: center;
+                          height: 100vh;
+                          width: 100vw;
+                        } */
 
         form {
             width: 30vw;
             min-width: 500px;
             align-self: center;
             box-shadow: 0px 0px 0px 0.5px rgba(50, 50, 93, 0.1),
-            0px 2px 5px 0px rgba(50, 50, 93, 0.1), 0px 1px 1.5px 0px rgba(0, 0, 0, 0.07);
+                0px 2px 5px 0px rgba(50, 50, 93, 0.1), 0px 1px 1.5px 0px rgba(0, 0, 0, 0.07);
             border-radius: 7px;
             padding: 40px;
         }
@@ -237,7 +237,7 @@
     <div class="container align-items-center min-h-full p-3">
         <div class="card p-3">
 
-            <div id="payment-message" class="hidden"></div>
+            <div id="payment-message" class="hidden alert alert-danger" role="alert"></div>
 
             <!-- Display a payment form -->
             <form id="payment-form">
@@ -246,12 +246,12 @@
                 <div class="form-group">
                     <label for="">Name on card</label>
                     <input type="text" required autocomplete="off" id="card_name" name="card_name"
-                           placeholder="Enter name on card" class="form-control">
+                        placeholder="Enter name on card" class="form-control">
                 </div>
                 <div class="form-group">
                     <label for="">Email Address</label>
                     <input type="email" required autocomplete="off" id="card_email" name="card_email"
-                           placeholder="Enter your email address" class="form-control">
+                        placeholder="Enter your email address" class="form-control">
                 </div>
                 <div id="payment-element">
 
@@ -267,13 +267,19 @@
 
     </div>
 
+    @php
+        $pay_data = DB::table('payment_settings')
+            ->where('id', 1)
+            ->first();
+
+    @endphp
     <script src="{{ asset('js/jquery.min.js') }}"></script>
-    <script src="{{asset('js/sweetalert.js')}}"></script>
-    <script src="{{asset('js/alert.js')}}"></script>
+    <script src="{{ asset('js/sweetalert.js') }}"></script>
+    <script src="{{ asset('js/alert.js') }}"></script>
     <script>
         // This is your test publishable API key.
         const stripe = Stripe(
-            "pk_test_51HIb63EFkSOsWovisUIYQnHQYmDyy4JyKG8mR7Xi3QERnSRzkjDAMREtYNI2CpoZuexenug0MW92ZMfFrW2W7RSn000UZ0R2Rn"
+            "{{ $pay_data->payment_name }}"
         );
 
         // The items the customer wants to buy
@@ -288,11 +294,11 @@
         checkStatus();
         const customer = JSON.parse(localStorage.getItem('myData'));
 
-        const param ={
+        const param = {
             amount: customer.amount,
-                total_raffle: customer.total_raffle,
-                raffle_id: customer.raffle_id,
-                pay_type: customer.type
+            total_raffle: customer.total_raffle,
+            raffle_id: customer.raffle_id,
+            pay_type: customer.type
         }
         $("#button-text").text(`Pay $${customer.amount} Now`)
         $.ajax({
@@ -304,7 +310,7 @@
             url: "{{ url('/createPay') }}",
             data: JSON.stringify(param),
             dataType: "json",
-            success: function (response) {
+            success: function(response) {
 
                 const appearance = {
                     theme: 'stripe',
@@ -320,7 +326,7 @@
                     }
                 };
 
-                // console.log(response);
+                console.log(response);
                 const clientSecret = response.clientSecret
                 elements = stripe.elements({
                     clientSecret,
@@ -350,11 +356,28 @@
                 const name = $("#card_name").val();
                 const email = $("#card_email").val();
 
-                const {error} = stripe.confirmPayment({
+                // const {error} = stripe.confirmPayment({
+                //     elements,
+                //     confirmParams: {
+                //         // Make sure to change this to your payment completion page
+                //         {{-- return_url: "{{ url('/payment_success') }}", --}}
+                //         return_url: "{{ url('/payment_success') }}",
+                //         payment_method_data: {
+                //             billing_details: {
+                //                 name: name,
+                //                 email: email,
+                //             },
+
+                //         },
+                //     },
+
+                // });
+
+                stripe.confirmPayment({
                     elements,
                     confirmParams: {
                         // Make sure to change this to your payment completion page
-                        {{--return_url: "{{ url('/payment_success') }}",--}}
+                        {{-- return_url: "{{ url('/payment_success') }}", --}}
                         return_url: "{{ url('/payment_success') }}",
                         payment_method_data: {
                             billing_details: {
@@ -365,49 +388,30 @@
                         },
                     },
 
+                }).then((result) => {
+                    // console.log(result);
+                    const error = result.error;
+
+                    if (error.type === "card_error" || error.type === "validation_error" || error
+                        .type === "card_declined") {
+                        setLoading(false);
+                        showMessage(error.message);
+                    } else {
+                        showMessage("An unexpected error occurred.");
+                        setLoading(false);
+
+                    }
+
+                }).catch((err) => {
+                    console.log(err);
                 });
-                if (error.type === "card_error" || error.type === "validation_error") {
-                    showMessage(error.message);
-                } else {
-                    showMessage("An unexpected error occurred.");
-                }
 
-                setLoading(false);
 
+                // setLoading(false);
+//
 
             });
         })
-        {{--async function handleSubmit(e) {--}}
-        {{--    e.preventDefault();--}}
-        {{--    setLoading(true);--}}
-
-        {{--    const {--}}
-        {{--        error--}}
-        {{--    } = await stripe.confirmPayment({--}}
-        {{--        elements,--}}
-        {{--        confirmParams: {--}}
-        {{--            // Make sure to change this to your payment completion page--}}
-        {{--            --}}{{--return_url: "{{ url('/payment_success') }}",--}}
-        {{--            return_url: "{{ url('/stripe-payment') }}",--}}
-        {{--            payment_method_data: {--}}
-        {{--                billing_details: {--}}
-        {{--                    name: 'Jenny Rosen',--}}
-        {{--                    email: 'jenny.rosen@example.com',--}}
-        {{--                },--}}
-
-        {{--            },--}}
-        {{--        },--}}
-        {{--    });--}}
-
-
-        {{--    if (error.type === "card_error" || error.type === "validation_error") {--}}
-        {{--        showMessage(error.message);--}}
-        {{--    } else {--}}
-        {{--        showMessage("An unexpected error occurred.");--}}
-        {{--    }--}}
-
-        {{--    setLoading(false);--}}
-        {{--}--}}
 
         // Fetches the payment intent status after payment submission
         async function checkStatus() {
@@ -449,10 +453,10 @@
             messageContainer.classList.remove("hidden");
             messageContainer.textContent = messageText;
 
-            setTimeout(function () {
-                messageContainer.classList.add("hidden");
-                messageContainer.textContent = "";
-            }, 4000);
+            // setTimeout(function() {
+            //     messageContainer.classList.add("hidden");
+            //     messageContainer.textContent = "";
+            // }, 4000);
         }
 
         // Show a spinner on payment submission

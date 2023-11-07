@@ -1,7 +1,7 @@
 @extends('layouts/master')
 @section('title', 'Create Raffle')
 @section('content')
-<meta name="csrf-token" content="{{ csrf_token() }}" />
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     @vite(['resources/scss/app.scss'])
     <style>
         .top-bg {
@@ -16,6 +16,14 @@
             justify-content: flex-start;
             align-items: center;
 
+        }
+        
+
+        #wordCount {
+            font-size: 12px;
+            color: #333;
+            display: flex;
+            justify-content: flex-end;
         }
     </style>
 
@@ -72,7 +80,7 @@
                     </div> --}}
                     <div class="form-group">
 
-                        <input name="organisation_id" hidden readonly  class="custom-form-control" id="organisation_id">
+                        <input name="organisation_id" hidden readonly class="custom-form-control" id="organisation_id">
                         <input name="fundraiser_id" hidden readonly class="custom-form-control" id="fundraiser_id">
 
 
@@ -82,13 +90,18 @@
 
                     <div class="form-group">
                         <label for="">Host Name</label>
-                        <input name="host_name" required placeholder="Enter host name" class="custom-form-control" id="host_name">
+                        <input name="host_name" required placeholder="Enter host name" class="custom-form-control"
+                            id="host_name">
 
                     </div>
                     <div class="form-group">
                         <label for="">Description</label>
-                        <textarea name="description" required placeholder="Enter the reason for the raffle" id="description" class="custom-form-control"
-                            cols="5" rows="5"></textarea>
+                        <textarea name="description" required placeholder="Enter the reason for the raffle" id="description"
+                            class="custom-form-control" cols="5" rows="5"></textarea>
+                            <div class="flex justify-end">
+                                <p id="wordCount"><span id="count">10</span>/300</p>
+
+                            </div>
                     </div>
 
                     <div class="form-group">
@@ -133,13 +146,13 @@
                     <div class="form-group">
                         <label for="">Raffle Start Date and Time</label>
                         <input type="datetime-local" name="starting_date" required placeholder="Enter host name"
-                            class="custom-form-control" id="host_name">
+                            class="custom-form-control" id="start_date">
 
                     </div>
                     <div class="form-group">
                         <label for="">Raffle End Date and Time</label>
                         <input type="datetime-local" name="ending_date" required placeholder="Enter host name"
-                            class="custom-form-control" id="host_name">
+                            class="custom-form-control" id="futureDateInput">
 
                     </div>
                     <div class="form-group">
@@ -229,12 +242,17 @@
                                 20 Ticket
                             </div>
                         </div>
-                        <p class="text">The above preset value will be applied and can’t be changed. <br> By proceeding you agree with this terms</p>
+                        <p class="text">The above preset value will be applied and can’t be changed. <br> By proceeding
+                            you agree with this terms</p>
                     </div>
-                    <button type="submit" class="submit-raffle login_btn" ><span>Create raffle</span> <span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                        <path d="M2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2C6.48 2 2 6.48 2 12ZM11.71 8.21L14.79 11.29C15.18 11.68 15.18 12.31 14.79 12.71L11.71 15.79C11.32 16.18 10.68 16.18 10.29 15.79C9.9 15.4 9.9 14.77 10.29 14.38L12.67 12L10.29 9.62C9.9 9.23 9.9 8.6 10.29 8.21C10.68 7.82 11.32 7.82 11.71 8.21Z" fill="#215273"/>
-                      </svg></span></button>
-                      <div class="d-flex spin justify-content-center">
+                    <button type="submit" class="submit-raffle login_btn"><span>Create raffle</span> <span><svg
+                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none">
+                                <path
+                                    d="M2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2C6.48 2 2 6.48 2 12ZM11.71 8.21L14.79 11.29C15.18 11.68 15.18 12.31 14.79 12.71L11.71 15.79C11.32 16.18 10.68 16.18 10.29 15.79C9.9 15.4 9.9 14.77 10.29 14.38L12.67 12L10.29 9.62C9.9 9.23 9.9 8.6 10.29 8.21C10.68 7.82 11.32 7.82 11.71 8.21Z"
+                                    fill="#215273" />
+                            </svg></span></button>
+                    <div class="d-flex spin justify-content-center">
                         <div class="spinner-border text-primary" role="status">
                             <span class="">...</span>
                         </div>
@@ -243,11 +261,43 @@
                 </form>
             </div>
         </div>
+        <link rel="stylesheet" href="{{asset('css/toastr.css')}}">
         <script src="{{ asset('js/jquery.min.js') }}"></script>
         <script src="{{ asset('js/sweetalert.js') }}"></script>
+        <script src="{{asset('js/toastr.min.js')}}"></script>
+
         <script src="{{ asset('js/alert.js') }}"></script>
         <script>
+            const futureDateInput = document.getElementById('futureDateInput');
+
+            futureDateInput.addEventListener('input', function() {
+                const inputDate = new Date(futureDateInput.value);
+                const currentDate = new Date();
+
+                // Check if the input date is in the past or equal to the current date
+                if (inputDate <= currentDate) {
+                    // Clear the input if it's not a future date
+                    futureDateInput.value = '';
+                    showError('Please select a future date and time.');
+                }
+            });
             $(document).ready(function() {
+                $("#count").text(0);
+                $("#wordCount").css("color", "blue");
+
+                $("#description").keyup(function (e) {
+                    console.log($(this).val().length);
+                    if($(this).val().length > 300) {
+                       $(this).val($(this).val().substring(0, 300))
+                $("#count").text(300);
+                $("#wordCount").css("color", "red");
+
+                    }
+                $("#count").text($(this).val().length);
+                $("#wordCount").css("color", "green");
+
+
+                });
                 $(".spinner-border").css("display", "none");
 
                 var organsation_id = localStorage.getItem('orgaisation_id');
@@ -274,6 +324,7 @@
                 $('#clickable-imagee1').on('click', function() {
                     $('#image-input1').click();
                 });
+
 
 
                 $('#image-input1').on('change', function() {
@@ -331,14 +382,15 @@
                 });
                 $('#decreaseButton1').click(function() {
                     var numberField = $('#numberField1');
-                    if(numberField.val() == 0){
+                    if (numberField.val() == 0) {
                         return;
-                    }else{
-                        var currentValue = parseInt(numberField.val(), 10); // Parse the current value as an integer
-                    var incrementAmount = 1; // You can change this value to the desired increment amount
+                    } else {
+                        var currentValue = parseInt(numberField.val(),
+                            10); // Parse the current value as an integer
+                        var incrementAmount = 1; // You can change this value to the desired increment amount
 
-                    // Increment the value by the specified amount
-                    numberField.val(currentValue - incrementAmount);
+                        // Increment the value by the specified amount
+                        numberField.val(currentValue - incrementAmount);
                     }
 
                 });
@@ -353,14 +405,15 @@
                 });
                 $('#decreaseButton0').click(function() {
                     var numberField = $('#numberField0');
-                    if(numberField.val() == 0){
+                    if (numberField.val() == 0) {
                         return;
-                    }else{
-                        var currentValue = parseInt(numberField.val(), 10); // Parse the current value as an integer
-                    var incrementAmount = 1; // You can change this value to the desired increment amount
+                    } else {
+                        var currentValue = parseInt(numberField.val(),
+                            10); // Parse the current value as an integer
+                        var incrementAmount = 1; // You can change this value to the desired increment amount
 
-                    // Increment the value by the specified amount
-                    numberField.val(currentValue - incrementAmount);
+                        // Increment the value by the specified amount
+                        numberField.val(currentValue - incrementAmount);
                     }
 
                 });
@@ -376,14 +429,15 @@
                 });
                 $('#decreaseButton2').click(function() {
                     var numberField = $('#numberField2');
-                    if(numberField.val() == 0){
+                    if (numberField.val() == 0) {
                         return;
-                    }else{
-                        var currentValue = parseInt(numberField.val(), 10); // Parse the current value as an integer
-                    var incrementAmount = 1; // You can change this value to the desired increment amount
+                    } else {
+                        var currentValue = parseInt(numberField.val(),
+                            10); // Parse the current value as an integer
+                        var incrementAmount = 1; // You can change this value to the desired increment amount
 
-                    // Increment the value by the specified amount
-                    numberField.val(currentValue - incrementAmount);
+                        // Increment the value by the specified amount
+                        numberField.val(currentValue - incrementAmount);
                     }
 
                 });
@@ -398,14 +452,15 @@
                 });
                 $('#decreaseButton3').click(function() {
                     var numberField = $('#numberField3');
-                    if(numberField.val() == 0){
+                    if (numberField.val() == 0) {
                         return;
-                    }else{
-                        var currentValue = parseInt(numberField.val(), 10); // Parse the current value as an integer
-                    var incrementAmount = 1; // You can change this value to the desired increment amount
+                    } else {
+                        var currentValue = parseInt(numberField.val(),
+                            10); // Parse the current value as an integer
+                        var incrementAmount = 1; // You can change this value to the desired increment amount
 
-                    // Increment the value by the specified amount
-                    numberField.val(currentValue - incrementAmount);
+                        // Increment the value by the specified amount
+                        numberField.val(currentValue - incrementAmount);
                     }
 
                 });
@@ -421,14 +476,15 @@
                 });
                 $('#decreaseButton4').click(function() {
                     var numberField = $('#numberField4');
-                    if(numberField.val() == 0){
+                    if (numberField.val() == 0) {
                         return;
-                    }else{
-                        var currentValue = parseInt(numberField.val(), 10); // Parse the current value as an integer
-                    var incrementAmount = 1; // You can change this value to the desired increment amount
+                    } else {
+                        var currentValue = parseInt(numberField.val(),
+                            10); // Parse the current value as an integer
+                        var incrementAmount = 1; // You can change this value to the desired increment amount
 
-                    // Increment the value by the specified amount
-                    numberField.val(currentValue - incrementAmount);
+                        // Increment the value by the specified amount
+                        numberField.val(currentValue - incrementAmount);
                     }
 
                 });
@@ -444,14 +500,15 @@
                 });
                 $('#decreaseButton5').click(function() {
                     var numberField = $('#numberField5');
-                    if(numberField.val() == 0){
+                    if (numberField.val() == 0) {
                         return;
-                    }else{
-                        var currentValue = parseInt(numberField.val(), 10); // Parse the current value as an integer
-                    var incrementAmount = 1; // You can change this value to the desired increment amount
+                    } else {
+                        var currentValue = parseInt(numberField.val(),
+                            10); // Parse the current value as an integer
+                        var incrementAmount = 1; // You can change this value to the desired increment amount
 
-                    // Increment the value by the specified amount
-                    numberField.val(currentValue - incrementAmount);
+                        // Increment the value by the specified amount
+                        numberField.val(currentValue - incrementAmount);
                     }
 
                 });
@@ -463,71 +520,66 @@
                     e.preventDefault(); // Prevent the default form submission
 
                     var imaghe = $("#image-input");
+                    var start_date = $("#start_date").val();
+               if(start_date >= futureDateInput.value){
+                showError("Start date must be less than end date input");
+                return;
+               }else{
+                $(".spinner-border").css("display", "block");
+                    $(".login_btn").css("display", "none");
+                    var formData = new FormData(this);
 
-                    // if (imaghe.val() === "") {
+                    console.log("form", image);
+                    var formData = new FormData(this);
+                    $.ajax({
+                        type: "post",
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        url: "{{ url('user/saveRaffle') }}",
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        success: function(response) {
+                            $(".spinner-border").css("display", "none");
+                            $(".login_btn").css("display", "block");
+                            if (response.code === 201) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: response.message,
+                                    showConfirmButton: false,
+                                    timer: 1000
+                                });
+                                localStorage.clear();
+                                window.location = "{{ url('host/dashboard') }}"
 
-                    //     Swal.fire({
-                    //         icon: 'error',
-                    //         type: 'error',
-                    //         title: 'Please upload at least one image',
-                    //         showConfirmButton: false,
-                    //         timer: 1500
-                    //     });
-                    //     return;
-                    // } else {
-                        $(".spinner-border").css("display", "block");
-                        $(".login_btn").css("display", "none");
-                        var formData = new FormData(this);
-
-                        console.log("form", image);
-                        var formData = new FormData(this);
-                        $.ajax({
-                            type: "post",
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            },
-                            url: "{{ url('user/saveRaffle') }}",
-                            data: formData,
-                            contentType: false,
-                            processData: false,
-                            success: function(response) {
-                                $(".spinner-border").css("display", "none");
-                                $(".login_btn").css("display", "block");
-                                if (response.code === 201) {
-                                    Swal.fire({
-                                        icon: 'success',
-                                        title: response.message,
-                                        showConfirmButton: false,
-                                        timer: 1000
-                                    });
-                                    localStorage.clear();
-                                    window.location = "{{ url('host/dashboard') }}"
-
-                                } else {
-                                    Swal.fire({
-                                        icon: 'error',
-                                        title: response.message,
-                                        showConfirmButton: false,
-                                        timer: 1500
-                                    })
-                                    $(".spinner-border").css("display", "none");
-                                    $(".login_btn").css("display", "block");
-
-                                }
-                            },
-                            error: function(data) {
-                                // Handle the error response
-                                $(".spinner-border").css("display", "none");
-                                $(".login_btn").css("display", "block");
+                            } else {
                                 Swal.fire({
                                     icon: 'error',
-                                    text: 'Something went wrong',
+                                    title: response.message,
                                     showConfirmButton: false,
                                     timer: 1500
                                 })
-                                console.log(data);
+                                $(".spinner-border").css("display", "none");
+                                $(".login_btn").css("display", "block");
+
                             }
-                        });
+                        },
+                        error: function(data) {
+                            // Handle the error response
+                            $(".spinner-border").css("display", "none");
+                            $(".login_btn").css("display", "block");
+                            Swal.fire({
+                                icon: 'error',
+                                text: 'Something went wrong',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+                            console.log(data);
+                        }
+                    });
+               }
+
                     // }
 
                 })

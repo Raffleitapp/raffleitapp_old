@@ -124,14 +124,21 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('deleteCategory', [AdminRouteController::class, 'deleteCategory']);
 
     //Admin
-    Route::get('new-admin',[AdminRouteController::class, 'newAdmin']);
+    Route::get('new-admin', [AdminRouteController::class, 'newAdmin']);
     Route::post("addAdmin", [AdminRouteController::class, 'addAdmin']);
     Route::get("admin/{id}", [AdminRouteController::class, 'getAdminById']);
 
-    Route::get("acceptRaffle/{id}/{val}",[AdminRouteController::class,'acceptRaffle']);
+    Route::get("acceptRaffle/{id}/{val}", [AdminRouteController::class, 'acceptRaffle']);
+    Route::get("payment-setting", function () {
+        if (session()->has('user_id') && session()->get('user_type') == 'admin') {
+            return view('admin.payment');
+        } else {
+            session()->flush();
+           return redirect('/login');
+        }
+    });
 
-
-
+    Route::post('update-payment',[AdminRouteController::class,'updatePayment'])->name('admin.update-payment');
 });
 
 
@@ -151,13 +158,16 @@ Route::group(['prefix' => 'user'], function () {
     Route::get('accdetails', function () {
         return view('accdetails');
     });
-    Route::post('saveAddress',[UserAuthController::class, 'saveAddress'])->name('user.saveAddress');
+    Route::post('saveAddress', [UserAuthController::class, 'saveAddress'])->name('user.saveAddress');
+    Route::get('raffles', [UserAuthController::class, 'raffles'])->name('user.raffles');
 });
 
 
 Route::group(['prefix' => 'host'], function () {
-    Route::get("dashboard",[HostController::class,'getDashboard']);
-    Route::get("raffle-detail/{id}",[HostController::class,'goRaffleDetails']);
+    Route::get("dashboard", [HostController::class, 'getDashboard']);
+    Route::get("raffle-detail/{id}", [HostController::class, 'goRaffleDetails']);
 
-    Route::post("extendRaffle",[RaffleController::class,'extendDate'])->name("host.extendRaffle");
+    Route::post("extendRaffle", [RaffleController::class, 'extendDate'])->name("host.extendRaffle");
+    Route::get("live-raffle",[HostController::class, 'liveraffle'])->name("host.liive-raffle");
+    Route::get("completed",[HostController::class, 'completedraffle'])->name("host.completed");
 });

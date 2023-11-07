@@ -254,7 +254,7 @@
                 @endphp
                 @foreach ($data as $item )
                 <div class="col-12  col-sm-12 col-md-6 col-lg-6">
-                  
+
                     <div class="mx-auto raffle-cardz" onclick="location.href='{{ url('raffle_detail/' . $item->state_raffle_hosted) }}'">
                         <div class="img">
                             <img src="{{ asset('uploads/images/'.$item->cover_image) }}" alt="">
@@ -285,7 +285,7 @@
                                                 fill="#215273" />
                                         </svg></span><span class="time" id="time"
                                         data-target="{{ $item->ending_date }}">20h 33m</span></h6>
-                                <h6>Total Pot <span class="block text-right" style="text-align: right">$100</span>
+                                <h6>Total Pot <span class="block text-right" style="text-align: right">${{number_format($item->total_amount, 2, '.', ',')}} </span>
                                 </h6>
                             </div>
                         </div>

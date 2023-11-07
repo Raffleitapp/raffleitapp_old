@@ -124,9 +124,17 @@
         </div>
         @php
             $raffle = DB::table('raffle')
-                ->where('approve_status', 1)
+                ->where('approve_status', 1)->leftJoin('raffle_order', 'raffle.id', 'raffle_order.raffle_id')->where('raffle.ending_date' ,'>', now()->format('Y-m-d H:i:s') )
                 ->leftJoin('organisation', 'raffle.organisation_id', 'organisation.id')
-                ->select('raffle.*', 'organisation.organisation_name', 'organisation.cover_image', 'organisation.handle','organisation.website')
+                ->select('raffle.starting_date','raffle.id','raffle.ending_date','raffle.host_name','raffle.state_raffle_hosted', 'organisation.organisation_name', 'organisation.cover_image', 'organisation.handle','organisation.website',  DB::raw('COALESCE(SUM(raffle_order.amount), 0) as total_amount'))
+                ->groupBy('raffle.id',  'raffle.starting_date',
+        'raffle.ending_date',  // Corrected column name
+        'raffle.host_name',
+        'raffle.state_raffle_hosted',
+        'organisation.organisation_name',
+        'organisation.cover_image',
+        'organisation.handle',
+        'organisation.website')
                 ->limit(6)
                 ->get();
         @endphp
@@ -166,13 +174,14 @@
                                                 fill="#215273" />
                                         </svg></span><span class="time" id="time"
                                         data-target="{{ $item->ending_date }}">20h 33m</span></h6>
-                                <h6>Total Pot <span class="block text-right" style="text-align: right">$100</span>
+                                <h6>Total Pot <span class="block text-right" style="text-align: right">{{$item->total_amount}}</span>
                                 </h6>
                             </div>
                         </div>
 
                     </div>
                 </div>
+
 
 
                 @endforeach
@@ -183,7 +192,7 @@
 
 
     </div>
-    {{-- <div class="about-past py-4 px-3">
+    <div class="about-past py-4 px-3">
         <h6 class="small">TESTIMONIALS</h6>
         <h5 class="title-2 text-center">About Past <span>Raffles</span></h5>
         <div class="row py-2 mb-4  pb-4 g-3 sm:gy-5 justify-center ">
@@ -349,7 +358,7 @@
                         d="M2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2C6.48 2 2 6.48 2 12ZM11.71 8.21L14.79 11.29C15.18 11.68 15.18 12.31 14.79 12.71L11.71 15.79C11.32 16.18 10.68 16.18 10.29 15.79C9.9 15.4 9.9 14.77 10.29 14.38L12.67 12L10.29 9.62C9.9 9.23 9.9 8.6 10.29 8.21C10.68 7.82 11.32 7.82 11.71 8.21Z"
                         fill="#215273" />
                 </svg></span></button>
-    </div> --}}
+    </div>
 
     <div class="fd">
         <div class="row g-3 justify-center align-items-center">

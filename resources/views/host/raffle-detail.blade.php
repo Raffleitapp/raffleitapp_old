@@ -530,7 +530,7 @@
                 <ul class="tabs">
                     <li class="tab-item active">Description</li>
                     <li class="tab-item">Raffles History</li>
-                    {{-- <li class="tab-item">Live Support</li> --}}
+                    <li class="tab-item">Live Support</li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active p-2">
@@ -539,7 +539,7 @@
                                 <div class="host-img">
                                     {{-- <img src="{{ asset('storage/images/' . $organisationData->cover_image) }}"
                                         alt=""> --}}
-                                    <img src="{{ asset($organisationData->cover_image) }}" alt="">
+                                    <img src="{{ asset('uploads/images/'.$organisationData->cover_image) }}" alt="">
                                 </div>
                                 <div class="profile-detail">
                                     <h4>{{ $organisationData->organisation_name }}</h4>
@@ -559,7 +559,7 @@
                                     <thead>
                                         @php
                                             $purchase = DB::table('raffle_order')
-                                                ->where('raffle_id', $data->id)
+                                                ->where('raffle_id', $data->id)->where("payment_reason",1)
                                                 ->join('users', 'raffle_order.user_id', 'users.id')
                                                 ->orderBy('raffle_order.date_purchase', 'desc')
                                                 ->select('raffle_order.date_purchase', 'users.first_name')
@@ -602,6 +602,63 @@
                                             <tr>
                                                 <td>{{ convertDate($item->date_purchase) }}</td>
                                                 <td>{{ $item->first_name }}</td>
+
+                                            </tr>
+                                        @endforeach
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="tab-pane">
+                        <div class="card p-3" style="width:85vw">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-responsive">
+                                    <thead>
+                                        @php
+                                            $purchaseSupport = DB::table('raffle_order')
+                                                ->where('raffle_id', $data->id)->where("payment_reason",2)
+                                                ->orderBy('raffle_order.date_purchase', 'desc')->get();
+
+                                            function convertDates($originalDatetimes)
+                                            {
+
+                                                // Convert the datetime string to a DateTime object
+                                                $datetimes = new DateTime($originalDatetimes);
+
+                                                // Get the current time as a DateTime object
+                                                $currentTimes = new DateTime();
+
+                                                // Calculate the time difference
+                                                $intervals = $currentTimes->diff($datetimes);
+
+                                                // Format the result
+                                                if ($intervals->h > 0) {
+                                                    $results = $intervals->h . ' hr ago';
+                                                } elseif ($interval->i > 0) {
+                                                    $results = $intervals->i . ' min ago';
+                                                } else {
+                                                    $results = 'just now';
+                                                }
+
+                                                return $results;
+                                            }
+                                        @endphp
+
+                                        <tr>
+                                            <th style="min-width: 150px">Date </th>
+                                            <th style="min-width: 150px">User</th>
+                                        </tr>
+
+
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($purchaseSupport as $item)
+                                            <tr>
+                                                <td>{{ convertDate($item->date_purchase) }}</td>
+                                                <td>Annonymous</td>
 
                                             </tr>
                                         @endforeach
@@ -725,7 +782,7 @@
                     </div>
 
                     <div class="flex justify-end">
-                        <button id="closeModal">Cancel</button>
+                        <button type="button" id="closeModal">Cancel</button>
                         <button type="submit" id="extend">Extend Time</button>
 
                     </div>

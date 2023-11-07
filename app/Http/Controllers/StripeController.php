@@ -10,8 +10,10 @@ class StripeController extends Controller
 {
     function createPay(Request $request)
     {
-        $stripe = new \Stripe\StripeClient("sk_test_51HIb63EFkSOsWovihAgvTLfBDmMm4IAXuUvQ9PCeNdJhiNj8uRwpC34f8tX4QtKBIOTTkzyVECBwWRpWFilyZ38z00DUBhGP4o");
+        $pay_data = DB::table('payment_settings')->where('id', 1)->first();
 
+        // $stripe = new \Stripe\StripeClient("sk_test_51HIb63EFkSOsWovihAgvTLfBDmMm4IAXuUvQ9PCeNdJhiNj8uRwpC34f8tX4QtKBIOTTkzyVECBwWRpWFilyZ38z00DUBhGP4o");
+        $stripe = new \Stripe\StripeClient($pay_data->code_access);
         try {
             // // retrieve JSON from POST body
             // $jsonStr = file_get_contents('php://input');
@@ -55,42 +57,51 @@ class StripeController extends Controller
 
     function paymentSuccess(Request $request)
     {
+        $pay_data = DB::table('payment_settings')->where('id', 1)->first();
         $paymentIntent = $request->query('payment_intent');
-        $stripe = new \Stripe\StripeClient('sk_test_51HIb63EFkSOsWovihAgvTLfBDmMm4IAXuUvQ9PCeNdJhiNj8uRwpC34f8tX4QtKBIOTTkzyVECBwWRpWFilyZ38z00DUBhGP4o');
+        // $stripe = new \Stripe\StripeClient('sk_test_51HIb63EFkSOsWovihAgvTLfBDmMm4IAXuUvQ9PCeNdJhiNj8uRwpC34f8tX4QtKBIOTTkzyVECBwWRpWFilyZ38z00DUBhGP4o');
+        $stripe = new \Stripe\StripeClient($pay_data->code_access);
+
         $res =   $stripe->paymentIntents->retrieve(
             $paymentIntent,
             []
         );
-
-
-        $ed = $stripe->charges->retrieve(
+ if(!is_null($res->latest_charge)){
+  $ed = $stripe->charges->retrieve(
             $res->latest_charge,
             []
           );
 
-          $insert_order = DB::table('raffle_order')->insertGetId([
-            'raffle_id' => session()->get('raffle_id'),
-            'amount' => session()->get('amount'),
-            'total' => session()->get('total_raffle'),
-            'user_id' => session()->get('user_id'),
-            'date_purchase' => now(),
-            'payment_reason' => session()->get('pay_type') == 'purchase' ? 1 : 2
-          ]);
-          if($insert_order){
-            $dat = DB::table('payment_history')->insert([
-                'payment_id' => $ed->id,
-                'payment_method' => $ed->payment_method,
-                'txn_id' => $ed->balance_transaction,
+
+            $insert_order = DB::table('raffle_order')->insertGetId([
+                'raffle_id' => session()->get('raffle_id'),
+                'amount' => session()->get('amount'),
+                'total' => session()->get('total_raffle'),
                 'user_id' => session()->get('user_id'),
-                'order_id' => $insert_order,
+                'date_purchase' => now(),
+                'payment_reason' => session()->get('pay_type') == 'purchase' ? 1 : 2
+              ]);
+              if($insert_order){
+                $dat = DB::table('payment_history')->insert([
+                    'payment_id' => $ed->id,
+                    'payment_method' => $ed->payment_method,
+                    'txn_id' => $ed->balance_transaction,
+                    'user_id' => session()->get('user_id'),
+                    'order_id' => $insert_order,
 
-            ]);
+                ]);
 
-            if($dat){
-                return view('payment-success');
-            }
+                if($dat){
+                    return view('payment-success');
+                }
+              }
+          }else{
+            return redirect('make-payment');
           }
+
+
+
         // dd($ed);
-        // dd($res);
+         //dd($res);
     }
 }

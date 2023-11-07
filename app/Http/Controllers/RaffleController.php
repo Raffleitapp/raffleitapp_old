@@ -117,10 +117,18 @@ class RaffleController extends Controller
 
     public function allRaffles()
     {
-        $data =  DB::table("raffle")->where('approve_status', 1)
-            ->leftJoin('organisation', 'raffle.organisation_id', 'organisation.id')
-            ->select('raffle.*', 'organisation.organisation_name', 'organisation.cover_image', 'organisation.handle', 'organisation.website')
-            ->paginate(7);
+        $data = DB::table('raffle')
+        ->where('approve_status', 1)->leftJoin('raffle_order', 'raffle.id', 'raffle_order.raffle_id')->where('raffle.ending_date' ,'>', now()->format('Y-m-d H:i:s') )
+        ->leftJoin('organisation', 'raffle.organisation_id', 'organisation.id')
+        ->select('raffle.starting_date','raffle.id','raffle.ending_date','raffle.host_name','raffle.state_raffle_hosted', 'organisation.organisation_name', 'organisation.cover_image', 'organisation.handle','organisation.website',  DB::raw('COALESCE(SUM(raffle_order.amount), 0) as total_amount'))
+        ->groupBy('raffle.id',  'raffle.starting_date',
+'raffle.ending_date',  // Corrected column name
+'raffle.host_name',
+'raffle.state_raffle_hosted',
+'organisation.organisation_name',
+'organisation.cover_image',
+'organisation.handle',
+'organisation.website')->paginate(7);
         return view('allraffle', compact('data'));
     }
 

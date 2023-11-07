@@ -238,4 +238,19 @@ class AdminRouteController extends Controller
             ]);
         }
     }
+
+
+    public function updatePayment(Request $request){
+        $data = DB::table('payment_settings')->where('id', 1)->update([
+            'payment_name' => $request->p_key,
+            'code_access' => $request->p_secret
+        ]);
+        if($data){
+            return back()->with('success','Successfully updated');
+        }else{
+            return back()->with('error','Error updating');
+        }
+    }
+
+
 }
