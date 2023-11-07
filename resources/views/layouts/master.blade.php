@@ -34,7 +34,7 @@
             </div>
             {{-- <div class="align-items-center"> --}}
 
-            <div class="conta" style="z-index: 1000">
+            <div class="conta" style="z-index: 999 !important">
                 <div class="ul animate__animated animate__bounce animate__slower">
                     <li class="list-item" onclick="location.href='{{ url('/') }}'"><a>HOME</a></li>
                     <span class="vl"></span>
@@ -50,12 +50,19 @@
                 {{-- </div> --}}
                 <div class="ul">
 
+                    @if (session()->has('user_id'))
                     <div class="axcou" onclick="location.href='{{ session()->get('user_type') == 'user' ? url('user/dashboard') :  url('host/dashboard') }}'">
                         <img src="{{ asset('img/account_circle.png') }}" alt="">
                     </div>
+                    @else
+                    <li class="list-item" onclick="location.href='{{url('login') }}'">
+                       <a style="text-decoration: none; color:white; font-weight:700" href="javascript:void(0)">Login</a>
+                    </li>
+                    @endif
+
                     <li class="list-item" onclick="location.href='{{ url('raffles') }}'"><a class="view-btn">VIEW LIVE RAFFLES</a></li>
 
-                    <li id="my-account" onclick="location.href='{{ url('user/dashboard') }}'" class="list-item"><a class="view-btn btn-primary">Account</a></li>
+                    <li id="my-account"onclick="location.href='{{ session()->get('user_type') == 'user' ? url('user/dashboard') :  url('host/dashboard') }}'" class="list-item"><a class="view-btn btn-primary">Account</a></li>
 
 
                 </div>
@@ -221,6 +228,7 @@
 
             } else {
                 $("div.toggle").hide();
+                $(".conta").css("z-index", 999);
                 $(".conta").css("display", "flex");
                 toggle = false;
 

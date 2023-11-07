@@ -83,7 +83,7 @@
                     {{-- <li class="sidebar-item"><a href="#">Raffles</a></li> --}}
                     <li onclick="location.href='{{ url('user/addresses')}}'" class="sidebar-item"><a href="javascript:void(0)">Addresses</a></li>
                     <li class="sidebar-item"><a href="{{ url('accdetails')}}">Account Details</a></li>
-                    <li class="sidebar-item" onclick="location.href='{{url('')}}'"><a href="jaavscript:void(0)">Payment Method</a></li>
+                    <li class="sidebar-item" onclick="location.href='{{url('')}}'"><a href="javscript:void(0)">Payment Method</a></li>
                     <li class="sidebar-item" onclick="location.href='{{url('logout')}}'"><a href="javascript:void(0)">Logout</a href="javascript:void"></li>
                 </div>
             </div>

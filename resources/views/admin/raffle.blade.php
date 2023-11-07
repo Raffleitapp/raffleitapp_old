@@ -142,13 +142,15 @@ $raffleCancelCount = DB::table('raffle')->where('approve_status', 4)->get();
                                     <td>{{($item->starting_date)}}</td>
                                     <td>{{$item->ending_date}}</td>
                                     <td style="color: green">{{$item->approve_status == 1 ? "Approved" : ''}}</td>
-                                    <td class="flex justify-center">
-
-                                        <span onclick="location.href='{{url('admin/viewraffle/'.$item->id)}}'" class="mx-2 text-success text-xl"><i class="bi bi-eye-fill"
+                                    <td class="">
+                                        <div class="flex justify-center">
+                                            <span onclick="location.href='{{url('admin/viewraffle/'.$item->id)}}'" class="mx-2 text-success text-xl"><i class="bi bi-eye-fill"
                                                 style="font-size:1rem"></i></span>
 
                                         {{-- <span class="mx-2 text-danger text-xl"><i class="bi bi-trash-fill"
                                                 style="font-size:1rem"></i></span> --}}
+                                        </div>
+
 
                                     </td>
                                 </tr>

@@ -24,7 +24,7 @@ position: relative;
     position: fixed;
     top: 0;
     bottom: 0;
-    overflow: hidden;
+    /* overflow: hidden; */
     z-index: 40;
     transition: left 0.5s ease-in-out;
     /* display:none; */
@@ -113,6 +113,7 @@ font-weight:700;
 
 }
 .admin-layout .admin-sidebar .side-item{
+    overflow-y: auto !important;
 
 }
 .admin-layout .admin-sidebar .side-item li{

@@ -52,13 +52,13 @@
                             alt="Click to Upload">
                         <input type="file" id="image-input" name="image" accept="image/*" style="display:none;">
                     </div>
-                    <div class="row">
-                        <div class="form-group col-md-6">
+                    <div class="row justify-between"  >
+                        <div class="form-group col-md-5 p-0 px-0" >
                             <label for="fname">First Name</label>
                             <input type="text" required id="first_name" required name="first_name" class="form-control"
                                 placeholder="First Name">
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-5  md:ml-2 p-0 px-0">
                             <label for="lname">Last Name</label>
                             <input type="text" required id="last_name" name="last_name" required class="form-control"
                                 placeholder="Last Name">
@@ -105,7 +105,7 @@
             $('#clickable-image').on('click', function() {
                 $('#image-input').click();
             });
-         
+
 
             $('#image-input').on('change', function() {
                 var file = this.files[0];
@@ -158,7 +158,13 @@
                                 showConfirmButton: false,
                                 timer: 1000
                             });
-                            window.location = "{{ url('user/dashboard') }}"
+                            if("{{session()->get('user_type') == 'user'}}"){
+                                window.location = "{{ url('user/dashboard') }}"
+
+                            }else{
+                            window.location = "{{ url('host/dashboard') }}"
+
+                            }
 
                         } else {
                             Swal.fire({

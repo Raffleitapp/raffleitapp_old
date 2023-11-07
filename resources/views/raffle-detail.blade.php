@@ -206,7 +206,7 @@
     </div>
     @php
 
-    $raff_id = $data->id;
+        $raff_id = $data->id;
         $da = DB::table('ticket_price')
             ->where('raffle_id', $data->id)
             ->first();
@@ -221,12 +221,17 @@
         $totalPos = DB::table('raffle_order')
             ->where('raffle_id', $data->id)
             ->sum('amount');
-        $formattedPrice = Lang::get('money', ['amount' => $totalPos]);
 
-        $check_if = DB::table('raffle_order')->where('raffle_id', $data->id)->where('user_id', session()->get('user_id'));
+        $totalTitcket = DB::table('raffle_order')
+            ->where('raffle_id', $data->id)
+            ->sum('total');
+        // $formattedPrice = Lang::get('money', ['amount' => $totalPos]);
+
+        $check_if = DB::table('raffle_order')
+            ->where('raffle_id', $data->id)
+            ->where('user_id', session()->get('user_id'));
         // echo $da;
         // $imageData = DB::table('')
-
     @endphp
     <div class="creat-raffle-container">
         <div class="container">
@@ -237,7 +242,7 @@
                         <div class="main-carouselsd">
                             <div class="carouselsd-item">
                                 {{-- <img src="{{ asset('storage/images/' . $data->image1) }}" alt="..."> --}}
-                                <img src="{{ asset($data->image1) }}" alt="...">
+                                <img src="{{ asset('uploads/images/' . $data->image1) }}" alt="...">
 
 
                             </div>
@@ -245,24 +250,26 @@
                         </div>
                         <div class="thumbnail-carouselsd">
 
+
                             @if ($image2 != '')
                                 <div class="thumbnail-item">
-                                    <img src="{{ asset($image2) }}" alt="...">
+                                    <img src="{{ asset('uploads/images/' . $image2) }}" alt="...">
 
                                 </div>
                             @endif
                             @if ($image3 != '')
                                 <div class="thumbnail-item">
-                                    <img src="{{ asset( $image4) }}" alt="...">
+                                    <img src="{{ asset('uploads/images/' . $image3) }}" alt="...">
 
                                 </div>
                             @endif
                             @if ($image4 != '')
                                 <div class="thumbnail-item">
-                                    <img src="{{asset($image4) }}" alt="...">
+                                    <img src="{{ asset('uploads/images/' . $image4) }}" alt="...">
 
                                 </div>
                             @endif
+
 
 
 
@@ -278,6 +285,10 @@
                         <span class="title">Total Pot:</span>
                         <span class="count">{{ '$' . $totalPos }}</span>
                     </div>
+                    <div class="total-pot">
+                        <span class="title">Raffle Target:</span>
+                        <span class="count">{{ '$' . number_format($data->target, 2, '.', ',') }}</span>
+                    </div>
                     <h6 class="spa">Description</h6>
                     <p class="text">{{ $data->description }}</p>
                     <h6 class="spa">Time left</h6>
@@ -292,11 +303,11 @@
                     </div>
                     <div class="flex">
                         <h6 class="spa">Tickets sold:</h6>
-                        <p class="text">{{ $formattedPrice }}</p>
+                        <p class="text">{{ $totalTitcket }}</p>
                     </div>
                     <div class="support flex">
                         <p class="msg">Do Good. Support Our Cause Today!</p>
-                         <p class="span_btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">SUPPORT</p>
+                        <p class="span_btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">SUPPORT</p>
                     </div>
                     {{-- <div class="price-select">
                     <div class="price-item">
@@ -324,8 +335,7 @@
 
                     </div>
                     @if (!$check_if->exists())
-                    <button class="pay-money" id="pay_now">Get Ticket</button>
-
+                        <button class="pay-money" id="pay_now">Get Ticket</button>
                     @endif
                 </div>
 
@@ -375,7 +385,7 @@
                 <ul class="tabs">
                     <li class="tab-item active">Description</li>
                     <li class="tab-item">Raffles History</li>
-                    {{-- <li class="tab-item">Live Support</li> --}}
+                    <li class="tab-item">Live Support</li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active p-2">
@@ -384,7 +394,7 @@
                                 <div class="host-img">
                                     {{-- <img src="{{ asset('storage/images/' . $organisationData->cover_image) }}"
                                         alt=""> --}}
-                                        <img src="{{ asset( $organisationData->cover_image) }}"
+                                    <img src="{{ asset('uploads/images/' . $organisationData->cover_image) }}"
                                         alt="">
                                 </div>
                                 <div class="profile-detail">
@@ -400,52 +410,152 @@
                     </div>
                     <div class="tab-pane">
                         <div class="card p-3" style="width:85vw">
-                           <div class="table-responsive">
-                            <table class="table table-striped table-responsive">
-                                <thead>
-                                    <tr >
-                                        <th style="min-width: 150px">Date </th>
-                                        <th style="min-width: 150px">User</th>
-                                    </tr>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-responsive">
+                                    <thead>
+                                        @php
+                                            $purchase = DB::table('raffle_order')
+                                                ->where('raffle_id', $data->id)
+                                                ->where('payment_reason', 1)
+                                                ->join('users', 'raffle_order.user_id', 'users.id')
+                                                ->orderBy('raffle_order.date_purchase', 'desc')
+                                                ->select('raffle_order.date_purchase', 'users.username')
+                                                ->get();
+
+                                            function convertDate($originalDatetime)
+                                            {
+                                                // Convert the datetime string to a DateTime object
+                                                $datetime = new DateTime($originalDatetime);
+
+                                                // Get the current time as a DateTime object
+                                                $currentTime = new DateTime();
+
+                                                // Calculate the time difference
+                                                $interval = $currentTime->diff($datetime);
+
+                                                // Format the result
+                                                if ($interval->h > 0) {
+                                                    $result = $interval->h . ' hr ago';
+                                                } elseif ($interval->i > 0) {
+                                                    $result = $interval->i . ' min ago';
+                                                } else {
+                                                    $result = 'just now';
+                                                }
+
+                                                return $result;
+                                            }
+                                        @endphp
+
+                                        <tr>
+                                            <th style="min-width: 150px">Date </th>
+                                            <th style="min-width: 150px">User</th>
+                                        </tr>
 
 
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($purchase as $item)
+                                            <tr>
+                                                <td>{{ convertDate($item->date_purchase) }}</td>
+                                                <td>{{ $item->username }}</td>
 
-                                    </tr>
-                                </tbody>
-                            </table>
-                           </div>
+                                            </tr>
+                                        @endforeach
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="tab-pane">
+                        <div class="card p-3" style="width:85vw">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-responsive">
+                                    <thead>
+                                        @php
+                                            $purchaseSupport = DB::table('raffle_order')
+                                                ->where('raffle_id', $data->id)
+                                                ->where('payment_reason', 2)
+                                                ->orderBy('raffle_order.date_purchase', 'desc')
+                                                ->get();
+
+                                            function convertDates($originalDatetimes)
+                                            {
+                                                // Convert the datetime string to a DateTime object
+                                                $datetimes = new DateTime($originalDatetimes);
+
+                                                // Get the current time as a DateTime object
+                                                $currentTimes = new DateTime();
+
+                                                // Calculate the time difference
+                                                $intervals = $currentTimes->diff($datetimes);
+
+                                                // Format the result
+                                                if ($intervals->h > 0) {
+                                                    $results = $intervals->h . ' hr ago';
+                                                } elseif ($interval->i > 0) {
+                                                    $results = $intervals->i . ' min ago';
+                                                } else {
+                                                    $results = 'just now';
+                                                }
+
+                                                return $results;
+                                            }
+                                        @endphp
+
+                                        <tr>
+                                            <th style="min-width: 150px">Date </th>
+                                            <th style="min-width: 150px">User</th>
+                                        </tr>
+
+
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($purchaseSupport as $item)
+                                            <tr>
+                                                <td>{{ convertDate($item->date_purchase) }}</td>
+                                                <td>Annonymous</td>
+
+                                            </tr>
+                                        @endforeach
+
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
 
                     </div>
 
-                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h6 class="modal-title fs-5 text-sm " id="staticBackdropLabel">Support {{$data->host_name}}</h6>
-                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <form>
-                                    <div class="form-group mb-3">
-                                        <label for="" style="font-size: 12px; font-weight:700" >Amount you want to support with</label>
-                                        <input type="number" name="support-amount" id="support-amount" required class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <button type="submit" class="pay-money btn btn-success btn-sm" id="support-pay">Make payment</button>
-                                    </div>
-                                </form>
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h6 class="modal-title fs-5 text-sm " id="staticBackdropLabel">Support
+                                        {{ $data->host_name }}</h6>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form>
+                                        <div class="form-group mb-3">
+                                            <label for="" style="font-size: 12px; font-weight:700">Amount you want
+                                                to support with</label>
+                                            <input type="number" name="support-amount" id="support-amount" required
+                                                class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="submit" class="pay-money btn btn-success btn-sm"
+                                                id="support-pay">Make payment</button>
+                                        </div>
+                                    </form>
+
+                                </div>
 
                             </div>
-
-                          </div>
                         </div>
-                      </div>
+                    </div>
                     {{-- <div class="tab-pane">
                         <div class="card p-3" style="">
                             <div class="host-detail flex align-items-center">
@@ -468,7 +578,16 @@
             </div>
         </div>
 
+        @php
+            if (session()->has('user.id')) {
+                $check_session = true;
+            } else {
+                $check_session = false;
+            }
+        @endphp
         <script src="{{ asset('js/jquery.min.js') }}"></script>
+        <script src="{{ asset('js/toastr.js') }}"></script>
+
         <script src="{{ asset('js/sweetalert.js') }}"></script>
         <script src="{{ asset('js/alert.js') }}"></script>
         <script>
@@ -512,7 +631,7 @@
             document.getElementById("instagramShare").addEventListener("click", function() {
                 // Share on Instagram
                 var url = encodeURIComponent(window.location.href);
-                window.open("https://telegram.me/share/url?url="+ url, "_blank");
+                window.open("https://telegram.me/share/url?url=" + url, "_blank");
             });
 
             document.getElementById("whatsappShare").addEventListener("click", function() {
@@ -617,20 +736,28 @@
                 $("#pay_now").click(function(e) {
                     e.preventDefault();
                     // console.log(selectedCard, selectedPrice)
-                    if (selectedCard === '') {
-                        showErrorMsg("Please choose the number of ticket you want to purchase");
-                    }else{
+                    var userLoggedIn = {{ session()->has('user_id') ? 'true' : 'false' }};
+                    if (userLoggedIn) {
+                        if (selectedCard === '') {
+                            showErrorMsg("Please choose the number of ticket you want to purchase");
+                        } else {
 
-                        const id = {{$raff_id}}
-                        const param = {
-                            raffle_id: id,
-                            amount: selectedPrice,
-                            total_raffle: selectedCard,
-                            type: 'purchase'
+                            const id = {{ $raff_id }}
+                            const param = {
+                                raffle_id: id,
+                                amount: selectedPrice,
+                                total_raffle: selectedCard,
+                                type: 'purchase'
+                            }
+                            // console.log(param);
+                            localStorage.setItem('myData', JSON.stringify(param));
+                            window.location.href = "{{ url('/make-payment') }}"
                         }
-                        // console.log(param);
-                        localStorage.setItem('myData', JSON.stringify(param));
-                        window.location.href = "{{url('/make-payment')}}"
+                    } else {
+                        showError("Please login before you can make payment")
+                        localStorage.clear();
+                        window.location.href = "{{ url('/login') }}"
+
                     }
 
                 });
@@ -639,20 +766,29 @@
                 $("#support-pay").click(function(e) {
                     e.preventDefault();
                     // console.log(selectedCard, selectedPrice)
-                    let amount = $("#support-amount").val();
-                    if (amount >  0) {
+                    var userLoggedIn = {{ session()->has('user_id') ? 'true' : 'false' }};
+                    if (userLoggedIn) {
+                        let amount = $("#support-amount").val();
+                        if (amount > 0) {
 
-                        const id = {{$raff_id}}
-                        const param = {
-                            raffle_id: id,
-                            amount: amount,
-                            total_raffle: 0,
-                            type: 'support'
+                            const id = {{ $raff_id }}
+                            const param = {
+                                raffle_id: id,
+                                amount: amount,
+                                total_raffle: 0,
+                                type: 'support'
+                            }
+                            // console.log(param);
+                            localStorage.setItem('myData', JSON.stringify(param));
+                            window.location.href = "{{ url('/make-payment') }}"
                         }
-                        // console.log(param);
-                        localStorage.setItem('myData', JSON.stringify(param));
-                        window.location.href = "{{url('/make-payment')}}"
+                    } else {
+                        showError("Please login before you can make payment")
+                        localStorage.clear();
+                        window.location.href = "{{ url('/login') }}"
+
                     }
+
 
                 });
 

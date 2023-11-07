@@ -1,4 +1,4 @@
-function showSuccessMsg(msg){
+function showSuccessMsg(msg) {
     Swal.fire({
         showClass: {
             popup: 'animate__animated animate__fadeInDown'
@@ -13,7 +13,7 @@ function showSuccessMsg(msg){
     });
 }
 
-function showErrorMsg(msg){
+function showErrorMsg(msg) {
     Swal.fire({
         showClass: {
             popup: 'animate__animated animate__fadeInDown'
@@ -26,4 +26,27 @@ function showErrorMsg(msg){
         showConfirmButton: false,
         timer: 1500
     });
+}
+
+
+function showSuccess(msg) {
+    toastr.options = {
+        progressBar: true,
+        // hideDuration: 2000,
+        timeOut: 2000,
+        preventDuplicates: true,
+    }
+
+    toastr.success(msg);
+}
+
+
+function showError(msg) {
+    toastr.options = {
+        progressBar: true,
+        timeOut: 2000,
+        preventDuplicates: true,
+    }
+
+    toastr.error(msg);
 }

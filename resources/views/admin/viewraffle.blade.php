@@ -1,5 +1,7 @@
 @extends('layouts.admin.adminlayout')
 @section('master-admin')
+<meta name="_token" content="{{ csrf_token() }}">
+
     <style>
         .host-detail .host-img {
             border-radius: 90px;
@@ -144,14 +146,14 @@ box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.25);
 
             @if ($data->approve_status == 2)
             <div class="flex mb-3">
-                <button onclick="convertUser('accept')" class="btn btn-success btn-sm p-2 mr-3">Accept</button>
-                <button onclick="convertUser('reject')" class="btn btn-danger btn-sm p-2 mx-5">Reject</button>
+                <button onclick="convertUser(1,{{$data->id}})" class="btn btn-success btn-sm p-2 mr-3">Accept</button>
+                <button onclick="convertUser(2,{{$data->id}})" class="btn btn-danger btn-sm p-2 mx-5">Reject</button>
             </div>
             @endif
 
             <div class="host-detail flex align-items-center">
                 <div class="host-img">
-                    <img src="{{ asset('storage/images/' . $data->profile_pix) }}" alt="">
+                    <img src="{{ asset('uploads/images/'. $data->profile_pix) }}" alt="">
                 </div>
                 <div class="profile-detail">
                     <h4>{{ $data->first_name . ' ' . $data->last_name }}</h4>
@@ -182,6 +184,12 @@ box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.25);
                 <h4>Raffle Description</h4>
                 <h5>{{ $data->description }}</h5>
             </div>
+
+            <div class="profile-detail mb-3">
+                <h4>Raffle Target</h4>
+                <h5>{{"$".number_format($data->target, 2, '.', ',') }}</h5>
+            </div>
+
             <div class="flex">
                 <div class="mr-3">
                     <div class="profile-detail my-2">
@@ -202,7 +210,7 @@ box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.25);
 
             </div>
             <div class="flex price align-items-center mb-3">
-                <h6 class="amount">${{ $priceTicket->three }}</h6>
+                <h6 class="amount">${{ $priceTicket->one }}</h6>
                 <h6 class="for">For</h6>
                 <h6 class="numbe">1 Tickets</h6>
             </div>
@@ -235,16 +243,16 @@ box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.25);
             <div class="profile-detail my-3">
                 <h4>Item Images</h4>
                 <div class="img-con flex overflow-auto">
-                    <div class="imgh" style="background-image:url('{{asset('storage/images/' . $data->profile_pix)}}')">
+                    <div class="imgh" style="background-image:url('{{asset('uploads/images/'. $data->image1)}}')">
 
                     </div>
-                    <div class="imgh" style="background-image:url('{{asset('storage/images/' . $data->profile_pix)}}')">
+                    <div class="imgh" style="background-image:url('{{asset('uploads/images/'. $data->image2)}}')">
 
                     </div>
-                    <div class="imgh" style="background-image:url('{{asset('storage/images/' . $data->profile_pix)}}')">
+                    <div class="imgh" style="background-image:url('{{asset('uploads/images/'. $data->image3)}}')">
 
                     </div>
-                    <div class="imgh" style="background-image:url('{{asset('storage/images/' . $data->profile_pix)}}')">
+                    <div class="imgh" style="background-image:url('{{asset('uploads/images/'. $data->image4)}}')">
 
                     </div>
                 </div>
@@ -255,12 +263,13 @@ box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.25);
                     <li class="tab-item active">Organisation </li>
                     <li class="tab-item">Fundraising </li>
                 </ul>
+                 @csrf
                 <div class="tab-content">
                     <div class="tab-pane active">
                         <div class="card p-3">
                             <div class="host-detail flex align-items-center">
                                 <div class="host-img">
-                                    <img src="{{ asset('storage/images/' . $organisation->cover_image) }}" alt="">
+                                    <img src="{{ asset('uploads/images/'. $organisation->cover_image) }}" alt="">
                                 </div>
                                 <div class="profile-detail">
                                     <h4>{{ $organisation->organisation_name }}</h4>
@@ -338,13 +347,57 @@ box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.25);
 
     </div>
     <script src="{{ asset('js/jquery.min.js') }}"></script>
-    <script src="{{asset("js/sweetalert.js")}}"></script>
+    <script src="{{asset('js/sweetalert.js')}}"></script>
+    <script src="{{asset('js/alert.js')}}"></script>
     <script>
         $("#support-item").hide();
         $("#completed-item").hide();
         $("#cancelled-item").hide();
 
+        function convertUser(a,b) {
+            Swal.fire({
+                title: a == 1 ? '<strong>Are you sure you want to accept this raffle?</strong>' : '<strong>Are you sure you want to reject this raffle?</strong>',
+                icon: a == 1 ? 'info' : 'danger',
+                html: "You won't be able to <b>revert</b> this ",
+                // '<a href="//sweetalert2.github.io">links</a> ' +
+                // 'and other HTML tags',
+                showCloseButton: true,
+                showCancelButton: true,
+                focusConfirm: false,
+                confirmButtonText: ' Yes',
 
+                cancelButtonText: ' No',
+
+            }).then((result) => {
+                if (result.value) {
+                    console.log(result);
+                    const f = a == 1 ? 1 : 4;
+                    $.ajax({
+                        type: "get",
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        url: "{{url("admin/acceptRaffle/")}}/"+b+'/'+f,
+                        data: {
+                            // approve_status: a == 1 ? 1 : 4
+                        },
+                        dataType: 'json',
+                        success: function (response) {
+                            console.log(response);
+                            if(response.code === 201){
+                                showSuccessMsg(response.message);
+                                window.location.href = "/admin/raffle"
+                            }else{
+                                showErrorMsg(response.message);
+                            }
+                        }
+                    });
+
+                }
+            }).catch((err) => {
+
+            });
+        }
         $(document).ready(function() {
             $("span#support-btn").click(() => {
                 $("span#host-btn").removeClass("active");
@@ -386,48 +439,5 @@ box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.25);
             // Set the first tab as active by default
             $('.tab-item:first').click();
         });
-
-
-        function convertUser() {
-            Swal.fire({
-                title: '<strong>Are you sure you want to become a host?</strong>',
-                icon: 'info',
-                html: "You won't be able to <b>revert</b> this ",
-                // '<a href="//sweetalert2.github.io">links</a> ' +
-                // 'and other HTML tags',
-                showCloseButton: true,
-                showCancelButton: true,
-                focusConfirm: false,
-                confirmButtonText: '<i class="fa fa-thumbs-up"></i> Yes',
-                confirmButtonAriaLabel: 'Thumbs up, great!',
-                cancelButtonText: '<i class="fa fa-thumbs-down"></i> No',
-                cancelButtonAriaLabel: 'Thumbs down'
-            }).then((result) => {
-                if (result.value) {
-                    console.log(result);
-                    $.ajax({
-                        type: "post",
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        url: "{{url("user/changeUser")}}",
-                        data: {},
-                        dataType: 'json',
-                        success: function (response) {
-                            console.log(response);
-                            if(response.code === 201){
-                                showSuccessMsg(response.message);
-                                window.location.href = "/host/dashboard"
-                            }else{
-                                showErrorMsg(response.message);
-                            }
-                        }
-                    });
-
-                }
-            }).catch((err) => {
-
-            });
-        }
     </script>
 @endsection

@@ -26,6 +26,7 @@ class UserAuthController extends Controller
             }
             // return view('admin.dashboard',compact('data')); return array of object
         } else {
+ session()->flush();
             return redirect('/login');
         }
     }
@@ -42,6 +43,7 @@ class UserAuthController extends Controller
             }
             // return view('admin.dashboard',compact('data'));
         } else {
+ session()->flush();
             return redirect('/login');
         }
     }
@@ -76,7 +78,7 @@ class UserAuthController extends Controller
                 return redirect('/login');
             }
         } else {
-            session().flush();
+            session()->flush();
             return redirect('/login');
         }
     }
@@ -93,14 +95,14 @@ class UserAuthController extends Controller
             $user = DB::table("users")->insert([
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
-                'user_type' => 1,
+                'user_type' => $request->user_type,
                 'status' => 1
             ]);
 
             if ($user) {
                 $data = DB::table('users')->where('email', $request->email)->first();
                 $request->session()->put('user_id', $data->id);
-                $request->session()->put('user_type', 'user');
+                $request->session()->put('user_type', $request->user_type == 1 ? 'user' : 'host');
 
                 return response()->json([
                     'code' => 201,
@@ -174,7 +176,7 @@ class UserAuthController extends Controller
 
     public function complete_register()
     {
-        if (session()->has('user_id') && (session()->get('user_type') == 'user')) {
+        if (session()->has('user_id') && (session()->get('user_type') == 'user' || session()->get('user_type') == 'host')) {
             $data = DB::table('users')->where('id', session()->get('user_id'));
             if ($data->exists()) {
                 $datas = $data->first();
@@ -194,15 +196,16 @@ class UserAuthController extends Controller
         if (session()->has('user_id')) {
             $file = $request->file('image');
             $fileName = time() . $file->getClientOriginalName();;
-            $file->storeAs('uploads', $fileName);
-            $path = $file->store("public/images");
-            $imageNames = basename($path);
+            // $file->storeAs('uploads', $fileName);
+            // $path = $file->store("public/images");
+            // $imageNames = basename($path);
+            $file->move(public_path('uploads/images'), $fileName);
             $user = DB::table('users')->where('id', session()->get('user_id'))->update([
                 'first_name' => $request->first_name,
                 'last_name' => $request->last_name,
                 'username' => $request->username,
                 'about' => $request->about,
-                'profile_pix' => $imageNames,
+                'profile_pix' => $fileName,
                 'reg_status' => 1
 
             ]);
@@ -232,15 +235,17 @@ class UserAuthController extends Controller
 
                 $file = $req->file('image');
                 $fileName = time() . $file->getClientOriginalName();;
-                $file->storeAs('uploads', $fileName);
-                $path = $file->store("public/images");
-                $imageNames = basename($path);
+                // $file->storeAs('uploads', $fileName);
+                // $path = $file->store("public/images");
+                // $imageNames = basename($path);
+                $file->move(public_path('uploads/images'), $fileName);
+
 
                 $data = DB::table('organisation')->insert([
                     'organisation_name' => $req->title,
                     'category_id' => $req->description,
                     'description' => $req->project_type,
-                    'cover_image' => $imageNames,
+                    'cover_image' => $fileName,
                     'website' => $req->website,
                     'handle' => $req->handle,
                     'status' => 1
@@ -276,13 +281,14 @@ class UserAuthController extends Controller
             if ($request->has('image')) {
                 $file = $request->file('image');
                 $fileName = time() . $file->getClientOriginalName();;
-                $file->storeAs('uploads', $fileName);
-                $path = $file->store("public/images");
-                $imageNames = basename($path);
+                // $file->storeAs('uploads', $fileName);
+                // $path = $file->store("public/images");
+                // $imageNames = basename($path);
+                $file->move(public_path('uploads/images'), $fileName);
                 $data = DB::table('organisation')->insertGetId([
                     'category_id' => $request->category_id,
                     'organisation_name' => $request->organisation_name,
-                    'cover_image' => $imageNames,
+                    'cover_image' => $fileName,
                     'user_id' => session()->get('user_id'),
                     'handle' => $request->handle,
                     'website' => $request->website,
@@ -553,6 +559,15 @@ class UserAuthController extends Controller
             }
         }else{
             return redirect('/login');
+        }
+    }
+
+    public function raffles(){
+        if(session()->has('user_id') && session()->get('user_type') == 'user'){
+            return view('ticket');
+        }else{
+            session()->flush();
+            return redirect('login');
         }
     }
 }

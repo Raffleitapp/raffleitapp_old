@@ -13,7 +13,7 @@
         <style>
             div.regform h5 {
                 color: #000;
-    
+
                 /* H1 Bold */
                 font-family: Poppins;
                 font-size: 24px;
@@ -21,14 +21,14 @@
                 font-weight: 700;
                 line-height: 140%;
             }
-    
+
             .regform .card {
                 border-radius: 10px;
                 border: 1px solid var(--Primary-Color, #215273);
                 box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.25);
                 padding: 20px;
             }
-    
+
             .regform form .form-group label {
                 color: var(--Body-text-color, #303030);
                 /* H5 Bold */
@@ -38,14 +38,14 @@
                 font-weight: 700;
                 line-height: 140%;
             }
-    
-            .regform form .form-group input {
+
+            .regform form .form-group input, .regform form .form-group select {
                 border-radius: 10px;
                 border: 1px solid var(--Primary-Color, #215273);
                 background: #FFF;
                 padding: 12px 10px
             }
-    
+
             .regform form .form-group span {
                 color: var(--Primary-Color, #215273);
                 text-align: center;
@@ -56,12 +56,12 @@
                 font-weight: 400;
                 line-height: 140%;
             }
-    
+
             .regform form .form-group span:hover {
                 cursor: pointer;
                 text-decoration: underline;
             }
-    
+
             .regform h6 {
                 color: var(--Body-text-color, #303030);
                 /* Title 2 */
@@ -71,7 +71,7 @@
                 font-weight: 400;
                 line-height: 140%;
             }
-    
+
             .login_btn {
                 border-radius: 10px;
                 background: var(--Button-Color, #55C595);
@@ -83,11 +83,11 @@
                 font-weight: 700;
                 line-height: 140%;
             }
-    
+
             .regform form .form-group .pass {
                 position: relative;
             }
-    
+
             .regform form .form-group .pass i {
                 font-size: 20px;
                 position: absolute;
@@ -103,17 +103,27 @@
             <div class="form">
                 <form id="reg-form">
                     @csrf
-                    <div class="form-group">
+                    <div class="form-group mb-3">
                         <label for="">Email Address</label>
                         <input type="email" id="email" name="email" class="form-control" placeholder="Email address">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group mb-3">
                         <label for="password">Password</label>
                         <div class="pass">
                             <input type="password" required id="password" name="password" class="form-control"
                                 placeholder="password">
                             <i id="togglePassword" class="bi bi-eye-fill"></i>
                         </div>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="">User Type</label>
+                       <select required name="user_type" class="form-control">
+                        <option value=''>Choose one</option>
+                        <option value='1'>User</option>
+                        <option value='3'>Host</option>
+
+                       </select>
                     </div>
                     <button type="submit" class="btn login_btn">Create</button>
                     <div class="d-flex spin justify-content-center">

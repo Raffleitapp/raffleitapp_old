@@ -254,45 +254,10 @@
                 @endphp
                 @foreach ($data as $item )
                 <div class="col-12  col-sm-12 col-md-6 col-lg-6">
-                    {{-- <div class="raffle-card"   onclick="location.href='{{ url('raffle_detail/' . $item->state_raffle_hosted) }}'">
-                        <div class="img">
-                            {{-- <img src="{{ asset('storage/images/'.$item->cover_image) }}" alt="">
-                            <img src="{{ asset($item->cover_image) }}" alt="">
 
-                        </div>
-                        <div class="d">
-                            <h3 class="head">{{ $item->host_name }}</h3>
-                            <h6>{{ $item->organisation_name }}</h6>
-                            <h6 class="small">{{ $item->handle }}</h6>
-                            <div class="flex align-items-center">
-                                <span><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15"
-                                        viewBox="0 0 18 26" fill="none">
-                                        <path opacity="0.3" d="M3.1416 7.375L8.71238 12.375L14.2832 7.375V3H3.1416V7.375Z"
-                                            fill="#215273" />
-                                        <path opacity="0.3" d="M3.1416 7.375L8.71238 12.375L14.2832 7.375V3H3.1416V7.375Z"
-                                            fill="#215273" />
-                                        <path
-                                            d="M17.0685 0.5H0.356201V8L5.92698 13L0.370128 18.0125L0.356201 25.5H17.0685L17.0546 18.0125L11.4978 13L17.0685 8.0125V0.5ZM14.2831 18.625V23H3.14159V18.625L8.71237 13.625L14.2831 18.625ZM14.2831 7.375L8.71237 12.375L3.14159 7.375V3H14.2831V7.375Z"
-                                            fill="#215273" />
-                                    </svg></span>
-                                <span class="time" id="time" data-target="{{ $item->ending_date }}">20h 33m</span>
-                            </div>
-                        </div>
-
-                        <div class="last">
-
-                            <div class="flex justify-end">
-                                {{-- <span><i class="bi bi-heart-fill"></i></span>
-                            </div>
-                            <div class="btm-div">
-                                <h5>Total Pot</h5>
-                                <h6>$30</h6>
-                            </div>
-                        </div>
-                    </div> --}}
                     <div class="mx-auto raffle-cardz" onclick="location.href='{{ url('raffle_detail/' . $item->state_raffle_hosted) }}'">
                         <div class="img">
-                            <img src="{{ asset($item->cover_image) }}" alt="">
+                            <img src="{{ asset('uploads/images/'.$item->cover_image) }}" alt="">
                         </div>
                         <div class="text" style="position: relative">
                             <div class="" style="width:70%">
@@ -320,7 +285,7 @@
                                                 fill="#215273" />
                                         </svg></span><span class="time" id="time"
                                         data-target="{{ $item->ending_date }}">20h 33m</span></h6>
-                                <h6>Total Pot <span class="block text-right" style="text-align: right">$100</span>
+                                <h6>Total Pot <span class="block text-right" style="text-align: right">${{number_format($item->total_amount, 2, '.', ',')}} </span>
                                 </h6>
                             </div>
                         </div>

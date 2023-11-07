@@ -31,4 +31,20 @@ class HostController extends Controller
             return redirect('/login');
         }
     }
+
+    public function liveraffle(){
+        if(session()->has('user_id') && session()->get('user_type') == 'host'){
+            return view("host.liveraffle");
+        }else{
+            return redirect('/login');
+        }
+    }
+
+    public function completedraffle(){
+        if(session()->has('user_id') && session()->get('user_type') == 'host'){
+            return view("host.completedraffle");
+        }else{
+            return redirect('/login');
+        }
+    }
 }
