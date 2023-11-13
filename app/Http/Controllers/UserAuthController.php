@@ -26,7 +26,7 @@ class UserAuthController extends Controller
             }
             // return view('admin.dashboard',compact('data')); return array of object
         } else {
- session()->flush();
+            session()->flush();
             return redirect('/login');
         }
     }
@@ -43,7 +43,7 @@ class UserAuthController extends Controller
             }
             // return view('admin.dashboard',compact('data'));
         } else {
- session()->flush();
+            session()->flush();
             return redirect('/login');
         }
     }
@@ -137,7 +137,7 @@ class UserAuthController extends Controller
                         'created_at' => now()
                     ]);
                     // $currentUserInfo = Location::get($ip);
-                    $user_type = $ch->user_type == 1 ? 'user' : ( $ch->user_type == 3 ? 'host' : 'admin') ;
+                    $user_type = $ch->user_type == 1 ? 'user' : ($ch->user_type == 3 ? 'host' : 'admin');
 
                     //Store into session fields
                     $req->session()->put('user_id', $ch->id);
@@ -146,7 +146,7 @@ class UserAuthController extends Controller
                     return response()->json([
                         'code' => 201,
                         'message' => "You have successfully logged in",
-                        'type' =>  $ch->user_type == 1 ? 'user' : ( $ch->user_type == 3 ? 'host' : 'admin'),
+                        'type' =>  $ch->user_type == 1 ? 'user' : ($ch->user_type == 3 ? 'host' : 'admin'),
                         'u_status' => $ch->reg_status
                     ]);
                 }
@@ -372,7 +372,6 @@ class UserAuthController extends Controller
                 return redirect()->back()->with('success', 'Billing address added successfully');
             } else {
                 return redirect()->back()->with('error', 'Something went wrong');
-
             }
         }
     }
@@ -392,8 +391,7 @@ class UserAuthController extends Controller
     {
         if (session()->has('user_id') && (session()->get('user_type') == 'host')) {
 
-                return view('createraffle');
-
+            return view('createraffle');
         } else {
             return redirect('/login');
         }
@@ -488,35 +486,35 @@ class UserAuthController extends Controller
                 return redirect()->back()->with('success', 'Shipping address added successfully');
             } else {
                 return redirect()->back()->with('error', 'Something went wrong');
-
             }
         }
     }
 
-    public function changeUser(){
+    public function changeUser()
+    {
         if (session()->has('user_id') && (session()->get('user_type') == 'user')) {
-            $data = DB::table('users')->where('id', session()->get('user_id') )->update([
+            $data = DB::table('users')->where('id', session()->get('user_id'))->update([
                 'user_type' => 3
             ]);
-            if($data){
-                session()->put('user_type','host');
+            if ($data) {
+                session()->put('user_type', 'host');
                 return response()->json([
                     'code' => 201,
                     'message' => "Congratulation you are now a host"
                 ]);
-            }else{
+            } else {
                 return response()->json([
                     'code' => 405,
                     'message' => "Something went wrong"
                 ]);
             }
         }
-
     }
 
-    public function saveAddress(Request $request){
+    public function saveAddress(Request $request)
+    {
         if (session()->has('user_id') && session()->get('user_type') == 'user') {
-            $validator = Validator::make($request->all(),[
+            $validator = Validator::make($request->all(), [
                 'first_name' => 'required',
                 'last_name' => 'required',
                 'email' => 'required',
@@ -527,12 +525,12 @@ class UserAuthController extends Controller
 
             ]);
 
-            if($validator->fails()){
+            if ($validator->fails()) {
                 // return response()->json([
                 //     'code' => 404,
                 //     'message' => "Please make sure you fill in the required"
                 // ]);
-                return redirect()->back()->with('error','Please make sure you fill in the required');
+                return redirect()->back()->with('error', 'Please make sure you fill in the required');
             }
             $data = DB::table('addresses')->insert([
                 'first_name' => $request['first_name'],
@@ -548,24 +546,25 @@ class UserAuthController extends Controller
                 'type' => $request['type'],
                 'user_id'  => session()->get("user_id")
             ]);
-            if($data){
+            if ($data) {
                 // return response()->json([
                 //     'code' => 201,
                 //     'message' => $request->type == 1 ? 'Billing Address Successfully Added' : 'Shipping Address successfully Added'
                 // ]);
-                return redirect('/user/addresses')->with('success',$request->type == 1 ? 'Billing Address Successfully Added' : 'Shipping Address successfully Added');
-            }else{
-                return redirect()->back()->with('error','Something went wrong');
+                return redirect('/user/addresses')->with('success', $request->type == 1 ? 'Billing Address Successfully Added' : 'Shipping Address successfully Added');
+            } else {
+                return redirect()->back()->with('error', 'Something went wrong');
             }
-        }else{
+        } else {
             return redirect('/login');
         }
     }
 
-    public function raffles(){
-        if(session()->has('user_id') && session()->get('user_type') == 'user'){
+    public function raffles()
+    {
+        if (session()->has('user_id') && session()->get('user_type') == 'user') {
             return view('ticket');
-        }else{
+        } else {
             session()->flush();
             return redirect('login');
         }
