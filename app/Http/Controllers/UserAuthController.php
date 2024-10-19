@@ -426,7 +426,6 @@ class UserAuthController extends Controller
                 'user_id' => session()->get('user_id'),
                 'name' => $request->name,
                 'CO' => $request->CO,
-                'user_id' => session()->get('user_id'),
                 'address' => $request->address,
                 'address_2' => $request->address_s,
                 'city' => $request->city,

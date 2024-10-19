@@ -2,7 +2,7 @@
 @section('title', 'Raffle Detail')
 @section('content')
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    @vite(['resources/scss/raffle.scss'])
+    {{-- @vite(['resources/scss/raffle.scss']) --}}
     <style>
         .top-bg {
             height: 20vh;

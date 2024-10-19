@@ -1,7 +1,7 @@
 @extends('layouts.dashlayout')
 @section('title', 'Dashboard')
 @section('contentss')
-    @vite(['resources/scss/raffle.scss'])
+    {{-- @vite(['resources/scss/raffle.scss']) --}}
 
 
 <div class="admin-main-container  p-sm-2 p-md-3 ">
@@ -185,8 +185,8 @@
                             <td>Ernest NDEERXW</td>
                             <td>$100</td>
                         </tr>
-                       
-                        
+
+
                     </tbody>
                 </table>
             </div>

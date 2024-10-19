@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitb755305ed6570c859421f5de02818af6
+class ComposerStaticInit1ad954b125b3c95f202605550897257d
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
@@ -567,6 +567,21 @@ class ComposerStaticInitb755305ed6570c859421f5de02818af6
         'App\\Mail\\raffleApproved' => __DIR__ . '/../..' . '/app/Mail/raffleApproved.php',
         'App\\Mail\\raffleWinner' => __DIR__ . '/../..' . '/app/Mail/raffleWinner.php',
         'App\\Mail\\registration' => __DIR__ . '/../..' . '/app/Mail/registration.php',
+        'App\\Models\\BillingAddress' => __DIR__ . '/../..' . '/app/Models/BillingAddress.php',
+        'App\\Models\\Category' => __DIR__ . '/../..' . '/app/Models/Category.php',
+        'App\\Models\\City' => __DIR__ . '/../..' . '/app/Models/City.php',
+        'App\\Models\\Country' => __DIR__ . '/../..' . '/app/Models/Country.php',
+        'App\\Models\\Fundraising' => __DIR__ . '/../..' . '/app/Models/Fundraising.php',
+        'App\\Models\\Organisation' => __DIR__ . '/../..' . '/app/Models/Organisation.php',
+        'App\\Models\\PaymentHistory' => __DIR__ . '/../..' . '/app/Models/PaymentHistory.php',
+        'App\\Models\\PaymentSettings' => __DIR__ . '/../..' . '/app/Models/PaymentSettings.php',
+        'App\\Models\\Paypal' => __DIR__ . '/../..' . '/app/Models/Paypal.php',
+        'App\\Models\\Raffle' => __DIR__ . '/../..' . '/app/Models/Raffle.php',
+        'App\\Models\\RaffleWinner' => __DIR__ . '/../..' . '/app/Models/RaffleWinner.php',
+        'App\\Models\\ShippingAddress' => __DIR__ . '/../..' . '/app/Models/ShippingAddress.php',
+        'App\\Models\\State' => __DIR__ . '/../..' . '/app/Models/State.php',
+        'App\\Models\\StripePayment' => __DIR__ . '/../..' . '/app/Models/StripePayment.php',
+        'App\\Models\\TicketPrice' => __DIR__ . '/../..' . '/app/Models/TicketPrice.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
@@ -691,6 +706,7 @@ class ComposerStaticInitb755305ed6570c859421f5de02818af6
         'Cron\\MinutesField' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/MinutesField.php',
         'Cron\\MonthField' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/MonthField.php',
         'Database\\Factories\\UserFactory' => __DIR__ . '/../..' . '/database/factories/UserFactory.php',
+        'Database\\Seeders\\CountryStateCityTableSeeder' => __DIR__ . '/../..' . '/database/seeders/CountryStateCityTableSeeder.php',
         'Database\\Seeders\\DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeders/DatabaseSeeder.php',
         'DateError' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateError.php',
         'DateException' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateException.php',
@@ -7088,9 +7104,9 @@ class ComposerStaticInitb755305ed6570c859421f5de02818af6
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitb755305ed6570c859421f5de02818af6::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitb755305ed6570c859421f5de02818af6::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitb755305ed6570c859421f5de02818af6::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit1ad954b125b3c95f202605550897257d::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit1ad954b125b3c95f202605550897257d::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit1ad954b125b3c95f202605550897257d::$classMap;
 
         }, null, ClassLoader::class);
     }

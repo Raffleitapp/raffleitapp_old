@@ -1,7 +1,7 @@
 @extends('layouts.reguser')
 @section('title', 'Complete Profile')
 @section('content')
-    @vite(['resources/scss/app.scss'])
+    {{-- @vite(['resources/scss/app.scss']) --}}
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <style>
         div.spinner-border {

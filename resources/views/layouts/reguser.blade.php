@@ -15,7 +15,7 @@
     <link href="{{ asset('css/header.css') }}" rel="stylesheet">
     <link href="{{ asset('css/dashboard.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('css/animate.css')}}">
-    @vite(['resources/scss/app.scss'])
+    {{-- @vite(['resources/scss/app.scss']) --}}
 </head>
 
 <body>

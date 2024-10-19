@@ -2,7 +2,7 @@
 @section('title', 'Raffle Detail')
 @section('content')
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    @vite(['resources/scss/raffle.scss'])
+    {{-- @vite(['resources/scss/raffle.scss']) --}}
     <style>
         .top-bg {
             height: 20vh;
@@ -206,14 +206,12 @@
     </div>
     @php
 
-    $raff_id = $data->id;
+        $raff_id = $data->id;
         $da = DB::table('ticket_price')
             ->where('raffle_id', $data->id)
             ->first();
 
-        $organisationData = DB::table('organisation')
-            ->where('id', $organ_id)
-            ->first();
+        $organisationData = DB::table('organisation')->where('id', $organ_id)->first();
 
         $totalSales = DB::table('raffle_order')
             ->where('raffle_id', $data->id)
@@ -223,10 +221,11 @@
             ->sum('amount');
         $formattedPrice = Lang::get('money', ['amount' => $totalPos]);
 
-        $check_if = DB::table('raffle_order')->where('raffle_id', $data->id)->where('user_id', session()->get('user_id'));
+        $check_if = DB::table('raffle_order')
+            ->where('raffle_id', $data->id)
+            ->where('user_id', session()->get('user_id'));
         // echo $da;
         // $imageData = DB::table('')
-
     @endphp
     <div class="creat-raffle-container">
         <div class="container">
@@ -253,13 +252,13 @@
                             @endif
                             @if ($image3 != '')
                                 <div class="thumbnail-item">
-                                    <img src="{{ asset( $image4) }}" alt="...">
+                                    <img src="{{ asset($image4) }}" alt="...">
 
                                 </div>
                             @endif
                             @if ($image4 != '')
                                 <div class="thumbnail-item">
-                                    <img src="{{asset($image4) }}" alt="...">
+                                    <img src="{{ asset($image4) }}" alt="...">
 
                                 </div>
                             @endif
@@ -296,55 +295,19 @@
                     </div>
                     <div class="support flex">
                         <p class="msg">Do Good. Support Our Cause Today!</p>
-                         <p class="span_btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">SUPPORT</p>
+                        <p class="span_btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">SUPPORT</p>
                     </div>
-                    {{-- <div class="price-select">
-                    <div class="price-item">
-                        <span class="name">3 Ticket</span>
-                        <span class="amount">${{ $da->three }}</span>
-                    </div>
-                    <div class="price-item">
-                        <span class="name">10 Ticket </span>
-                        <span class="amount">${{ $da->ten }}</span>
-                    </div>
-                    <div class="price-item">
-                        <span class="name">20 Ticket</span>
-                        <span class="amount">${{ $da->twenty }}</span>
-                    </div>
-                    <div class="price-item">
-                        <span class="name">100 Ticket</span>
-                        <span class="amount">${{ $da->one_twenty }}</span>
-                    </div>
-                    <div class="price-item">
-                        <span class="name">200 Ticket</span>
-                        <span class="amount">${{ $da->two_hundred }}</span>
-                    </div>
-                </div> --}}
+
                     <div class="justify-center" id="me">
 
                     </div>
                     @if (!$check_if->exists())
-                    <button class="pay-money" id="pay_now">Get Ticket</button>
-
+                        <button class="pay-money" id="pay_now">Get Ticket</button>
                     @endif
                 </div>
 
             </div>
             <div class="d-flex justify-content-end align-items-center">
-                {{-- <div class="text-icon">
-                    <span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 30 30" fill="none">
-                            <path d="M21.75 0C19.14 0 16.635 1.32425 15 3.41689C13.365 1.32425 10.86 0 8.25 0C3.63 0 0 3.9564 0 8.99183C0 15.1717 5.1 20.2071 12.825 27.8583L15 30L17.175 27.842C24.9 20.2071 30 15.1717 30 8.99183C30 3.9564 26.37 0 21.75 0ZM15.15 25.4223L15 25.5858L14.85 25.4223C7.71 18.376 3 13.7166 3 8.99183C3 5.72207 5.25 3.26975 8.25 3.26975C10.56 3.26975 12.81 4.88828 13.605 7.12807H16.41C17.19 4.88828 19.44 3.26975 21.75 3.26975C24.75 3.26975 27 5.72207 27 8.99183C27 13.7166 22.29 18.376 15.15 25.4223Z" fill="#55C595" />
-                        </svg></span>
-                    <span>Follow Org</span>
-                </div>
-                <div class="text-icon">
-                    <span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 30 30" fill="none">
-                            <path d="M13.75 8.75H16.25V11.25H13.75V8.75ZM13.75 13.75H16.25V21.25H13.75V13.75ZM15 2.5C8.1 2.5 2.5 8.1 2.5 15C2.5 21.9 8.1 27.5 15 27.5C21.9 27.5 27.5 21.9 27.5 15C27.5 8.1 21.9 2.5 15 2.5ZM15 25C9.4875 25 5 20.5125 5 15C5 9.4875 9.4875 5 15 5C20.5125 5 25 9.4875 25 15C25 20.5125 20.5125 25 15 25Z" fill="#55C595" />
-                        </svg>
-                    </span>
-                    <span>More Info</span>
-                </div> --}}
                 <div class="text-icon m-2">
                     <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 30 30"
                             fill="none">
@@ -384,8 +347,7 @@
                                 <div class="host-img">
                                     {{-- <img src="{{ asset('storage/images/' . $organisationData->cover_image) }}"
                                         alt=""> --}}
-                                        <img src="{{ asset( $organisationData->cover_image) }}"
-                                        alt="">
+                                    <img src="{{ asset($organisationData->cover_image) }}" alt="">
                                 </div>
                                 <div class="profile-detail">
                                     <h4>{{ $organisationData->organisation_name }}</h4>
@@ -413,7 +375,6 @@
 
                                             function convertDate($originalDatetime)
                                             {
-
                                                 // Convert the datetime string to a DateTime object
                                                 $datetime = new DateTime($originalDatetime);
 
@@ -459,47 +420,35 @@
 
                     </div>
 
-                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h6 class="modal-title fs-5 text-sm " id="staticBackdropLabel">Support {{$data->host_name}}</h6>
-                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <form>
-                                    <div class="form-group mb-3">
-                                        <label for="" style="font-size: 12px; font-weight:700" >Amount you want to support with</label>
-                                        <input type="number" name="support-amount" id="support-amount" required class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <button type="submit" class="pay-money btn btn-success btn-sm" id="support-pay">Make payment</button>
-                                    </div>
-                                </form>
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h6 class="modal-title fs-5 text-sm " id="staticBackdropLabel">Support
+                                        {{ $data->host_name }}</h6>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form>
+                                        <div class="form-group mb-3">
+                                            <label for="" style="font-size: 12px; font-weight:700">Amount you want
+                                                to support with</label>
+                                            <input type="number" name="support-amount" id="support-amount" required
+                                                class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="submit" class="pay-money btn btn-success btn-sm"
+                                                id="support-pay">Make payment</button>
+                                        </div>
+                                    </form>
+
+                                </div>
 
                             </div>
-
-                          </div>
                         </div>
-                      </div>
-                    {{-- <div class="tab-pane">
-                        <div class="card p-3" style="">
-                            <div class="host-detail flex align-items-center">
-                                <div class="host-img">
-                                    <img src="{{ asset('storage/images/' . $organisationData->cover_image) }}"
-                                        alt="">
-                                </div>
-                                <div class="profile-detail">
-                                    <h4>{{ $organisationData->organisation_name }}</h4>
-                                    <h5>{{ $organisationData->handle }}</h5>
-                                </div>
-                            </div>
-                            <div class="profile-detail my-3">
-                                <h4 style="font-size: 1.4rem">About Us</h4>
-                                <h5 style="font-size: 12px; line-height:150%">{{ $organisationData->description }}</h5>
-                            </div>
-                        </div>
-                    </div> --}}
+                    </div>
                 </div>
             </div>
         </div>
@@ -548,7 +497,7 @@
             document.getElementById("instagramShare").addEventListener("click", function() {
                 // Share on Instagram
                 var url = encodeURIComponent(window.location.href);
-                window.open("https://telegram.me/share/url?url="+ url, "_blank");
+                window.open("https://telegram.me/share/url?url=" + url, "_blank");
             });
 
             document.getElementById("whatsappShare").addEventListener("click", function() {
@@ -655,9 +604,9 @@
                     // console.log(selectedCard, selectedPrice)
                     if (selectedCard === '') {
                         showErrorMsg("Please choose the number of ticket you want to purchase");
-                    }else{
+                    } else {
 
-                        const id = {{$raff_id}}
+                        const id = {{ $raff_id }}
                         const param = {
                             raffle_id: id,
                             amount: selectedPrice,
@@ -666,7 +615,7 @@
                         }
                         // console.log(param);
                         localStorage.setItem('myData', JSON.stringify(param));
-                        window.location.href = "{{url('/make-payment')}}"
+                        window.location.href = "{{ url('/make-payment') }}"
                     }
 
                 });
@@ -676,9 +625,9 @@
                     e.preventDefault();
                     // console.log(selectedCard, selectedPrice)
                     let amount = $("#support-amount").val();
-                    if (amount >  0) {
+                    if (amount > 0) {
 
-                        const id = {{$raff_id}}
+                        const id = {{ $raff_id }}
                         const param = {
                             raffle_id: id,
                             amount: amount,
@@ -687,7 +636,7 @@
                         }
                         // console.log(param);
                         localStorage.setItem('myData', JSON.stringify(param));
-                        window.location.href = "{{url('/make-payment')}}"
+                        window.location.href = "{{ url('/make-payment') }}"
                     }
 
                 });

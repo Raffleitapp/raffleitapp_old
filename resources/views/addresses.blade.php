@@ -186,7 +186,7 @@
                         </div>
                         <div class="form-group mb-3">
                             <label for="description">City</label>
-                            <select name="city" id="city" class="form-control">
+                            <select name="city" id="cities" class="form-control">
                                 <option value="">Choose city</option>
 
                             </select>

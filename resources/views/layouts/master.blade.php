@@ -23,7 +23,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/bootstrap/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/header.css') }}" rel="stylesheet">
-    @vite(['resources/scss/app.scss'])
+    {{-- @vite(['resources/scss/app.scss']) --}}
 </head>
 
 <body>

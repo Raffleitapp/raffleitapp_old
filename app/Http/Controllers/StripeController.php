@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Error;
 use Stripe;
 
 class StripeController extends Controller
@@ -46,7 +47,7 @@ class StripeController extends Controller
             $request->session()->put('amount', $request->amount);
 
             return response()->json($output);
-        } catch (Error $e) {
+        } catch (\Error $e) {
             return response()->json([
                 'code' => 405,
                 'error' => $e->getMessage(),

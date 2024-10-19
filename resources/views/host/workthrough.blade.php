@@ -1,7 +1,7 @@
 @extends('layouts/master')
 @section('title', 'Create Raffle')
 @section('content')
-    @vite(['resources/scss/app.scss'])
+    {{-- @vite(['resources/scss/app.scss']) --}}
     <style>
         .top-bg {
     height: 20vh;

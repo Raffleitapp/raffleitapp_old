@@ -2,7 +2,7 @@
 @section('title', 'Create Raffle')
 @section('content')
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    @vite(['resources/scss/app.scss'])
+    {{-- @vite(['resources/scss/app.scss']) --}}
     <style>
         .top-bg {
             height: 20vh;

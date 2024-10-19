@@ -5,7 +5,7 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://js.stripe.com/v3/"></script>
-    @vite(['resources/scss/app.scss'])
+    {{-- @vite(['resources/scss/app.scss']) --}}
     <style>
         .form-group label {
             color: #303030;

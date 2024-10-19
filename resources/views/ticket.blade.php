@@ -66,7 +66,7 @@
                 ->leftJoin('organisation', 'raffle.organisation_id', 'organisation.id')
                 ->leftJoin('raffle_winner', 'raffle.id', 'raffle_winner.raffle_id')
                 ->leftJoin('users', 'raffle_winner.winner_id', 'users.id')
-                ->select('raffle.*', 'organisation.organisation_name', 'users.first_name', 'users.profile_pix', 'organisation.cover_image', 'organisation.handle', 'organisation.website')
+                ->select('raffle.*', 'organisation.organisation_name', 'users.first_name', 'users.image', 'organisation.cover_image', 'organisation.handle', 'organisation.website')
                 // ->groupBy('raffle.id')
                 ->get();
 
@@ -180,7 +180,7 @@
                                                     </svg></span><span class="time" id="time"
                                                     data-target="{{ $item->ending_date }}"></span></h6>
                                             <h6 class="flex align-items-end">
-                                                <span style="height: 30px; width:30px; border-radius:50%; overflow:hidden"><img src="{{asset('uploads/images/'.$item->profile_pix)}}" height="100%" width="100%" style="object-fit: cover; object-position:center" alt=""></span>
+                                                <span style="height: 30px; width:30px; border-radius:50%; overflow:hidden"><img src="{{asset('uploads/images/'.$item->image)}}" height="100%" width="100%" style="object-fit: cover; object-position:center" alt=""></span>
                                                 <span style="font-size: 10px">{{ $item->first_name}}</span>
                                                 <span><img src="{{asset('img/icon/winner.png')}}" height="40px" width="20px" alt=""></span>
                                             </h6>

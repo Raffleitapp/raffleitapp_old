@@ -72,11 +72,11 @@
         @csrf
         <div class="form-group mb-3">
             <label for="">Secret</label>
-            <input type="text" required name="p_secret" value="{{$data->code_access}}" class="form-control">
+            <input type="text" required name="p_secret" value="{{ $data->code_access ?? '' }}" class="form-control">
         </div>
         <div class="form-group mb-3">
             <label for="">Key</label>
-            <input type="text" required name="p_key" value="{{$data->payment_name}}" class="form-control">
+            <input type="text" required name="p_key" value="{{ $data->payment_name ?? '' }}" class="form-control">
         </div>
 
         <div class="form-group">
