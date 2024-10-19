@@ -2,13 +2,13 @@
 
 namespace Illuminate\Support;
 
-use BackedEnum;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Jsonable;
 use JsonSerializable;
+use Stringable;
 
-class Js implements Htmlable
+class Js implements Htmlable, Stringable
 {
     /**
      * The JavaScript string.
@@ -70,9 +70,7 @@ class Js implements Htmlable
             return $data->toHtml();
         }
 
-        if ($data instanceof BackedEnum) {
-            $data = $data->value;
-        }
+        $data = enum_value($data);
 
         $json = static::encode($data, $flags, $depth);
 

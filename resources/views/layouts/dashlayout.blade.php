@@ -30,7 +30,7 @@
 
         .custom-grid {
             display: grid;
-            // padding: 12px;
+            /* padding: 12px; */
             width: 90vw;
             /* border:2px solid red; */
             grid-template-columns: repeat(auto-fit, minmax(250px, auto));
