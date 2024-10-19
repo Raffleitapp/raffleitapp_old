@@ -34,7 +34,7 @@
                     <div class="customs-card flex items-center">
                         <div class="w-100">
                             <h4 class="big">
-                                RAFFLE’S INCOME
+                                RAFFLE&apos;S INCOME
                             </h4>
                             <h6>$0</h6>
                         </div>
