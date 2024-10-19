@@ -425,7 +425,7 @@ class UserAuthController extends Controller
             $data = DB::table('fundraising_check')->insertGetId([
                 'user_id' => session()->get('user_id'),
                 'name' => $request->name,
-                'c_o' => $request->c_o,
+                'CO' => $request->CO,
                 'user_id' => session()->get('user_id'),
                 'address' => $request->address,
                 'address_2' => $request->address_s,
