@@ -24,16 +24,19 @@ use App\Http\Controllers\StripeController;
 
 Route::get('/', function () {
     return view('index');
-});
+})->name('home');
 Route::get('/about', function () {
     return view('about');
-});
+})->name('about');
+
 Route::get('/howitworks', function () {
     return view('howitwork');
-});
+})->name('howitworks');
+
 Route::get('/contact', function () {
     return view('contact');
-});
+})->name('contact');
+
 Route::get('raffles', [RaffleController::class, 'allRaffles']);
 
 Route::get('spin-raffle', function () {
@@ -63,21 +66,13 @@ Route::get('billaddress', function () {
     return view('billaddress');
 });
 
-// Route::post('billaddress', function () {
-//     return view('billaddress');
-// });
-
 Route::get('shipaddress', function () {
     return view('shipaddress');
 });
 
-// Route::get('createraffle', function () {
-//     return view('createraffle');
-// });
-
-// Route::get('raffles', function () {
-//     return view('raffles');
-// });
+Route::get('privacy-policy', function () {
+    return view('privacy-policy');
+})->name('privacy-policy');
 
 Route::get('/make-payment', function () {
     return view('stripe');
@@ -134,11 +129,11 @@ Route::group(['prefix' => 'admin'], function () {
             return view('admin.payment');
         } else {
             session()->flush();
-           return redirect('/login');
+            return redirect('/login');
         }
     });
 
-    Route::post('update-payment',[AdminRouteController::class,'updatePayment'])->name('admin.update-payment');
+    Route::post('update-payment', [AdminRouteController::class, 'updatePayment'])->name('admin.update-payment');
 });
 
 
@@ -168,6 +163,6 @@ Route::group(['prefix' => 'host'], function () {
     Route::get("raffle-detail/{id}", [HostController::class, 'goRaffleDetails']);
 
     Route::post("extendRaffle", [RaffleController::class, 'extendDate'])->name("host.extendRaffle");
-    Route::get("live-raffle",[HostController::class, 'liveraffle'])->name("host.liive-raffle");
-    Route::get("completed",[HostController::class, 'completedraffle'])->name("host.completed");
+    Route::get("live-raffle", [HostController::class, 'liveraffle'])->name("host.liive-raffle");
+    Route::get("completed", [HostController::class, 'completedraffle'])->name("host.completed");
 });

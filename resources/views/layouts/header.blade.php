@@ -35,14 +35,14 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link btn btn-raffle" href="{{ url('raffles') }}">View Raffles</a>
+                            <a class="btn-raffle" href="{{ url('raffles') }}">View Raffles</a>
                         </li>
                     @else
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('login') }}">Login</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link btn btn-raffle" href="{{ url('raffles') }}">View Raffles</a>
+                            <a class="nav-link btn-raffle" href="{{ url('raffles') }}">View Raffles</a>
                         </li>
                     @endif
                 </ul>

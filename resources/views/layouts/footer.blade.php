@@ -23,23 +23,28 @@
                     <h3>Quick Links</h3>
                 </li>
                 <li>
-                    <a href="{{ url('/') }}">
+                    <a href="{{ route('home') }}">
                         Home
                     </a>
                 </li>
                 <li>
-                    <a href="{{ url('/about') }}">
+                    <a href="{{ route('about') }}">
                         About
                     </a>
                 </li>
                 <li>
-                    <a href="{{ url('howitworks') }}">
+                    <a href="{{ route('howitworks') }}">
                         How Raffleit Works
                     </a>
                 </li>
                 <li>
-                    <a href="javascrip:void(0)">
+                    <a href="">
                         Testimonial
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('privacy-policy') }}">
+                        Privacy Policy
                     </a>
                 </li>
             </ul>
