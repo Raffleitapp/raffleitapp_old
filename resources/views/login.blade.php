@@ -6,7 +6,7 @@
             color: #000;
 
             /* H1 Bold */
-            font-family: Poppins;
+
             font-size: 24px;
             font-style: normal;
             font-weight: 700;
@@ -24,7 +24,7 @@
         .regform form .form-group label {
             color: var(--Body-text-color, #303030);
             /* H5 Bold */
-            font-family: Poppins;
+
             font-size: 14px;
             font-style: normal;
             font-weight: 700;
@@ -42,7 +42,7 @@
             color: var(--Primary-Color, #215273);
             text-align: center;
             /* Body */
-            font-family: Poppins;
+
             font-size: 10px;
             font-style: normal;
             font-weight: 400;
@@ -57,7 +57,7 @@
         .regform h6 {
             color: var(--Body-text-color, #303030);
             /* Title 2 */
-            font-family: Poppins;
+
             font-size: 13px;
             font-style: normal;
             font-weight: 400;
@@ -69,7 +69,7 @@
             background: var(--Button-Color, #55C595);
             color: #FFF;
             padding: 10px 20px;
-            font-family: Poppins;
+
             font-size: 13px;
             font-style: normal;
             font-weight: 700;

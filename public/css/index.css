@@ -8,7 +8,7 @@
 .top-section p.smallest-text {
     color: var(--Button-Color, #55C595);
     /* H5 */
-    font-family: Poppins;
+
     font-size: .9rem;
     font-style: normal;
     font-weight: 400;
@@ -32,7 +32,7 @@ a.view-btn{
 background: var(--Button-Color, #55C595);
 color: var(--Base-Color, #FDFDFD);
 /* Title 3 Bold */
-font-family: Poppins;
+
 font-size: 12px;
 font-style: normal;
 font-weight: 700;
@@ -48,7 +48,7 @@ padding: 10px 12px;
     color: #FFF;
 
     /* H5 */
-    font-family: Poppins;
+
     font-size: .9em;
     font-style: normal;
     font-weight: 400;
@@ -76,7 +76,7 @@ div.j .row .col-6 .pre-work img {
 div.j .row .col-6 .pre-work h3.head {
     color: #303030;
     /* H5 Bold */
-    font-family: Poppins;
+
     font-size: 16px;
     font-style: normal;
     font-weight: 700;
@@ -85,7 +85,7 @@ div.j .row .col-6 .pre-work h3.head {
 
 div.j .row .col-6 .pre-work p.text {
     color: #303030;
-    font-family: Poppins;
+
     font-size: 12px;
     font-style: normal;
     font-weight: 400;
@@ -119,11 +119,9 @@ div.j .row .col-6 .pre-work p.text {
 }
 
 .draw-live-btn {
-    border-radius: 10px;
+    border-radius: .4rem;
     background: var(--Button-Color, #55C595);
     color: var(--Base-Color, #FDFDFD);
-    /* Title 3 Bold */
-    font-family: Poppins;
     font-size: 12px;
     padding: 8px;
     font-style: normal;
@@ -140,7 +138,7 @@ div.j .row .col-6 .pre-work p.text {
     color: var(--Base-Color, #FDFDFD);
     text-align: center;
     /* H5 */
-    font-family: Poppins;
+
     font-size: 14px;
     max-width: 600px;
     font-style: normal;
@@ -151,13 +149,11 @@ div.j .row .col-6 .pre-work p.text {
 
 .fd .custom {
     display: flex;
-    /* width: 100px; */
     padding: 20px 12px;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    /* gap: 12px; */
-    border-radius: 10px;
+    border-radius: .5rem;
     background: var(--Base-Color, #FDFDFD);
 }
 
@@ -170,7 +166,7 @@ div.j .row .col-6 .pre-work p.text {
     color: var(--Heading-Text-color, #161616);
     text-align: center;
     /* H5 Bold */
-    font-family: Poppins;
+
     font-size: 14px;
     font-style: normal;
     font-weight: 700;
@@ -201,9 +197,6 @@ div.j .row .col-6 .pre-work p.text {
 .raffle-card .img img {
     width: 100%;
     height: 100%;
-    /* object-fit: contain;
-    aspect-ratio: 1;
-    object-position: center */
 }
 
 .raffle-card .d {
@@ -216,7 +209,6 @@ div.j .row .col-6 .pre-work p.text {
 
 .raffle-card .d .head {
     color: var(--Body-text-color, #303030);
-    /* H4 Bold */
     font-family: 'Prompt', sans-serif;
     font-size: 16px;
     font-style: normal;
@@ -226,9 +218,6 @@ div.j .row .col-6 .pre-work p.text {
 
 .raffle-card .d h6 {
     color: var(--Body-text-color, #303030);
-    /* text-align: center; */
-    /* H5 */
-    font-family: Poppins;
     font-size: 12px;
     font-style: normal;
     font-weight: 400;
@@ -237,8 +226,6 @@ div.j .row .col-6 .pre-work p.text {
 
 .raffle-card .d div.span.time {
     color: var(--Body-text-color, #303030);
-    /* H5 Bold */
-    font-family: Poppins;
     font-size: 10px;
     font-style: normal;
     font-weight: 700;
@@ -250,7 +237,6 @@ div.j .row .col-6 .pre-work p.text {
 }
 
 .raffle-card .last span {
-    /* text-align: right; */
     height: 30px;
     width: 30px;
     border-radius: 50%;
@@ -268,8 +254,6 @@ div.j .row .col-6 .pre-work p.text {
 
 .raffle-card .last .btm-div h5 {
     color: var(--Body-text-color, #303030);
-    /* H5 Bold */
-    font-family: Poppins;
     font-size: 14px;
     font-style: normal;
     font-weight: 700;
@@ -280,9 +264,7 @@ div.j .row .col-6 .pre-work p.text {
 
 .raffle-card .last .btm-div h6 {
     color: var(--Body-text-color, #303030);
-    /* H5 Bold */
     text-align: right;
-    font-family: Poppins;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -299,7 +281,7 @@ div.j .row .col-6 .pre-work p.text {
 .about-past h6.small {
     color: var(--Button-Color, #55C595);
     /* H5 Bold */
-    font-family: Poppins;
+
     font-size: 12px;
     font-style: normal;
     text-align: center;
@@ -324,7 +306,7 @@ div.j .row .col-6 .pre-work p.text {
 .about-past-card {
     position: relative;
     border-radius: 20px;
-    padding: 10px;
+    padding: .4rem;
     max-width: 350px;
     background: #FFF;
     box-shadow: 0px 0px 40px 0px rgba(33, 82, 115, 0.25);
@@ -357,8 +339,6 @@ div.j .row .col-6 .pre-work p.text {
 
 .about-past-card .first h3 {
     color: var(--Body-text-color, #303030);
-    /* H5 */
-    font-family: Poppins;
     font-size: 13px;
     font-style: normal;
     word-wrap: break-word;
@@ -378,8 +358,6 @@ div.j .row .col-6 .pre-work p.text {
 
 .about-past-card .bott .text h3 {
     color: var(--Body-text-color, #303030);
-    /* Title 3 Bold */
-    font-family: Poppins;
     font-size: 14px;
     font-style: normal;
     font-weight: 700;
@@ -388,8 +366,6 @@ div.j .row .col-6 .pre-work p.text {
 
 .about-past-card .bott .text h6 {
     color: var(--Body-text-color, #303030);
-    /* Title 3 Bold */
-    font-family: Poppins;
     font-size: 12px;
     font-style: normal;
     font-weight: 400;
@@ -408,7 +384,7 @@ button.btn-icon {
     border: none;
     color: #FFF;
 
-    font-family: Poppins;
+
     font-size: 12px;
     font-style: normal;
     font-weight: 700;
@@ -427,7 +403,7 @@ button.btn-icon.white {
     border: none;
     color: #215273;
 
-    font-family: Poppins;
+
     font-size: 12px;
     font-style: normal;
     font-weight: 700;
@@ -465,7 +441,7 @@ button.btn-icon.white {
     color: var(--Body-text-color, #303030);
     text-align: center;
     /* H5 */
-    font-family: Poppins;
+
     font-size: 13px;
     font-style: normal;
     font-weight: 400;
@@ -526,7 +502,7 @@ button.btn-icon.white {
     color: #000;
 
     /* H5 */
-    font-family: Poppins;
+
     font-size: 12px;
     font-style: normal;
     font-weight: 400;

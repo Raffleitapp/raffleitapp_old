@@ -10,7 +10,7 @@
     .card-test h2{
         color: var(--Heading-Text-color, #161616);
 /* H5 Bold */
-font-family: Poppins;
+
 font-size: 16px;
 font-style: normal;
 font-weight: 700;

@@ -23,7 +23,7 @@
         color: #FFF;
 
         /* H3 Bold */
-        font-family: Poppins;
+
         font-size: 20px;
         font-style: normal;
         font-weight: 700;
@@ -37,7 +37,7 @@
     .pre-work .text {
         color: var(--Body-text-color, #303030);
         /* H5 */
-        font-family: Poppins;
+
         font-size: 14px;
         font-style: normal;
         font-weight: 400;
@@ -64,7 +64,7 @@
         color: var(--Heading-Text-color, #161616);
         /* text-align: center; */
         /* H4 Bold */
-        font-family: Poppins;
+
         font-size: 16px;
         font-style: normal;
         font-weight: 700;
@@ -75,7 +75,7 @@
         color: var(--Heading-Text-color, #161616);
         /* text-align: center; */
         /* H5 */
-        font-family: Poppins;
+
         font-size: 12px;
         font-style: normal;
         font-weight: 400;

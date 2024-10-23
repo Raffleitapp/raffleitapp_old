@@ -5,7 +5,7 @@
         color: #000;
 
         /* H3 Bold */
-        font-family: Poppins;
+
         font-size: 1.5rem;
         font-style: normal;
         font-weight: 700;
@@ -16,7 +16,7 @@
         color: #000;
 
         /* Title 1 */
-        font-family: Poppins;
+
         font-size: .8rem;
         font-style: normal;
         font-weight: 400;
@@ -34,7 +34,7 @@
         padding: 8px 0px;
         color: var(--white-color, #FDFDFD);
         /* Title 3 Bold */
-        font-family: Poppins;
+
         font-size: 14px;
         font-style: normal;
         font-weight: 700;

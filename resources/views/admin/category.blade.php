@@ -5,7 +5,7 @@
 <style>
     h2.head {
         color: #000;
-        font-family: Poppins;
+
         font-size: 1.5rem;
         font-style: normal;
         font-weight: 700;
@@ -14,7 +14,7 @@
 
     p.head-desc {
         color: #000;
-        font-family: Poppins;
+
         font-size: .8rem;
         font-style: normal;
         font-weight: 400;
@@ -30,7 +30,7 @@
     table thead tr {
         padding: 8px 0px;
         color: var(--white-color, #FDFDFD);
-        font-family: Poppins;
+
         font-size: 14px;
         font-style: normal;
         font-weight: 700;

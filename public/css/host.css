@@ -2,7 +2,7 @@ h3.user-greet{
     color: #000;
 
 /* H3 Bold */
-font-family: Poppins;
+
 font-size: 23px;
 font-style: normal;
 font-weight: 700;
@@ -12,7 +12,7 @@ h6.instruction{
     color: #000;
 
 /* Title 1 */
-font-family: Poppins;
+
 font-size: 12px;
 font-style: normal;
 font-weight: 400;
@@ -32,7 +32,7 @@ div.profile-pix .welcome-name{
     color: #000;
 
 /* H5 Bold */
-font-family: Poppins;
+
 font-size: 16px;
 font-style: normal;
 font-weight: 700;
@@ -44,7 +44,7 @@ div.profile-pix .welcome-name span{
     color: #000;
 display: block;
 /* Title 1 */
-font-family: Poppins;
+
 font-size: 12px;
 font-style: normal;
 font-weight: 400;
@@ -58,7 +58,7 @@ padding: 6px 12px;
 outline: 1px solid #55C595;
 border: 1px solid #55C595;
 
-font-family: Poppins;
+
 font-size: 12px;
 font-style: normal;
 font-weight: 700;
@@ -85,7 +85,7 @@ width: 100%;
     color: #FFF;
 
 /* H5 Bold */
-font-family: Poppins;
+
 font-size: 1rem;
 font-style: normal;
 font-weight: 700;
@@ -96,7 +96,7 @@ text-align: center;
     color: #FFF;
 
 /* H5 Bold */
-font-family: Poppins;
+
 font-size: 1rem;
 font-style: normal;
 font-weight: 700;
@@ -108,7 +108,7 @@ text-align: center;
     color: #000;
 
 /* H3 Bold */
-font-family: Poppins;
+
 font-size: 24px;
 font-style: normal;
 font-weight: 700;
@@ -151,7 +151,7 @@ margin-bottom: 12px;
 .raffle-cardz .text h3.title{
     color: var(--Body-text-color, #303030);
 /* H4 Bold */
-font-family: Poppins;
+
 font-size: 16px;
 font-style: normal;
 font-weight: 700;
@@ -163,7 +163,7 @@ line-height: 140%;
 /* text-align: center; */
 
 /* H5 */
-font-family: Poppins;
+
 font-size: 12px;
 font-style: normal;
 font-weight: 400;
@@ -173,7 +173,7 @@ line-height: 100%; /* 32.2px */
     color: var(--Body-text-color, #303030);
 /* text-align: center; */
 /* Title 1 */
-font-family: Poppins;
+
 font-size: 11px;
 font-style: normal;
 font-weight: 400;
@@ -184,7 +184,7 @@ line-height: 100%;
 .raffle-cardz .text .bottom-text h6{
     color: var(--Body-text-color, #303030);
 /* H5 Bold */
-font-family: Poppins;
+
 font-size: 12px;
 font-style: normal;
 font-weight: 700;

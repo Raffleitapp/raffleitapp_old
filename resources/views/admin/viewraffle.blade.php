@@ -25,7 +25,7 @@
         .profile-detail h4 {
             color: var(--bold-black-color, #262626);
             /* Title 3 Bold */
-            font-family: Poppins;
+
             font-size: 16px;
             font-style: normal;
             font-weight: 700;
@@ -49,7 +49,7 @@
             flex: 1;
             text-align: center;
             /* H3 Bold */
-            font-family: Poppins;
+
             font-size: 15px;
             font-style: normal;
             font-weight: 700;
@@ -78,7 +78,7 @@
         .profile-detail h5 {
             color: var(--bold-black-color, #313030);
             /* Title 3 Bold */
-            font-family: Poppins;
+
             font-size: 12px;
             font-style: normal;
             font-weight: 400;
@@ -99,7 +99,7 @@
             text-align: center;
 
             /* H5 Bold */
-            font-family: Poppins;
+
             font-size: 13px;
             font-style: normal;
             font-weight: 700;

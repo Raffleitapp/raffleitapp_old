@@ -2,94 +2,76 @@
 @section('title', 'Fundraising Address')
 @section('content')
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <div class="regform p-3">
-        <div class="text-center">
-            <h5 class="fw-bold h3" style="color: #55C595;">Fundraising Cheque Address</h5>
+    <div class="container mt-5">
+        <div class="text-center mb-4">
+            <h3 class="fw-bold" style="color: #55C595;">Fundraising Cheque Address</h3>
         </div>
         @php
             $currentPath = request()->path();
-
             $pathSegments = explode('/', $currentPath);
-
-            // Access the desired value by index (in this case, '1')
-            if (count($pathSegments) >= 2) {
-                $desiredValue = $pathSegments[2];
-            } else {
-                // Handle the case where there may not be a value at that index
-                $desiredValue = null;
-            }
+            $desiredValue = count($pathSegments) >= 2 ? $pathSegments[2] : null;
         @endphp
-        <div class="card p-3 shadow">
-            <div class="form">
-                <h6 class="fw-bold mb-3 text-muted">Set up your address to receive cheque</h6>
-                <form id="submit_fundraise">
-                    @csrf
-                    {{-- <input type="text" name="" value="{{$desiredValue}}" id=""> --}}
-
-                    <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" required id="name" name="name" class="form-control"
-                            placeholder="Name">
+        <div class="card shadow p-4">
+            <h5 class="fw-bold mb-3 text-muted">Set up your address to receive cheque</h5>
+            <form id="submit_fundraise">
+                @csrf
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" required id="name" name="name" class="form-control" placeholder="Name">
+                </div>
+                <div class="mb-3">
+                    <label for="co" class="form-label">c/o</label>
+                    <input type="text" id="handle" name="c_o" class="form-control" placeholder="c/o">
+                </div>
+                <div class="mb-3">
+                    <label for="address" class="form-label">Address</label>
+                    <input type="text" required id="address" name="address" class="form-control" placeholder="Address">
+                </div>
+                <div class="mb-3">
+                    <label for="addressline" class="form-label">Address Line2</label>
+                    <input type="text" id="addressline" name="addressline" class="form-control" placeholder="Address Line2">
+                </div>
+                @php
+                    $country = DB::table('countries')->get();
+                @endphp
+                <div class="mb-3">
+                    <label for="country" class="form-label">Country</label>
+                    <select required name="country" id="country" class="form-select">
+                        <option value="">Choose country</option>
+                        @foreach ($country as $item)
+                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="state" class="form-label">State</label>
+                    <select required name="state" id="state" class="form-select">
+                        <option value="">Choose state</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="city" class="form-label">City</label>
+                    <select required name="city" id="city" class="form-select">
+                        <option value="">Choose city</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="zipcode" class="form-label">Zip Code</label>
+                    <input type="text" id="zipcode" name="zipcode" class="form-control" placeholder="Zip Code">
+                </div>
+                <div class="mb-3">
+                    <label for="phone_no" class="form-label">Phone Number</label>
+                    <input type="text" required id="phone_no" name="phone_no" class="form-control" placeholder="Phone Number">
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Proceed</button>
+                <div class="d-flex justify-content-center mt-3">
+                    <div class="spinner-border text-primary" role="status" style="display: none;">
+                        <span class="visually-hidden">Loading...</span>
                     </div>
-                    <div class="form-group">
-                        <label for="co">c/o</label>
-                        <input type="text"  id="handle" name="c_o" class="form-control" placeholder="c/o">
-                    </div>
-                    <div class="form-group">
-                        <label for="address">Address</label>
-                        <input type="text" required id="address" name="address" class="form-control"
-                            placeholder="Address">
-                    </div>
-                    <div class="form-group">
-                        <label for="address">Address Line2</label>
-                        <input type="text" id="" name="address_2" class="form-control"
-                            placeholder="Address Line2">
-                    </div>
-
-                    @php
-                        $country = DB::table('countries')->get();
-                    @endphp
-                    <div class="form-group mb-3">
-                        <select required name="country" id="country" class="form-control">
-                            <option value="">Choose country</option>
-                            @foreach ($country as $item)
-                                <option value="{{ $item->id }}">{{ $item->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="state">State</label>
-                        <select required name="state" id="state" class="form-control">
-                            <option value="">Choose state</option>
-
-                        </select>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="description">City</label>
-                        <select required name="city" id="city" class="form-control">
-                            <option value="">Choose city</option>
-
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="zipcode">Zip Code</label>
-                        <input type="text" id="zipcode" name="zipcode" class="form-control" placeholder="zipcode">
-                    </div>
-                    <div class="form-group">
-                        <label for="phone">Phone Number</label>
-                        <input type="text" required id="" name="phone_no" class="form-control"
-                            placeholder="phone">
-                    </div>
-                    <button type="submit" class="btn login_btn">Proceed</button>
-                    <div class="d-flex spin justify-content-center">
-                        <div class="spinner-border text-primary" role="status">
-                            <span class="">...</span>
-                        </div>
-                    </div>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
+    </div>
 
         <script src="{{ asset('js/jquery.min.js') }}"></script>
         <script src="{{ asset('js/sweetalert.js') }}"></script>

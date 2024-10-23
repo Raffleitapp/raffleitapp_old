@@ -21,7 +21,7 @@
             flex: 1;
             text-align: center;
             /* H3 Bold */
-            font-family: Poppins;
+
             font-size: 15px;
             font-style: normal;
             font-weight: 700;
@@ -303,7 +303,7 @@
             flex: 1;
             text-align: center;
             /* H3 Bold */
-            font-family: Poppins;
+
             font-size: 15px;
             font-style: normal;
             font-weight: 700;

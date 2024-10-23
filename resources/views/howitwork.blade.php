@@ -26,7 +26,7 @@
         color: #FFF;
 
         /* H3 Bold */
-        font-family: Poppins;
+
         font-size: 20px;
         font-style: normal;
         font-weight: 700;
@@ -40,7 +40,7 @@
     .pre-work .text {
         color: var(--Body-text-color, #303030);
         /* H5 */
-        font-family: Poppins;
+
         font-size: 14px;
         font-style: normal;
         font-weight: 400;
@@ -59,7 +59,7 @@
     .howitwork-container .pre-work h3.head {
         color: var(--Body-text-color, #303030);
         /* H5 Bold */
-        font-family: Poppins;
+
         font-size: 16px;
         font-style: normal;
         font-weight: 700;
@@ -69,7 +69,7 @@
     .howitwork-container .pre-work p.text {
         color: var(--Body-text-color, #303030);
         /* H5 */
-        font-family: Poppins;
+
         font-size: 12px;
         font-style: normal;
         font-weight: 400;
@@ -89,7 +89,7 @@
     .howitwork-container h6.desc {
         color: var(--Body-text-color, #303030);
         /* H5 */
-        font-family: Poppins;
+
         font-size: 12px;
         font-style: normal;
         font-weight: 400;
@@ -121,7 +121,7 @@
         color: var(--Heading-Text-color, #161616);
         /* text-align: center; */
         /* H4 Bold */
-        font-family: Poppins;
+
         font-size: 16px;
         font-style: normal;
         font-weight: 700;
@@ -132,7 +132,7 @@
         color: var(--Heading-Text-color, #161616);
         /* text-align: center; */
         /* H5 */
-        font-family: Poppins;
+
         font-size: 12px;
         font-style: normal;
         font-weight: 400;
@@ -155,7 +155,7 @@
 
 
         /* H3 Bold */
-        font-family: Poppins;
+
         font-size: 15px;
         font-style: normal;
         font-weight: 700;
@@ -182,7 +182,7 @@
     #host-item h3.head {
         color: var(--Primary-Color, #215273);
         /* H3 Bold */
-        font-family: Poppins;
+
         font-size: 18px;
         font-style: normal;
         font-weight: 700;
@@ -192,7 +192,7 @@
     #host-item h6.desc {
         color: var(--Body-text-color, #303030);
         /* H5 */
-        font-family: Poppins;
+
         font-size: 12px;
         font-style: normal;
         font-weight: 400;
@@ -202,7 +202,7 @@
     #support-item h6.desc {
         color: var(--Body-text-color, #303030);
         /* H5 */
-        font-family: Poppins;
+
         font-size: 12px;
         font-style: normal;
         font-weight: 400;
@@ -213,7 +213,7 @@
         color: var(--Body-text-color, #303030);
         /* H5 */
         list-style: disc;
-        font-family: Poppins;
+
         font-size: 12px;
         font-style: normal;
         font-weight: 400;
@@ -228,7 +228,7 @@
         color: var(--Body-text-color, #303030);
         /* H5 */
         list-style: none;
-        font-family: Poppins;
+
         font-size: 12px;
         font-style: normal;
         font-weight: 400;
@@ -250,7 +250,7 @@
         color: var(--Body-text-color, #303030);
         /* H5 */
         list-style: disc;
-        font-family: Poppins;
+
         font-size: 12px;
         font-style: normal;
         font-weight: 400;

@@ -427,7 +427,7 @@ class UserAuthController extends Controller
                 'name' => $request->name,
                 'CO' => $request->CO,
                 'address' => $request->address,
-                'address_2' => $request->address_s,
+                'addressline' => $request->addresslines,
                 'city' => $request->city,
                 'state' => $request->state,
                 'country' => $request->country,

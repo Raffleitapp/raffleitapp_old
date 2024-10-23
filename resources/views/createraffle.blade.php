@@ -18,7 +18,6 @@
 
         }
 
-
         #wordCount {
             font-size: 12px;
             color: #333;
@@ -28,9 +27,9 @@
     </style>
 
     <div class="top-bg">
-        <div class="top-section">
-            <div class="flex mb-2 align-items-center text-white fw-light">
-                <li class="flex align-items-center" onclick="location.href='{{ url('/') }}'">
+        <div class="top-section" style="padding-left: 2rem;">
+            <div class="d-flex mb-2 align-items-center text-white fw-light">
+                <li class="d-flex align-items-center" onclick="location.href='{{ url('/') }}'">
                     <span><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 30 30"
                             fill="none">
                             <path
@@ -51,8 +50,8 @@
                 </li>
                 <li><span>Raffle Creation Steps</span></li>
             </div>
-            <div class="flex  ">
-                <div class="vl mt-2 mr-2"></div>
+            <div class="d-flex">
+                <div class="vl mt-2 me-2"></div>
                 <p class="custom-textext">Follow Steps To Create Raffle</p>
             </div>
         </div>
@@ -63,47 +62,32 @@
             <h6 class="heading">Create your first raffle</h6>
             <h6 class="step">Step 3 of 3</h6>
             @php
-                $organisation = DB::table('organisation')
-                    ->where('user_id', session()->get('user_id'))
-                    ->get();
+                $organisation = DB::table('organisation')->where('user_id', session()->get('user_id'))->get();
             @endphp
-            <div class="form-card">
+            <div class="form-card rounded shadow">
                 <form id="submit-raffle" enctype="multipart/form-data">
-                    {{-- <div class="form-group">
-                        <label for="">Selected Organisation</label>
-                        <select name="organisation_id" class="custom-form-control" id="organ_id">
-                            <option value=""></option>
-                            @foreach ($organisation as $item)
-                                <option value="{{ $item->id }}">{{ $item->organisation_name }}</option>
-                            @endforeach
-                        </select>
-                    </div> --}}
                     <div class="form-group">
 
-                        <input name="organisation_id" hidden readonly class="custom-form-control" id="organisation_id">
-                        <input name="fundraiser_id" hidden readonly class="custom-form-control" id="fundraiser_id">
-
-
+                        <input name="organisation_id" hidden readonly class="form-control" id="organisation_id">
+                        <input name="fundraiser_id" hidden readonly class="form-control" id="fundraiser_id">
                     </div>
 
                     @csrf
-
                     <div class="form-group">
                         <label for="">Host Name</label>
-                        <input name="host_name" required placeholder="Enter host name" class="custom-form-control"
+                        <input name="host_name" required placeholder="Enter host name" class="form-control"
                             id="host_name">
 
                     </div>
                     <div class="form-group">
                         <label for="">Description</label>
                         <textarea name="description" required placeholder="Enter the reason for the raffle" id="description"
-                            class="custom-form-control" cols="5" rows="5"></textarea>
-                            <div class="flex justify-end">
-                                <p id="wordCount"><span id="count">10</span>/300</p>
+                            class="form-control" cols="5" rows="5"></textarea>
+                        <div class="flex justify-end">
+                            <p id="wordCount"><span id="count">10</span>/300</p>
 
-                            </div>
+                        </div>
                     </div>
-
                     <div class="form-group">
                         <label for="">Pictures</label>
                         <div class="gri">
@@ -146,100 +130,111 @@
                     <div class="form-group">
                         <label for="">Raffle Start Date and Time</label>
                         <input type="datetime-local" name="starting_date" required placeholder="Enter host name"
-                            class="custom-form-control" id="start_date">
+                            class="form-control" id="start_date">
 
                     </div>
                     <div class="form-group">
                         <label for="">Raffle End Date and Time</label>
                         <input type="datetime-local" name="ending_date" required placeholder="Enter host name"
-                            class="custom-form-control" id="futureDateInput">
+                            class="form-control" id="futureDateInput">
 
                     </div>
                     <div class="form-group">
                         <label for="">Raffle Target</label>
                         <input type="number" name="raffle_target" placeholder="Enter raffle target"
-                            class="custom-form-control" id="host_name">
+                            class="form-control" id="host_name">
 
                     </div>
                     <div class="form-group">
                         <label for="">Raffle Ticket Prices</label>
-                        <div class="price-section">
-                            <div class="price-insert">
-                                <span id="decreaseButton0">-</span>
-                                <input type="number" required name="one_ticket" id="numberField0" value="0">
-                                <span id="increaseButton0">+</span>
+                        <div class="row mb-3">
+                            <div class="col-4">
+                                <div class="input-group">
+                                    <button class="btn btn-outline-secondary" type="button" id="decreaseButton0">-</button>
+                                    <input type="number" class="form-control" required name="one_ticket" id="numberField0" value="0">
+                                    <button class="btn btn-outline-secondary" type="button" id="increaseButton0">+</button>
+                                </div>
                             </div>
-                            <div class="fo">
+                            <div class="col-4 text-center">
                                 For
                             </div>
-                            <div class="price-label">
+                            <div class="col-4 text-start">
                                 1 Ticket
                             </div>
                         </div>
-                        <div class="price-section">
-                            <div class="price-insert">
-                                <span id="decreaseButton1">-</span>
-                                <input type="number" required name="three_ticket" id="numberField1" value="0">
-                                <span id="increaseButton1">+</span>
+                        <div class="row mb-3">
+                            <div class="col-4">
+                                <div class="input-group">
+                                    <button class="btn btn-outline-secondary" type="button" id="decreaseButton1">-</button>
+                                    <input type="number" class="form-control" required name="three_ticket" id="numberField1" value="0">
+                                    <button class="btn btn-outline-secondary" type="button" id="increaseButton1">+</button>
+                                </div>
                             </div>
-                            <div class="fo">
+                            <div class="col-4 text-center">
                                 For
                             </div>
-                            <div class="price-label">
-                                3 Ticket
+                            <div class="col-4 text-start">
+                                3 Tickets
                             </div>
                         </div>
-                        <div class="price-section">
-                            <div class="price-insert">
-                                <span id="decreaseButton2">-</span>
-                                <input type="number" name="ten_ticket" id="numberField2" value="0">
-                                <span id="increaseButton2">+</span>
+                        <div class="row mb-3">
+                            <div class="col-4">
+                                <div class="input-group">
+                                    <button class="btn btn-outline-secondary" type="button" id="decreaseButton2">-</button>
+                                    <input type="number" class="form-control" name="ten_ticket" id="numberField2" value="0">
+                                    <button class="btn btn-outline-secondary" type="button" id="increaseButton2">+</button>
+                                </div>
                             </div>
-                            <div class="fo">
+                            <div class="col-4 text-center">
                                 For
                             </div>
-                            <div class="price-label">
-                                5 Ticket
+                            <div class="col-4 text-start">
+                                5 Tickets
                             </div>
                         </div>
-                        <div class="price-section">
-                            <div class="price-insert">
-                                <span id="decreaseButton3">-</span>
-                                <input type="number" name="twenty_ticket" id="numberField3" value="0">
-                                <span id="increaseButton3">+</span>
+                        <div class="row mb-3">
+                            <div class="col-4">
+                                <div class="input-group">
+                                    <button class="btn btn-outline-secondary" type="button" id="decreaseButton3">-</button>
+                                    <input type="number" class="form-control" name="twenty_ticket" id="numberField3" value="0">
+                                    <button class="btn btn-outline-secondary" type="button" id="increaseButton3">+</button>
+                                </div>
                             </div>
-                            <div class="fo">
+                            <div class="col-4 text-center">
                                 For
                             </div>
-                            <div class="price-label">
-                                10 Ticket
+                            <div class="col-4 text-start">
+                                10 Tickets
                             </div>
                         </div>
-                        <div class="price-section">
-                            <div class="price-insert">
-                                <span id="decreaseButton4">-</span>
-                                <input type="number" id="numberField4" name="one_twenty" value="0">
-                                <span id="increaseButton4">+</span>
+                        <div class="row mb-3">
+                            <div class="col-4">
+                                <div class="input-group">
+                                    <button class="btn btn-outline-secondary" type="button" id="decreaseButton4">-</button>
+                                    <input type="number" class="form-control" id="numberField4" name="one_twenty" value="0">
+                                    <button class="btn btn-outline-secondary" type="button" id="increaseButton4">+</button>
+                                </div>
                             </div>
-                            <div class="fo">
+                            <div class="col-4 text-center">
                                 For
                             </div>
-                            <div class="price-label">
-                                15 Ticket
+                            <div class="col-4 text-start">
+                                15 Tickets
                             </div>
                         </div>
-                        <div class="price-section">
-                            <div class="price-insert">
-                                <span id="decreaseButton5">-</span>
-                                {{-- <span style="color: #215">$</span> --}}
-                                <input type="number" name="two_hundred" id="numberField5" value="0">
-                                <span id="increaseButton5">+</span>
+                        <div class="row mb-3">
+                            <div class="col-4">
+                                <div class="input-group">
+                                    <button class="btn btn-outline-secondary" type="button" id="decreaseButton5">-</button>
+                                    <input type="number" class="form-control" name="two_hundred" id="numberField5" value="0">
+                                    <button class="btn btn-outline-secondary" type="button" id="increaseButton5">+</button>
+                                </div>
                             </div>
-                            <div class="fo">
+                            <div class="col-4 text-center">
                                 For
                             </div>
-                            <div class="price-label">
-                                20 Ticket
+                            <div class="col-4 text-start">
+                                20 Tickets
                             </div>
                         </div>
                         <p class="text">The above preset value will be applied and can’t be changed. <br> By proceeding
@@ -261,271 +256,270 @@
                 </form>
             </div>
         </div>
-        <link rel="stylesheet" href="{{asset('css/toastr.css')}}">
-        <script src="{{ asset('js/jquery.min.js') }}"></script>
-        <script src="{{ asset('js/sweetalert.js') }}"></script>
-        <script src="{{asset('js/toastr.min.js')}}"></script>
+    </div>
+    <link rel="stylesheet" href="{{ asset('css/toastr.css') }}">
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/sweetalert.js') }}"></script>
+    <script src="{{ asset('js/toastr.min.js') }}"></script>
 
-        <script src="{{ asset('js/alert.js') }}"></script>
-        <script>
-            const futureDateInput = document.getElementById('futureDateInput');
+    <script src="{{ asset('js/alert.js') }}"></script>
+    <script>
+        const futureDateInput = document.getElementById('futureDateInput');
 
-            futureDateInput.addEventListener('input', function() {
-                const inputDate = new Date(futureDateInput.value);
-                const currentDate = new Date();
+        futureDateInput.addEventListener('input', function() {
+            const inputDate = new Date(futureDateInput.value);
+            const currentDate = new Date();
 
-                // Check if the input date is in the past or equal to the current date
-                if (inputDate <= currentDate) {
-                    // Clear the input if it's not a future date
-                    futureDateInput.value = '';
-                    showError('Please select a future date and time.');
+            // Check if the input date is in the past or equal to the current date
+            if (inputDate <= currentDate) {
+                // Clear the input if it's not a future date
+                futureDateInput.value = '';
+                showError('Please select a future date and time.');
+            }
+        });
+        $(document).ready(function() {
+            $("#count").text(0);
+            $("#wordCount").css("color", "blue");
+
+            $("#description").keyup(function(e) {
+                console.log($(this).val().length);
+                if ($(this).val().length > 300) {
+                    $(this).val($(this).val().substring(0, 300))
+                    $("#count").text(300);
+                    $("#wordCount").css("color", "red");
+
                 }
-            });
-            $(document).ready(function() {
-                $("#count").text(0);
-                $("#wordCount").css("color", "blue");
-
-                $("#description").keyup(function (e) {
-                    console.log($(this).val().length);
-                    if($(this).val().length > 300) {
-                       $(this).val($(this).val().substring(0, 300))
-                $("#count").text(300);
-                $("#wordCount").css("color", "red");
-
-                    }
                 $("#count").text($(this).val().length);
                 $("#wordCount").css("color", "green");
 
 
-                });
-                $(".spinner-border").css("display", "none");
+            });
+            $(".spinner-border").css("display", "none");
 
-                var organsation_id = localStorage.getItem('orgaisation_id');
-                var fundraiser_id = localStorage.getItem('fundraising_id');
-                $("#organisation_id").val(organsation_id);
-                $("#fundraiser_id").val(fundraiser_id);
+            var organsation_id = localStorage.getItem('orgaisation_id');
+            var fundraiser_id = localStorage.getItem('fundraising_id');
+            $("#organisation_id").val(organsation_id);
+            $("#fundraiser_id").val(fundraiser_id);
 
-                $('#clickable-imagee').on('click', function() {
-                    $('#image-input').click();
-                });
-
-
-                $('#image-input').on('change', function() {
-                    var file = this.files[0];
-                    if (file) {
-                        var reader = new FileReader();
-                        reader.onload = function(e) {
-                            $('#clickable-imagee').attr('src', e.target.result);
-                        };
-                        reader.readAsDataURL(file);
-                    }
-                    image = this.files[0];
-                });
-                $('#clickable-imagee1').on('click', function() {
-                    $('#image-input1').click();
-                });
+            $('#clickable-imagee').on('click', function() {
+                $('#image-input').click();
+            });
 
 
-
-                $('#image-input1').on('change', function() {
-                    var file = this.files[0];
-                    if (file) {
-                        var reader = new FileReader();
-                        reader.onload = function(e) {
-                            $('#clickable-imagee1').attr('src', e.target.result);
-                        };
-                        reader.readAsDataURL(file);
-                    }
-                    // image = this.files[0];
-                });
-                $('#clickable-imagee2').on('click', function() {
-                    $('#image-input2').click();
-                });
-
-
-                $('#image-input2').on('change', function() {
-                    var file = this.files[0];
-                    if (file) {
-                        var reader = new FileReader();
-                        reader.onload = function(e) {
-                            $('#clickable-imagee2').attr('src', e.target.result);
-                        };
-                        reader.readAsDataURL(file);
-                    }
-                    // image = this.files[0];
-                });
-                $('#clickable-imagee3').on('click', function() {
-                    $('#image-input3').click();
-                });
+            $('#image-input').on('change', function() {
+                var file = this.files[0];
+                if (file) {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        $('#clickable-imagee').attr('src', e.target.result);
+                    };
+                    reader.readAsDataURL(file);
+                }
+                image = this.files[0];
+            });
+            $('#clickable-imagee1').on('click', function() {
+                $('#image-input1').click();
+            });
 
 
-                $('#image-input3').on('change', function() {
-                    var file = this.files[0];
-                    if (file) {
-                        var reader = new FileReader();
-                        reader.onload = function(e) {
-                            $('#clickable-imagee3').attr('src', e.target.result);
-                        };
-                        reader.readAsDataURL(file);
-                    }
-                    // image = this.files[0];
-                });
+
+            $('#image-input1').on('change', function() {
+                var file = this.files[0];
+                if (file) {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        $('#clickable-imagee1').attr('src', e.target.result);
+                    };
+                    reader.readAsDataURL(file);
+                }
+                // image = this.files[0];
+            });
+            $('#clickable-imagee2').on('click', function() {
+                $('#image-input2').click();
+            });
 
 
-                $('#increaseButton1').click(function() {
-                    var numberField = $('#numberField1');
-                    var currentValue = parseInt(numberField.val(), 10); // Parse the current value as an integer
+            $('#image-input2').on('change', function() {
+                var file = this.files[0];
+                if (file) {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        $('#clickable-imagee2').attr('src', e.target.result);
+                    };
+                    reader.readAsDataURL(file);
+                }
+                // image = this.files[0];
+            });
+            $('#clickable-imagee3').on('click', function() {
+                $('#image-input3').click();
+            });
+
+
+            $('#image-input3').on('change', function() {
+                var file = this.files[0];
+                if (file) {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        $('#clickable-imagee3').attr('src', e.target.result);
+                    };
+                    reader.readAsDataURL(file);
+                }
+                // image = this.files[0];
+            });
+
+
+            $('#increaseButton1').click(function() {
+                var numberField = $('#numberField1');
+                var currentValue = parseInt(numberField.val(), 10); // Parse the current value as an integer
+                var incrementAmount = 1; // You can change this value to the desired increment amount
+
+                // Increment the value by the specified amount
+                numberField.val(currentValue + incrementAmount);
+            });
+            $('#decreaseButton1').click(function() {
+                var numberField = $('#numberField1');
+                if (numberField.val() == 0) {
+                    return;
+                } else {
+                    var currentValue = parseInt(numberField.val(),
+                        10); // Parse the current value as an integer
                     var incrementAmount = 1; // You can change this value to the desired increment amount
 
                     // Increment the value by the specified amount
-                    numberField.val(currentValue + incrementAmount);
-                });
-                $('#decreaseButton1').click(function() {
-                    var numberField = $('#numberField1');
-                    if (numberField.val() == 0) {
-                        return;
-                    } else {
-                        var currentValue = parseInt(numberField.val(),
-                            10); // Parse the current value as an integer
-                        var incrementAmount = 1; // You can change this value to the desired increment amount
+                    numberField.val(currentValue - incrementAmount);
+                }
 
-                        // Increment the value by the specified amount
-                        numberField.val(currentValue - incrementAmount);
-                    }
+            });
 
-                });
+            $('#increaseButton0').click(function() {
+                var numberField = $('#numberField0');
+                var currentValue = parseInt(numberField.val(), 10); // Parse the current value as an integer
+                var incrementAmount = 1; // You can change this value to the desired increment amount
 
-                $('#increaseButton0').click(function() {
-                    var numberField = $('#numberField0');
-                    var currentValue = parseInt(numberField.val(), 10); // Parse the current value as an integer
+                // Increment the value by the specified amount
+                numberField.val(currentValue + incrementAmount);
+            });
+            $('#decreaseButton0').click(function() {
+                var numberField = $('#numberField0');
+                if (numberField.val() == 0) {
+                    return;
+                } else {
+                    var currentValue = parseInt(numberField.val(),
+                        10); // Parse the current value as an integer
                     var incrementAmount = 1; // You can change this value to the desired increment amount
 
                     // Increment the value by the specified amount
-                    numberField.val(currentValue + incrementAmount);
-                });
-                $('#decreaseButton0').click(function() {
-                    var numberField = $('#numberField0');
-                    if (numberField.val() == 0) {
-                        return;
-                    } else {
-                        var currentValue = parseInt(numberField.val(),
-                            10); // Parse the current value as an integer
-                        var incrementAmount = 1; // You can change this value to the desired increment amount
+                    numberField.val(currentValue - incrementAmount);
+                }
 
-                        // Increment the value by the specified amount
-                        numberField.val(currentValue - incrementAmount);
-                    }
-
-                });
+            });
 
 
-                $('#increaseButton2').click(function() {
-                    var numberField = $('#numberField2');
-                    var currentValue = parseInt(numberField.val(), 10); // Parse the current value as an integer
+            $('#increaseButton2').click(function() {
+                var numberField = $('#numberField2');
+                var currentValue = parseInt(numberField.val(), 10); // Parse the current value as an integer
+                var incrementAmount = 1; // You can change this value to the desired increment amount
+
+                // Increment the value by the specified amount
+                numberField.val(currentValue + incrementAmount);
+            });
+            $('#decreaseButton2').click(function() {
+                var numberField = $('#numberField2');
+                if (numberField.val() == 0) {
+                    return;
+                } else {
+                    var currentValue = parseInt(numberField.val(),
+                        10); // Parse the current value as an integer
                     var incrementAmount = 1; // You can change this value to the desired increment amount
 
                     // Increment the value by the specified amount
-                    numberField.val(currentValue + incrementAmount);
-                });
-                $('#decreaseButton2').click(function() {
-                    var numberField = $('#numberField2');
-                    if (numberField.val() == 0) {
-                        return;
-                    } else {
-                        var currentValue = parseInt(numberField.val(),
-                            10); // Parse the current value as an integer
-                        var incrementAmount = 1; // You can change this value to the desired increment amount
+                    numberField.val(currentValue - incrementAmount);
+                }
 
-                        // Increment the value by the specified amount
-                        numberField.val(currentValue - incrementAmount);
-                    }
+            });
 
-                });
+            $('#increaseButton3').click(function() {
+                var numberField = $('#numberField3');
+                var currentValue = parseInt(numberField.val(), 10); // Parse the current value as an integer
+                var incrementAmount = 1; // You can change this value to the desired increment amount
 
-                $('#increaseButton3').click(function() {
-                    var numberField = $('#numberField3');
-                    var currentValue = parseInt(numberField.val(), 10); // Parse the current value as an integer
+                // Increment the value by the specified amount
+                numberField.val(currentValue + incrementAmount);
+            });
+            $('#decreaseButton3').click(function() {
+                var numberField = $('#numberField3');
+                if (numberField.val() == 0) {
+                    return;
+                } else {
+                    var currentValue = parseInt(numberField.val(),
+                        10); // Parse the current value as an integer
                     var incrementAmount = 1; // You can change this value to the desired increment amount
 
                     // Increment the value by the specified amount
-                    numberField.val(currentValue + incrementAmount);
-                });
-                $('#decreaseButton3').click(function() {
-                    var numberField = $('#numberField3');
-                    if (numberField.val() == 0) {
-                        return;
-                    } else {
-                        var currentValue = parseInt(numberField.val(),
-                            10); // Parse the current value as an integer
-                        var incrementAmount = 1; // You can change this value to the desired increment amount
+                    numberField.val(currentValue - incrementAmount);
+                }
 
-                        // Increment the value by the specified amount
-                        numberField.val(currentValue - incrementAmount);
-                    }
-
-                });
+            });
 
 
-                $('#increaseButton4').click(function() {
-                    var numberField = $('#numberField4');
-                    var currentValue = parseInt(numberField.val(), 10); // Parse the current value as an integer
+            $('#increaseButton4').click(function() {
+                var numberField = $('#numberField4');
+                var currentValue = parseInt(numberField.val(), 10); // Parse the current value as an integer
+                var incrementAmount = 1; // You can change this value to the desired increment amount
+
+                // Increment the value by the specified amount
+                numberField.val(currentValue + incrementAmount);
+            });
+            $('#decreaseButton4').click(function() {
+                var numberField = $('#numberField4');
+                if (numberField.val() == 0) {
+                    return;
+                } else {
+                    var currentValue = parseInt(numberField.val(),
+                        10); // Parse the current value as an integer
                     var incrementAmount = 1; // You can change this value to the desired increment amount
 
                     // Increment the value by the specified amount
-                    numberField.val(currentValue + incrementAmount);
-                });
-                $('#decreaseButton4').click(function() {
-                    var numberField = $('#numberField4');
-                    if (numberField.val() == 0) {
-                        return;
-                    } else {
-                        var currentValue = parseInt(numberField.val(),
-                            10); // Parse the current value as an integer
-                        var incrementAmount = 1; // You can change this value to the desired increment amount
+                    numberField.val(currentValue - incrementAmount);
+                }
 
-                        // Increment the value by the specified amount
-                        numberField.val(currentValue - incrementAmount);
-                    }
-
-                });
+            });
 
 
-                $('#increaseButton5').click(function() {
-                    var numberField = $('#numberField5');
-                    var currentValue = parseInt(numberField.val(), 10); // Parse the current value as an integer
+            $('#increaseButton5').click(function() {
+                var numberField = $('#numberField5');
+                var currentValue = parseInt(numberField.val(), 10); // Parse the current value as an integer
+                var incrementAmount = 1; // You can change this value to the desired increment amount
+
+                // Increment the value by the specified amount
+                numberField.val(currentValue + incrementAmount);
+            });
+            $('#decreaseButton5').click(function() {
+                var numberField = $('#numberField5');
+                if (numberField.val() == 0) {
+                    return;
+                } else {
+                    var currentValue = parseInt(numberField.val(),
+                        10); // Parse the current value as an integer
                     var incrementAmount = 1; // You can change this value to the desired increment amount
 
                     // Increment the value by the specified amount
-                    numberField.val(currentValue + incrementAmount);
-                });
-                $('#decreaseButton5').click(function() {
-                    var numberField = $('#numberField5');
-                    if (numberField.val() == 0) {
-                        return;
-                    } else {
-                        var currentValue = parseInt(numberField.val(),
-                            10); // Parse the current value as an integer
-                        var incrementAmount = 1; // You can change this value to the desired increment amount
+                    numberField.val(currentValue - incrementAmount);
+                }
 
-                        // Increment the value by the specified amount
-                        numberField.val(currentValue - incrementAmount);
-                    }
-
-                });
+            });
 
 
+            $("form#submit-raffle").on('submit', function(e) {
+                e.preventDefault(); // Prevent the default form submission
 
-
-                $("form#submit-raffle").on('submit', function(e) {
-                    e.preventDefault(); // Prevent the default form submission
-
-                    var imaghe = $("#image-input");
-                    var start_date = $("#start_date").val();
-               if(start_date >= futureDateInput.value){
-                showError("Start date must be less than end date input");
-                return;
-               }else{
-                $(".spinner-border").css("display", "block");
+                var imaghe = $("#image-input");
+                var start_date = $("#start_date").val();
+                if (start_date >= futureDateInput.value) {
+                    showError("Start date must be less than end date input");
+                    return;
+                } else {
+                    $(".spinner-border").css("display", "block");
                     $(".login_btn").css("display", "none");
                     var formData = new FormData(this);
 
@@ -578,13 +572,10 @@
                             console.log(data);
                         }
                     });
-               }
+                }
 
-                    // }
+            })
 
-                })
-
-            });
-        </script>
-    </div>
+        });
+    </script>
 @endsection

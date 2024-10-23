@@ -76,7 +76,7 @@ select:focus {
 
 .admin-main-container row .col-12.col-md-3 {
     margin: 0;
-    border-radius: 10px;
+    border-radius: .4rem;
     overflow: hidden;
 
 }
@@ -144,7 +144,7 @@ h2.name-address {
     color: #000;
 
     /* H5 */
-    font-family: Poppins;
+
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -155,7 +155,7 @@ h2.name-address {
     color: #000;
 
     /* H3 Bold */
-    font-family: Poppins;
+
     font-size: 18px;
     font-style: normal;
     font-weight: 700;
@@ -165,7 +165,7 @@ h2.name-address {
 .address-container .address-name {
     color: var(--Body-text-color, #303030);
     /* Title 1 */
-    font-family: Poppins;
+
     font-size: 12px;
     font-style: normal;
     font-weight: 400;
@@ -176,7 +176,7 @@ h3.head-title {
     color: #000;
 
     /* H3 Bold */
-    font-family: Poppins;
+
     font-size: 20px;
     font-style: normal;
     font-weight: 700;
@@ -193,7 +193,7 @@ h3.head-title {
     min-height: 100px;
     max-height: 100px;
     height: auto;
-    border-radius: 10px;
+    border-radius: .4rem;
     display: flex;
     padding: 8px 0px;
     align-items: center;
@@ -217,7 +217,7 @@ h3.head-title {
     color: #000;
 
     /* H5 Bold */
-    font-family: Poppins;
+
     font-size: 12px;
     font-style: normal;
     font-weight: 700;
@@ -228,7 +228,7 @@ p.sub-title {
     color: #000;
 
     /* Title 1 */
-    font-family: Poppins;
+
     font-size: 11px;
     font-style: normal;
     font-weight: 400;
@@ -243,7 +243,7 @@ p.sub-title {
     justify-content: space-between;
     align-items: center;
     padding: 10px;
-    border-radius: 10px;
+    border-radius: .4rem;
     background: #FFF;
     box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.25);
 }
@@ -275,7 +275,7 @@ p.sub-title {
 .text-div h4.head {
     color: var(--Body-text-color, #303030);
     /* H4 Bold */
-    font-family: Poppins;
+
     font-size: 16px;
     font-style: normal;
     font-weight: 700;
@@ -286,7 +286,7 @@ p.sub-title {
     color: var(--Body-text-color, #303030);
     /* text-align: center; */
     /* H5 */
-    font-family: Poppins;
+
     font-size: 12px;
     font-style: normal;
     font-weight: 400;
@@ -298,7 +298,7 @@ p.sub-title {
     color: var(--Body-text-color, #303030);
     /* text-align: center; */
     /* Title 1 */
-    font-family: Poppins;
+
     font-size: 10px;
     font-style: normal;
     font-weight: 400;
@@ -314,7 +314,7 @@ p.sub-title {
     color: #F44343;
 
     /* Title 3 Bold */
-    font-family: Poppins;
+
     font-size: 12px;
     font-style: normal;
     font-weight: 700;
@@ -325,7 +325,7 @@ p.sub-title {
     color: #55C595;
 
     /* Title 3 Bold */
-    font-family: Poppins;
+
     font-size: 12px;
     font-style: normal;
     font-weight: 700;
@@ -361,7 +361,7 @@ p.sub-title {
 .raffle-card .second-section .person-no span {
     color: var(--Body-text-color, #303030);
     /* Title 4 Bold */
-    font-family: Poppins;
+
     font-size: 10px;
     font-style: normal;
     font-weight: 700;
@@ -372,7 +372,7 @@ p.sub-title {
     color: #55C595;
 
     /* H5 Bold */
-    font-family: Poppins;
+
     font-size: 16px;
     font-style: normal;
     font-weight: 700;
@@ -399,7 +399,7 @@ h2.title span {
     color: #000;
 
     /* H3 Bold */
-    font-family: Poppins;
+
     font-size: 16px;
     font-style: normal;
     font-weight: 700;
@@ -412,7 +412,7 @@ h2.title span {
     color: #000;
 
     /* H3 Bold */
-    font-family: Poppins;
+
     font-size: 12px;
     font-style: normal;
     font-weight: 400;
@@ -434,7 +434,7 @@ h2.title span {
     background: #FFF;
     color: var(--bold-black-color, #262626);
     /* Title 3 Bold */
-    font-family: Poppins;
+
     font-size: 12px;
     font-style: normal;
     font-weight: 700;

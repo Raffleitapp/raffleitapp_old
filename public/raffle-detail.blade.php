@@ -224,8 +224,6 @@
         $check_if = DB::table('raffle_order')
             ->where('raffle_id', $data->id)
             ->where('user_id', session()->get('user_id'));
-        // echo $da;
-        // $imageData = DB::table('')
     @endphp
     <div class="creat-raffle-container">
         <div class="container">
@@ -262,8 +260,6 @@
 
                                 </div>
                             @endif
-
-
 
                             <!-- Add more thumbnail items corresponding to the main carousel items -->
                         </div>

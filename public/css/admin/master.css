@@ -1,4 +1,3 @@
-
 :root {
  --primary-color : #215273;
  --secondary-color: #55C595;
@@ -8,59 +7,41 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-
 }
 .admin-layout{
-display: flex;
-position: relative;
-
+    display: flex;
+    position: relative;
 }
 .admin-layout .admin-sidebar{
     min-height: 100vh;
     max-height: 100vh;
-    /* display: ; */
     width: 240px;
     background-color: var(--primary-color);
     position: fixed;
     top: 0;
     bottom: 0;
-    /* overflow: hidden; */
     z-index: 40;
     transition: left 0.5s ease-in-out;
-    /* display:none; */
 }
 
 .admin-layout .admin-sidebar.active{
-  /* left: -240px; */
-  left: 0;
-  transition: left 0.5s ease-in-out;
-    /* display:none; */
+    left: 0;
+    transition: left 0.5s ease-in-out;
 }
 
 .admin-layout .admin-sidebar.active-tog{
     left: -240px;
-    /* display: none; */
     transition: left 0.5s ease-in-out;
-      /* display:none; */
-      /* position: fixed; */
-      /* left: 0; */
-      z-index: 10;
-      /* width: 240px; */
-  }
-
+    z-index: 10;
+}
 
 .admin-layout .admin-section-head{
     width: calc(100vw - 240px);
     margin-left: 240px;
-
-
 }
 .admin-layout .admin-section-head.active{
     width: 100%;
-    /* max-height: 100vh; */
     margin-left: 0;
-    /* overflow: hidden; */
-
 }
 .admin-layout .admin-section-head .admin-head{
     background-color: var(--primary-color);
@@ -69,9 +50,7 @@ position: relative;
     top: 0;
     right: 0;
     left: 240px;
-    /* width: 100%; */
     display: flex;
-
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
@@ -89,14 +68,14 @@ position: relative;
 }
 
 .admin-layout .admin-section-head .admin-head .menu-btn i{
-color:white;
-font-size: 28px;
-font-weight:700;
+    color: white;
+    font-size: 28px;
+    font-weight: 700;
 }
 
 .admin-layout .admin-section-head .admin-head .admin-img img{
     height: 100%;
-    width:100%;
+    width: 100%;
     object-fit: cover;
     object-position: center;
 }
@@ -105,16 +84,13 @@ font-weight:700;
     padding: 12px;
     padding-top: 40px;
     background: whitesmoke;
-
 }
 .admin-layout .admin-section-head .admin-content .container-fluid{
     padding-top: 40px;
     background: #FAFDFF;
-
 }
 .admin-layout .admin-sidebar .side-item{
     overflow-y: auto !important;
-
 }
 .admin-layout .admin-sidebar .side-item li{
     list-style: none;
@@ -125,29 +101,23 @@ font-weight:700;
 }
 .admin-layout .admin-sidebar .side-item li a.link-text{
     color: #FFF;
-
-/* H5 Bold */
-font-family: Poppins;
-font-size: 16px;
-font-style: normal;
-font-weight: 500;
-line-height: 140%;
-display: flex;
-align-items: center;
-text-decoration: none;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 140%;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
 }
 
 .admin-layout .admin-sidebar .side-item li:hover, .admin-layout .admin-sidebar .side-item li.active{
     background: rgba(85, 197, 149, 1);
     border-left: 4px solid white;
-    /* border-right: 2px solid white; */
-    /* border-radius: 0px 10px 10px 0px; */
 }
 
 .admin-layout .admin-section-head .admin-content{
-   padding: 20px;
-   overflow: scroll !important;
-
+    padding: 20px;
+    overflow: scroll !important;
 }
 
 .admin-content .conten{

@@ -12,7 +12,7 @@
         label {
             color: #303030;
             /* H5 Bold */
-            font-family: Poppins;
+
             font-size: 14px;
             font-style: normal;
             font-weight: 700;

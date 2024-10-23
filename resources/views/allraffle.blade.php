@@ -23,7 +23,7 @@
         color: #FFF;
 
         /* H3 Bold */
-        font-family: Poppins;
+
         font-size: 20px;
         font-style: normal;
         font-weight: 700;
@@ -37,7 +37,7 @@
     .pre-work .text {
         color: var(--Body-text-color, #303030);
         /* H5 */
-        font-family: Poppins;
+
         font-size: 14px;
         font-style: normal;
         font-weight: 400;
@@ -125,7 +125,7 @@
     .top-filter-dash .body .search-org label {
         color: var(--bold-black-color, #262626);
         /* H5 Bold */
-        font-family: Poppins;
+
         font-size: .8rem;
         font-style: normal;
         font-weight: 700;

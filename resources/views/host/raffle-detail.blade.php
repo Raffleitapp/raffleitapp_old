@@ -87,7 +87,7 @@
             flex: 1;
             text-align: center;
             /* H3 Bold */
-            font-family: Poppins;
+
             font-size: 15px;
             font-style: normal;
             font-weight: 700;
@@ -135,7 +135,7 @@
         .profile-detail h4 {
             color: var(--bold-black-color, #262626);
             /* Title 3 Bold */
-            font-family: Poppins;
+
             font-size: 16px;
             font-style: normal;
             font-weight: 700;
@@ -145,7 +145,7 @@
         .profile-detail h5 {
             color: var(--bold-black-color, #313030);
             /* Title 3 Bold */
-            font-family: Poppins;
+
             font-size: 12px;
             font-style: normal;
             font-weight: 400;
@@ -156,7 +156,7 @@
             color: var(--Body-text-color, #303030);
             text-align: center;
             /* Title 4 Bold */
-            font-family: Poppins;
+
             font-size: 14px;
             font-style: normal;
             font-weight: 700;
@@ -168,7 +168,7 @@
         .extend-con h5.message {
             color: var(--Body-text-color, #303030);
             /* H5 */
-            font-family: Poppins;
+
             font-size: 12px;
             font-style: normal;
             font-weight: 400;
@@ -180,7 +180,7 @@
             background: var(--Primary-Color, #215273);
             color: var(--Base-Color, #FDFDFD);
             /* H5 Bold */
-            font-family: Poppins;
+
             font-size: 14px;
             padding: 10px 12px;
             font-style: normal;
@@ -228,7 +228,7 @@
         .modal-content h2 {
             color: var(--Body-text-color, #303030);
             /* H3 Bold */
-            font-family: Poppins;
+
             font-size: 18px;
             text-align: center;
             font-style: normal;
@@ -247,7 +247,7 @@
             color: #2B94DA;
 
             /* Title 4 Bold */
-            font-family: Poppins;
+
             font-size: 10px;
             text-align: center;
             font-style: normal;
@@ -266,7 +266,7 @@
             color: var(--Body-text-color, #303030);
             /* H5 Bold */
             display: block;
-            font-family: Poppins;
+
             font-size: 14px;
             font-style: normal;
             font-weight: 700;
@@ -277,7 +277,7 @@
         #new_date {
             color: #666565;
 
-            font-family: Poppins;
+
             font-size: 12px;
             font-style: normal;
             font-weight: 400;
@@ -287,7 +287,7 @@
         #extend {
             color: #FFF;
             padding: 10px;
-            font-family: Poppins;
+
             font-size: 12px;
             font-style: normal;
             font-weight: 700;
@@ -302,7 +302,7 @@
         #closeModal {
             color: #161616;
             padding: 10px;
-            font-family: Poppins;
+
             font-size: 12px;
             font-style: normal;
             font-weight: 700;
@@ -749,7 +749,7 @@
                                 style="
                                 color: #666565;
 
-    font-family: Poppins;
+
     font-size: 13px;
     display:block;
     font-style: normal;
@@ -769,7 +769,7 @@
                             <span
                                 style="
                                 color:  #161616;
-    font-family: Poppins;
+
     font-size: 13px;
     display:block;
     font-style: normal;
