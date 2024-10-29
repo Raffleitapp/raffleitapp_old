@@ -56,8 +56,6 @@ Route::get('yourself', function () {
     return view('yourself');
 });
 
-
-
 Route::get('addresses', function () {
     return view('addresses');
 });
@@ -94,6 +92,7 @@ Route::get('raffle_detail/{id}', [RaffleController::class, 'raffleDetails']);
 Route::get('fundraise', function () {
     return view('fundraise');
 });
+
 Route::post('create_account', [UserAuthController::class, 'createAccount'])->name('create_account');
 Route::get('complete_register', [UserAuthController::class, 'complete_register'])->name('complete_register');
 Route::post('update_register', [UserAuthController::class, 'update_register'])->name('update_register');
@@ -102,8 +101,6 @@ Route::post('login_login', [UserAuthController::class, 'loginAccount'])->name('l
 Route::get('logout', [UserAuthController::class, 'logout'])->name('logout');
 Route::post("getStateByCountryId", [UserAuthController::class, 'getStateByCountryId']);
 Route::post("getCityByStateId", [UserAuthController::class, 'getCityByStateId']);
-
-
 
 
 Route::group(['prefix' => 'admin'], function () {
@@ -132,7 +129,6 @@ Route::group(['prefix' => 'admin'], function () {
             return redirect('/login');
         }
     });
-
     Route::post('update-payment', [AdminRouteController::class, 'updatePayment'])->name('admin.update-payment');
 });
 
@@ -166,3 +162,9 @@ Route::group(['prefix' => 'host'], function () {
     Route::get("live-raffle", [HostController::class, 'liveraffle'])->name("host.liive-raffle");
     Route::get("completed", [HostController::class, 'completedraffle'])->name("host.completed");
 });
+
+
+// mobile app paypal
+Route::post('paypal', [PaypalController::class, 'payment'])->name('payment');
+Route::get('success', [PaypalController::class, 'success'])->name('success');
+Route::get('cancel', [PaypalController::class, 'cancel'])->name('cancel');

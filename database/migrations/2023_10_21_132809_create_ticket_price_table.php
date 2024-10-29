@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('ticket_price', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('raffle_id');
-            $table->decimal('one',10.2);
+            $table->decimal('one',10,2);
             $table->decimal('three', 10,2);
             $table->decimal('ten', 10,2);
             $table->decimal('twenty', 10,2);

@@ -118,17 +118,20 @@ class RaffleController extends Controller
     public function allRaffles()
     {
         $data = DB::table('raffle')
-        ->where('approve_status', 1)->leftJoin('raffle_order', 'raffle.id', 'raffle_order.raffle_id')->where('raffle.ending_date' ,'>', now()->format('Y-m-d H:i:s') )
-        ->leftJoin('organisation', 'raffle.organisation_id', 'organisation.id')
-        ->select('raffle.starting_date','raffle.id','raffle.ending_date','raffle.host_name','raffle.state_raffle_hosted', 'organisation.organisation_name', 'organisation.cover_image', 'organisation.handle','organisation.website',  DB::raw('COALESCE(SUM(raffle_order.amount), 0) as total_amount'))
-        ->groupBy('raffle.id',  'raffle.starting_date',
-'raffle.ending_date',  // Corrected column name
-'raffle.host_name',
-'raffle.state_raffle_hosted',
-'organisation.organisation_name',
-'organisation.cover_image',
-'organisation.handle',
-'organisation.website')->paginate(7);
+            ->where('approve_status', 1)->leftJoin('raffle_order', 'raffle.id', 'raffle_order.raffle_id')->where('raffle.ending_date', '>', now()->format('Y-m-d H:i:s'))
+            ->leftJoin('organisation', 'raffle.organisation_id', 'organisation.id')
+            ->select('raffle.starting_date', 'raffle.id', 'raffle.ending_date', 'raffle.host_name', 'raffle.state_raffle_hosted', 'organisation.organisation_name', 'organisation.cover_image', 'organisation.handle', 'organisation.website',  DB::raw('COALESCE(SUM(raffle_order.amount), 0) as total_amount'))
+            ->groupBy(
+                'raffle.id',
+                'raffle.starting_date',
+                'raffle.ending_date',  // Corrected column name
+                'raffle.host_name',
+                'raffle.state_raffle_hosted',
+                'organisation.organisation_name',
+                'organisation.cover_image',
+                'organisation.handle',
+                'organisation.website'
+            )->paginate(7);
         return view('allraffle', compact('data'));
     }
 
@@ -171,30 +174,13 @@ class RaffleController extends Controller
             if ($validator->fails()) {
                 $response = [
                     'success' => false,
-                    'message' => 'Validation Error.', $validator->errors(),
+                    'message' => 'Validation Error.',
+                    $validator->errors(),
                     'status' => 500
                 ];
                 return response()->json($response, 404);
             }
-            // $payCreds = DB::table('payments')
-            // ->select('*')->where('id',2)->first();
-            // if (is_null($payCreds) || is_null($payCreds->creds)) {
-            //     $response = [
-            //         'success' => false,
-            //         'message' => 'Payment issue please contact administrator',
-            //         'status' => 404
-            //     ];
-            //     return response()->json($response, 404);
-            // }
-            // $credsData = json_decode($payCreds->creds);
-            // if(is_null($credsData) || is_null($credsData->secret)){
-            //     $response = [
-            //         'success' => false,
-            //         'message' => 'Payment issue please contact administrator',
-            //         'status' => 404
-            //     ];
-            //     return response()->json($response, 404);
-            // }
+
             $stripe = new \Stripe\StripeClient("sk_test_51HIb63EFkSOsWovihAgvTLfBDmMm4IAXuUvQ9PCeNdJhiNj8uRwpC34f8tX4QtKBIOTTkzyVECBwWRpWFilyZ38z00DUBhGP4o");
             $data = $stripe->tokens->create([
                 'card' => [
@@ -211,7 +197,7 @@ class RaffleController extends Controller
                 'status' => 200
             ];
             return response()->json($response, 200);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return response()->json($e->getMessage(), 200);
         }
     }
