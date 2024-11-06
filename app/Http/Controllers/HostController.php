@@ -24,7 +24,7 @@ class HostController extends Controller
         if (session()->has('user_id') && session()->get('user_type') == 'host') {
             $data = DB::table("raffle")->where('state_raffle_hosted', $id)->where('user_id',session()->get('user_id') )->first();
             if ($data) {
-                return view('host.raffle-detail', compact('data'));
+                return view('raffle-detail', compact('data'));
             }
         } else {
             session()->flush();

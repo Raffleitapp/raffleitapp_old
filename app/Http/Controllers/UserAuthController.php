@@ -632,7 +632,7 @@ class UserAuthController extends Controller
                 'token' => $token
             ], 201);
         } catch (\Exception $e) {
-            \Log::error('Error during registration: ', [
+            Log::error('Error during registration: ', [
                 'error' => $e->getMessage(),
                 'stack_trace' => $e->getTraceAsString(),
                 'request_data' => $request->except(['password', 'password_confirmation'])
@@ -644,76 +644,76 @@ class UserAuthController extends Controller
 
 
 
-    public function update_register(Request $request)
-    {
-        // Validate the request data
-        $validator = Validator::make($request->all(), [
+    // public function update_register(Request $request)
+    // {
+    //     // Validate the request data
+    //     $validator = Validator::make($request->all(), [
 
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
-            'username' => 'required|string|max:255|unique:users,username,' . auth()->id(),
-            'about' => 'nullable|string|max:1000',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5120'
-        ]);
+    //         'first_name' => 'required|string|max:255',
+    //         'last_name' => 'required|string|max:255',
+    //         'username' => 'required|string|max:255|unique:users,username,' . auth()->id(),
+    //         'about' => 'nullable|string|max:1000',
+    //         'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5120'
+    //     ]);
 
-        // Return validation errors if any
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
+    //     // Return validation errors if any
+    //     if ($validator->fails()) {
+    //         return response()->json(['errors' => $validator->errors()], 422);
+    //     }
 
-        try {
-            // Verify and authenticate user via token
-            if (!Auth::guard('api')->check()) {
-                return response()->json(['error' => 'Unauthenticated.'], 401);
-            }
+    //     try {
+    //         // Verify and authenticate user via token
+    //         if (!Auth::guard('api')->check()) {
+    //             return response()->json(['error' => 'Unauthenticated.'], 401);
+    //         }
 
-            $user = Auth::guard('api')->user(); // Get authenticated user
+    //         $user = Auth::guard('api')->user(); // Get authenticated user
 
-            // Handle file upload
-            $fileName = null;
-            if ($request->hasFile('image')) {
-                $file = $request->file('image');
-                $fileName = time() . '_' . $file->getClientOriginalName();
+    //         // Handle file upload
+    //         $fileName = null;
+    //         if ($request->hasFile('image')) {
+    //             $file = $request->file('image');
+    //             $fileName = time() . '_' . $file->getClientOriginalName();
 
-                // Handle file move with error check
-                try {
-                    $file->move(public_path('uploads/images'), $fileName);
-                } catch (\Exception $e) {
-                    \Log::error('File upload error: ' . $e->getMessage());
-                    return response()->json([
-                        'code' => 500,
-                        'message' => 'File upload failed. Please try again.'
-                    ], 500);
-                }
-            }
+    //             // Handle file move with error check
+    //             try {
+    //                 $file->move(public_path('uploads/images'), $fileName);
+    //             } catch (\Exception $e) {
+    //                 \Log::error('File upload error: ' . $e->getMessage());
+    //                 return response()->json([
+    //                     'code' => 500,
+    //                     'message' => 'File upload failed. Please try again.'
+    //                 ], 500);
+    //             }
+    //         }
 
-            // Update user details in the database
-            $user->first_name = $request->first_name;
-            $user->last_name = $request->last_name;
-            $user->username = $request->username;
-            $user->about = $request->about;
-            if ($fileName) {
-                $user->image = $fileName; // Update profile picture if uploaded
-            }
-            $user->reg_status = 1; // Assuming this is a registration status update
+    //         // Update user details in the database
+    //         $user->first_name = $request->first_name;
+    //         $user->last_name = $request->last_name;
+    //         $user->username = $request->username;
+    //         $user->about = $request->about;
+    //         if ($fileName) {
+    //             $user->image = $fileName; // Update profile picture if uploaded
+    //         }
+    //         $user->reg_status = 1; // Assuming this is a registration status update
 
-            $user->save();
+    //         $user->save();
 
-            // Return success response
-            return response()->json([
-                'code' => 201,
-                'message' => 'Account successfully updated'
-            ]);
-        } catch (\Exception $e) {
-            \Log::error('Error updating user details: ' . $e->getMessage());
+    //         // Return success response
+    //         return response()->json([
+    //             'code' => 201,
+    //             'message' => 'Account successfully updated'
+    //         ]);
+    //     } catch (\Exception $e) {
+    //         \Log::error('Error updating user details: ' . $e->getMessage());
 
-            // Return error response
-            return response()->json([
-                'code' => 500,
-                'message' => 'Internal server error. Please try again later.'
-            ], 500);
-        }
-    }
+    //         // Return error response
+    //         return response()->json([
+    //             'code' => 500,
+    //             'message' => 'Internal server error. Please try again later.'
+    //         ], 500);
+    //     }
+    // }
 
 
     public function login(Request $request)
@@ -740,10 +740,10 @@ class UserAuthController extends Controller
     /**
      * Log out a user.
      */
-    public function logout(Request $request)
-    {
-        $request->user()->tokens()->delete();
+    // public function logout(Request $request)
+    // {
+    //     $request->user()->tokens()->delete();
 
-        return response()->json(['message' => 'Successfully logged out']);
-    }
+    //     return response()->json(['message' => 'Successfully logged out']);
+    // }
 }

@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('image2')->nullable();
             $table->string('image3')->nullable();
             $table->string('image4')->nullable();
-            $table->string('target')->nullable();
+            $table->string('target');
             $table->date('starting_date');
             $table->date('ending_date');
             $table->string("state_raffle_hosted")->nullable();

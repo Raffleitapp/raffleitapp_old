@@ -3,7 +3,7 @@
         'name' => 'laravel/laravel',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '87bde140ff4c42f5d7a8246000df34009b9b07a5',
+        'reference' => 'd49246b3b0dea6f3d58badd723586f05397e7564',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -388,7 +388,7 @@
         'laravel/laravel' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '87bde140ff4c42f5d7a8246000df34009b9b07a5',
+            'reference' => 'd49246b3b0dea6f3d58badd723586f05397e7564',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -1009,6 +1009,15 @@
             'replaced' => array(
                 0 => '*',
             ),
+        ),
+        'srmklive/paypal' => array(
+            'pretty_version' => '3.0.32',
+            'version' => '3.0.32.0',
+            'reference' => '031d69d7c99f9ef0874a34cb85326ede28cd7aed',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../srmklive/paypal',
+            'aliases' => array(),
+            'dev_requirement' => false,
         ),
         'stripe/stripe-php' => array(
             'pretty_version' => 'v13.18.0',

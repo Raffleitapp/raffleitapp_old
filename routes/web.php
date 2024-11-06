@@ -4,11 +4,9 @@ use App\Http\Controllers\AdminRouteController;
 use App\Http\Controllers\HostController;
 use App\Http\Controllers\RaffleController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\UserAuthController;
-use App\Http\Controllers\UserController;
 use App\Http\Controllers\StripeController;
+use App\Http\Controllers\PayPalController;
 
 // Route::get("/", [AdminRouteController::class,"index"])->name("index");
 /*
@@ -72,14 +70,11 @@ Route::get('privacy-policy', function () {
     return view('privacy-policy');
 })->name('privacy-policy');
 
-Route::get('/make-payment', function () {
-    return view('stripe');
-});
-
-Route::post('/payments/createStripeToken', [RaffleController::class, 'createStripeToken'])->name('payments.createStripeToken');
-
-Route::post("createPay", [StripeController::class, 'createPay']);
-Route::get("payment_success", [StripeController::class, 'paymentSuccess']);
+// Paypal payments
+Route::post('/payment', [PayPalController::class, 'payment'])->name('payment');
+Route::get('/success', [PayPalController::class, 'success'])->name('paypal.success');
+Route::get('/failed', [PayPalController::class, 'failed'])->name('paypal.failed');
+Route::get('/payment', [PayPalController::class, 'payment'])->name('payment');
 
 Route::get('organisation', function () {
     return view('organisation');
@@ -162,9 +157,3 @@ Route::group(['prefix' => 'host'], function () {
     Route::get("live-raffle", [HostController::class, 'liveraffle'])->name("host.liive-raffle");
     Route::get("completed", [HostController::class, 'completedraffle'])->name("host.completed");
 });
-
-
-// mobile app paypal
-Route::post('paypal', [PaypalController::class, 'payment'])->name('payment');
-Route::get('success', [PaypalController::class, 'success'])->name('success');
-Route::get('cancel', [PaypalController::class, 'cancel'])->name('cancel');

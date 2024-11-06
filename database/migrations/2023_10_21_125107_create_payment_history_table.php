@@ -14,10 +14,13 @@ return new class extends Migration
         Schema::create('payment_history', function (Blueprint $table) {
             $table->id();
             $table->string('payment_id');
-            $table->string('txn_id');
-            $table->string('payment_method');
             $table->integer('user_id');
-            $table->integer('order_id');
+            $table->string('amount');
+            $table->string('currency');
+            $table->string('status');
+            $table->string('payer_email');
+            $table->string('transaction_id');
+            $table->string('payment_method');
             $table->timestamps();
         });
     }
