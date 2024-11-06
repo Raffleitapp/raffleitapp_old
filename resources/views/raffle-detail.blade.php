@@ -2,7 +2,6 @@
 @section('title', 'Raffle Detail')
 @section('content')
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    {{-- @vite(['resources/scss/raffle.scss']) --}}
     <style>
         .top-bg {
             height: 20vh;
@@ -269,10 +268,6 @@
 
                                 </div>
                             @endif
-
-
-
-
                             <!-- Add more thumbnail items corresponding to the main carousel items -->
                         </div>
                     </div>
@@ -341,20 +336,6 @@
 
             </div>
             <div class="d-flex justify-content-end align-items-center">
-                {{-- <div class="text-icon">
-                    <span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 30 30" fill="none">
-                            <path d="M21.75 0C19.14 0 16.635 1.32425 15 3.41689C13.365 1.32425 10.86 0 8.25 0C3.63 0 0 3.9564 0 8.99183C0 15.1717 5.1 20.2071 12.825 27.8583L15 30L17.175 27.842C24.9 20.2071 30 15.1717 30 8.99183C30 3.9564 26.37 0 21.75 0ZM15.15 25.4223L15 25.5858L14.85 25.4223C7.71 18.376 3 13.7166 3 8.99183C3 5.72207 5.25 3.26975 8.25 3.26975C10.56 3.26975 12.81 4.88828 13.605 7.12807H16.41C17.19 4.88828 19.44 3.26975 21.75 3.26975C24.75 3.26975 27 5.72207 27 8.99183C27 13.7166 22.29 18.376 15.15 25.4223Z" fill="#55C595" />
-                        </svg></span>
-                    <span>Follow Org</span>
-                </div>
-                <div class="text-icon">
-                    <span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 30 30" fill="none">
-                            <path d="M13.75 8.75H16.25V11.25H13.75V8.75ZM13.75 13.75H16.25V21.25H13.75V13.75ZM15 2.5C8.1 2.5 2.5 8.1 2.5 15C2.5 21.9 8.1 27.5 15 27.5C21.9 27.5 27.5 21.9 27.5 15C27.5 8.1 21.9 2.5 15 2.5ZM15 25C9.4875 25 5 20.5125 5 15C5 9.4875 9.4875 5 15 5C20.5125 5 25 9.4875 25 15C25 20.5125 20.5125 25 15 25Z" fill="#55C595" />
-                        </svg>
-                    </span>
-                    <span>More Info</span>
-                </div> --}}
                 <div class="text-icon m-2">
                     <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 30 30"
                             fill="none">
@@ -556,24 +537,6 @@
                             </div>
                         </div>
                     </div>
-                    {{-- <div class="tab-pane">
-                        <div class="card p-3" style="">
-                            <div class="host-detail flex align-items-center">
-                                <div class="host-img">
-                                    <img src="{{ asset('storage/images/' . $organisationData->cover_image) }}"
-                                        alt="">
-                                </div>
-                                <div class="profile-detail">
-                                    <h4>{{ $organisationData->organisation_name }}</h4>
-                                    <h5>{{ $organisationData->handle }}</h5>
-                                </div>
-                            </div>
-                            <div class="profile-detail my-3">
-                                <h4 style="font-size: 1.4rem">About Us</h4>
-                                <h5 style="font-size: 12px; line-height:150%">{{ $organisationData->description }}</h5>
-                            </div>
-                        </div>
-                    </div> --}}
                 </div>
             </div>
         </div>
@@ -735,13 +698,11 @@
 
                 $("#pay_now").click(function(e) {
                     e.preventDefault();
-                    // console.log(selectedCard, selectedPrice)
                     var userLoggedIn = {{ session()->has('user_id') ? 'true' : 'false' }};
                     if (userLoggedIn) {
                         if (selectedCard === '') {
                             showErrorMsg("Please choose the number of ticket you want to purchase");
                         } else {
-
                             const id = {{ $raff_id }}
                             const param = {
                                 raffle_id: id,
@@ -749,28 +710,34 @@
                                 total_raffle: selectedCard,
                                 type: 'purchase'
                             }
-                            // console.log(param);
-                            localStorage.setItem('myData', JSON.stringify(param));
-                            window.location.href = "{{ url('/make-payment') }}"
+                            // Send a POST request to the PayPal payment route
+                            $.ajax({
+                                url: "{{ url('/payment') }}", // Ensure this URL matches your route
+                                type: "POST",
+                                data: param,
+                                success: function(response) {
+                                    // Handle success response (e.g., redirect to PayPal)
+                                    window.location.href = response.redirectUrl; // Redirect to PayPal
+                                },
+                                error: function(xhr) {
+                                    // Handle error response
+                                    showError("Payment processing failed. Please try again.");
+                                }
+                            });
                         }
                     } else {
                         showError("Please login before you can make payment")
                         localStorage.clear();
                         window.location.href = "{{ url('/login') }}"
-
                     }
-
                 });
-
 
                 $("#support-pay").click(function(e) {
                     e.preventDefault();
-                    // console.log(selectedCard, selectedPrice)
                     var userLoggedIn = {{ session()->has('user_id') ? 'true' : 'false' }};
                     if (userLoggedIn) {
                         let amount = $("#support-amount").val();
                         if (amount > 0) {
-
                             const id = {{ $raff_id }}
                             const param = {
                                 raffle_id: id,
@@ -778,18 +745,26 @@
                                 total_raffle: 0,
                                 type: 'support'
                             }
-                            // console.log(param);
-                            localStorage.setItem('myData', JSON.stringify(param));
-                            window.location.href = "{{ url('/make-payment') }}"
+                            // Send a POST request to the PayPal payment route
+                            $.ajax({
+                                url: "{{ url('/payment') }}", // Update this URL to your PayPal payment route
+                                type: "POST",
+                                data: param,
+                                success: function(response) {
+                                    // Handle success response (e.g., redirect to PayPal)
+                                    window.location.href = response.redirectUrl; // Assuming your backend returns a redirect URL
+                                },
+                                error: function(xhr) {
+                                    // Handle error response
+                                    showError("Payment processing failed. Please try again.");
+                                }
+                            });
                         }
                     } else {
                         showError("Please login before you can make payment")
                         localStorage.clear();
                         window.location.href = "{{ url('/login') }}"
-
                     }
-
-
                 });
 
             });

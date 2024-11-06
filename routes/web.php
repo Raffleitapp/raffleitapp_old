@@ -4,11 +4,9 @@ use App\Http\Controllers\AdminRouteController;
 use App\Http\Controllers\HostController;
 use App\Http\Controllers\RaffleController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\UserAuthController;
-use App\Http\Controllers\UserController;
 use App\Http\Controllers\StripeController;
+use App\Http\Controllers\PayPalController;
 
 // Route::get("/", [AdminRouteController::class,"index"])->name("index");
 /*
@@ -56,8 +54,6 @@ Route::get('yourself', function () {
     return view('yourself');
 });
 
-
-
 Route::get('addresses', function () {
     return view('addresses');
 });
@@ -74,14 +70,11 @@ Route::get('privacy-policy', function () {
     return view('privacy-policy');
 })->name('privacy-policy');
 
-Route::get('/make-payment', function () {
-    return view('stripe');
-});
-
-Route::post('/payments/createStripeToken', [RaffleController::class, 'createStripeToken'])->name('payments.createStripeToken');
-
-Route::post("createPay", [StripeController::class, 'createPay']);
-Route::get("payment_success", [StripeController::class, 'paymentSuccess']);
+// Paypal payments
+Route::post('/payment', [PayPalController::class, 'payment'])->name('payment');
+Route::get('/success', [PayPalController::class, 'success'])->name('paypal.success');
+Route::get('/failed', [PayPalController::class, 'failed'])->name('paypal.failed');
+Route::get('/payment', [PayPalController::class, 'payment'])->name('payment');
 
 Route::get('organisation', function () {
     return view('organisation');
@@ -94,6 +87,7 @@ Route::get('raffle_detail/{id}', [RaffleController::class, 'raffleDetails']);
 Route::get('fundraise', function () {
     return view('fundraise');
 });
+
 Route::post('create_account', [UserAuthController::class, 'createAccount'])->name('create_account');
 Route::get('complete_register', [UserAuthController::class, 'complete_register'])->name('complete_register');
 Route::post('update_register', [UserAuthController::class, 'update_register'])->name('update_register');
@@ -102,8 +96,6 @@ Route::post('login_login', [UserAuthController::class, 'loginAccount'])->name('l
 Route::get('logout', [UserAuthController::class, 'logout'])->name('logout');
 Route::post("getStateByCountryId", [UserAuthController::class, 'getStateByCountryId']);
 Route::post("getCityByStateId", [UserAuthController::class, 'getCityByStateId']);
-
-
 
 
 Route::group(['prefix' => 'admin'], function () {
@@ -132,7 +124,6 @@ Route::group(['prefix' => 'admin'], function () {
             return redirect('/login');
         }
     });
-
     Route::post('update-payment', [AdminRouteController::class, 'updatePayment'])->name('admin.update-payment');
 });
 

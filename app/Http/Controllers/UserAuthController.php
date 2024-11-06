@@ -7,6 +7,13 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
+// mobile app imports
+use App\Models\User;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
+
 class UserAuthController extends Controller
 {
     function dashboard()
@@ -24,7 +31,6 @@ class UserAuthController extends Controller
                 //  redirect me
                 return redirect('/login');
             }
-            // return view('admin.dashboard',compact('data')); return array of object
         } else {
             session()->flush();
             return redirect('/login');
@@ -41,7 +47,6 @@ class UserAuthController extends Controller
                 session()->flush();
                 return redirect('/login');
             }
-            // return view('admin.dashboard',compact('data'));
         } else {
             session()->flush();
             return redirect('/login');
@@ -568,4 +573,177 @@ class UserAuthController extends Controller
             return redirect('login');
         }
     }
+
+
+    // mobile app codebase
+    public function register(Request $request)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                'email' => 'required|string|email|max:255|unique:users,email',
+                'password' => 'required|string|min:8|confirmed',
+                'device_name' => 'string|max:255|nullable',
+                'user_type' => 'required|integer',
+                'first_name' => 'required|string|max:255',
+                'last_name' => 'required|string|max:255',
+                'username' => 'required|string|max:255',
+                'about' => 'required|string|max:255',
+                // 'image' => 'required|file|image|mimes:jpeg,png,jpg,gif|max:2048'
+                'image' => 'required|string'
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json(['errors' => $validator->errors()], 422);
+            }
+
+            $imagePath = null;
+            if ($request->hasFile('image')) {
+                // Get the file from the request
+                $file = $request->file('image');
+
+                // Generate a unique file name
+                $imageName = 'profile_' . time() . '.' . $file->getClientOriginalExtension();
+
+                // Save the file to the S3 storage
+                $filePath = $file->storeAs('profiles', $imageName, 's3');
+
+                // Get the full URL to the image
+                // $imagePath = Storage::disk('s3')->url($filePath);
+            }
+
+            // Create user with image path
+            $user = User::create([
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'user_type' => $request->user_type,
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'username' => $request->username,
+                'about' => $request->about,
+                'image' => $request->image, // Store full S3 URL in the database
+            ]);
+
+            // Generate token
+            $deviceName = $request->device_name ?? 'Default Device';
+            $token = $user->createToken($deviceName)->plainTextToken;
+
+            return response()->json([
+                'user' => $user,
+                'token' => $token
+            ], 201);
+        } catch (\Exception $e) {
+            Log::error('Error during registration: ', [
+                'error' => $e->getMessage(),
+                'stack_trace' => $e->getTraceAsString(),
+                'request_data' => $request->except(['password', 'password_confirmation'])
+            ]);
+
+            return response()->json(['error' => 'An error occurred during registration. Please try again later.'], 500);
+        }
+    }
+
+
+
+    // public function update_register(Request $request)
+    // {
+    //     // Validate the request data
+    //     $validator = Validator::make($request->all(), [
+
+    //         'first_name' => 'required|string|max:255',
+    //         'last_name' => 'required|string|max:255',
+    //         'username' => 'required|string|max:255|unique:users,username,' . auth()->id(),
+    //         'about' => 'nullable|string|max:1000',
+    //         'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5120'
+    //     ]);
+
+    //     // Return validation errors if any
+    //     if ($validator->fails()) {
+    //         return response()->json(['errors' => $validator->errors()], 422);
+    //     }
+
+    //     try {
+    //         // Verify and authenticate user via token
+    //         if (!Auth::guard('api')->check()) {
+    //             return response()->json(['error' => 'Unauthenticated.'], 401);
+    //         }
+
+    //         $user = Auth::guard('api')->user(); // Get authenticated user
+
+    //         // Handle file upload
+    //         $fileName = null;
+    //         if ($request->hasFile('image')) {
+    //             $file = $request->file('image');
+    //             $fileName = time() . '_' . $file->getClientOriginalName();
+
+    //             // Handle file move with error check
+    //             try {
+    //                 $file->move(public_path('uploads/images'), $fileName);
+    //             } catch (\Exception $e) {
+    //                 \Log::error('File upload error: ' . $e->getMessage());
+    //                 return response()->json([
+    //                     'code' => 500,
+    //                     'message' => 'File upload failed. Please try again.'
+    //                 ], 500);
+    //             }
+    //         }
+
+    //         // Update user details in the database
+    //         $user->first_name = $request->first_name;
+    //         $user->last_name = $request->last_name;
+    //         $user->username = $request->username;
+    //         $user->about = $request->about;
+    //         if ($fileName) {
+    //             $user->image = $fileName; // Update profile picture if uploaded
+    //         }
+    //         $user->reg_status = 1; // Assuming this is a registration status update
+
+    //         $user->save();
+
+    //         // Return success response
+    //         return response()->json([
+    //             'code' => 201,
+    //             'message' => 'Account successfully updated'
+    //         ]);
+    //     } catch (\Exception $e) {
+    //         \Log::error('Error updating user details: ' . $e->getMessage());
+
+    //         // Return error response
+    //         return response()->json([
+    //             'code' => 500,
+    //             'message' => 'Internal server error. Please try again later.'
+    //         ], 500);
+    //     }
+    // }
+
+
+    public function login(Request $request)
+    {
+        $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+            'device_name' => ['required']
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user || !Hash::check($request->password, $user->password)) {
+            throw ValidationException::withMessages([
+                'email' => ['The provided credentials are incorrect']
+            ]);
+        }
+
+        return response()->json([
+            'token' => $user->createToken($request->device_name)->plainTextToken
+        ]);
+    }
+
+    /**
+     * Log out a user.
+     */
+    // public function logout(Request $request)
+    // {
+    //     $request->user()->tokens()->delete();
+
+    //     return response()->json(['message' => 'Successfully logged out']);
+    // }
 }

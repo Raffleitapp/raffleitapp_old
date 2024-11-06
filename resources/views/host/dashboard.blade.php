@@ -107,7 +107,7 @@
                 <div class="raffle-group">
                     @if (count($raffle) > 0)
                     @foreach ($raffle as $item)
-                    <div class=" raffle-cardz" onclick="location.href='{{ url('host/raffle-detail/' . $item->state_raffle_hosted) }}'">
+                    <div class=" raffle-cardz" onclick="location.href='{{ url('raffle-detail/' . $item->state_raffle_hosted) }}'">
                         <div class="img">
                             <img src="{{ asset('uploads/images/'.$item->cover_image) }}" alt="">
                         </div>
@@ -167,7 +167,7 @@
                 <div class="raffle-group">
                     @if (count($raffle_pend) > 0)
                     @foreach ($raffle_pend as $item)
-                    <div class="mx-auto raffle-cardz" onclick="location.href='{{ url('host/raffle-detail/' . $item->state_raffle_hosted) }}'">
+                    <div class="mx-auto raffle-cardz" onclick="location.href='{{ url('raffle-detail/' . $item->state_raffle_hosted) }}'">
                         <div class="img">
                             <img src="{{ asset('uploads/images/'.$item->cover_image) }}" alt="">
                         </div>

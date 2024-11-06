@@ -309,7 +309,7 @@ box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.25);
                             <div class="flex profile-detail my-3">
 
                                 <h4>C/O : </h4>
-                                <h5>{{ $fundraising->c_o }}</h5>
+                                <h5>{{ $fundraising->CO }}</h5>
 
                             </div>
                             <div class="flex profile-detail my-3">

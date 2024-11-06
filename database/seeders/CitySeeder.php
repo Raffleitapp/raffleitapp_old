@@ -47955,6 +47955,10 @@ class CitySeeder extends Seeder
             ['id' => 48356, 'name' => 'Zarzal', 'state_id' => 805],
         ];
 
-        DB::table('cities')->insert($cities);
+        $chunks = array_chunk($cities, 1000);
+
+    foreach ($chunks as $chunk) {
+        DB::table('cities')->insert($chunk);
     }
+}
 }

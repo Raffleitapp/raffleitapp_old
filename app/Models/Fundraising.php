@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Fundraising extends Model
 {
-    protected $table = 'fundraisings';
+    protected $table = 'fundraising_check';
 
     protected $fillable = [
         'name',
@@ -16,7 +16,9 @@ class Fundraising extends Model
         'addressline',
         'city',
         'state',
-        'zipcode',
-        'phone',
+        'zip_code',
+        'country',
+        'phone_number',
+        'user_id',
     ];
 }
