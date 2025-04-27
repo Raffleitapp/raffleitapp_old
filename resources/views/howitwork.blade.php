@@ -1,4 +1,4 @@
-@extends('layouts/master')
+@extends('layouts/main')
 @section('title', 'About')
 @section('content')
 <link rel="stylesheet" href="{{ asset('css/index.css') }}">

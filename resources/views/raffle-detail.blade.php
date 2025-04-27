@@ -1,4 +1,4 @@
-@extends('layouts/master')
+@extends('layouts/main')
 @section('title', 'Raffle Detail')
 @section('content')
     <meta name="csrf-token" content="{{ csrf_token() }}" />
@@ -212,7 +212,7 @@
 
         $organisationData = DB::table('organisation')
             ->where('id', $organ_id)
-            ->first();
+            ->first();`
 
         $totalSales = DB::table('raffle_order')
             ->where('raffle_id', $data->id)

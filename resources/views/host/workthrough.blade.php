@@ -1,4 +1,4 @@
-@extends('layouts/master')
+@extends('layouts/main')
 @section('title', 'Create Raffle')
 @section('content')
     {{-- @vite(['resources/scss/app.scss']) --}}

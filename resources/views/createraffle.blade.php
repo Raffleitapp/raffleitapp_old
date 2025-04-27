@@ -1,4 +1,4 @@
-@extends('layouts/master')
+@extends('layouts/main')
 @section('title', 'Create Raffle')
 @section('content')
     <meta name="csrf-token" content="{{ csrf_token() }}" />
