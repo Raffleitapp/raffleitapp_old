@@ -1,10 +1,19 @@
 <header>
+    <style>
+        .navbar-nav .nav-link.active {
+            color: rgb(217, 223, 229) !important;
+            background-color: transparent !important;
+            border-bottom: 1px solid white !important;
+            font-weight: bold !important;
+        }
+    </style>
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
-            <a class="navbar-brand" href="{{ url('/') }}">Raffleit</a>
+            <a class="navbar-brand text-white font-bold" href="{{ url('/') }}">Raffleit</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <i class='bx bx-menu'></i>
+                {{-- <i class='bx bx-menu'></i> --}}
+                <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">

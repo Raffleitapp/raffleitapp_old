@@ -417,7 +417,7 @@
                                                 // Format the result
                                                 if ($interval->h > 0) {
                                                     $result = $interval->h . ' hr ago';
-                                                } elseif ($interval->i > 0) {
+                                                } elseif ($intervals->i > 0) {
                                                     $result = $interval->i . ' min ago';
                                                 } else {
                                                     $result = 'just now';
