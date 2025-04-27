@@ -40,15 +40,14 @@
                 </ul>
                 <ul class="navbar-nav ms-auto">
                     @auth
-                        <li class="nav-item nav-icon">
-                            <a class="nav-link"
-                               href="{{ auth()->user()->user_type == 'user' ? url('user/dashboard') : url('host/dashboard') }}"
-                               aria-label="User Dashboard">
-                                <i class='bx bx-user-circle' style='font-size: 30px;'></i>
-                            </a>
-                        </li>
                         <li class="nav-item">
                             <a class="nav-link btn-raffle" href="{{ url('raffles') }}">View Raffles</a>
+                        </li>
+                        <li class="nav-item">
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit" class="nav-link btn btn-link" style="text-decoration: none;">Logout</button>
+                            </form>
                         </li>
                     @else
                         <li class="nav-item">
@@ -65,3 +64,26 @@
         </div>
     </nav>
 </header>
+{{-- 
+<ul class="navbar-nav ms-auto">
+    @auth
+        <li class="nav-item">
+            <a class="nav-link btn-raffle" href="{{ url('raffles') }}">View Raffles</a>
+        </li>
+        <li class="nav-item">
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="nav-link btn btn-link" style="text-decoration: none;">Logout</button>
+            </form>
+        </li>
+    @else
+        <li class="nav-item">
+            <a class="nav-link {{ request()->is('login') ? 'active' : '' }}"
+               href="{{ url('login') }}"
+               aria-current="{{ request()->is('login') ? 'page' : '' }}">Login</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link btn-raffle" href="{{ url('raffles') }}">View Raffles</a>
+        </li>
+    @endauth
+</ul> --}}
