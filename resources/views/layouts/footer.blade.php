@@ -91,12 +91,12 @@
             </ul>
         </div>
     </div>
-    <div class="p-3">
+    {{-- <div class="p-3">
         <div class="hr"></div>
         <p class="copy">All Right Resvered Reffleit &copy;
             <script>
                 document.write(new Date().getFullYear())
             </script>
         </p>
-    </div>
+    </div> --}}
 </footer>

@@ -1,62 +1,53 @@
-<!doctype html>
-<html>
-@include('layouts.head')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>@yield('title', 'Raffleit')</title>
 
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{{ asset('img/favicon.png') }}">
+
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <!-- Boxicons -->
+    <link href="https://unpkg.com/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
+    <!-- Custom CSS -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/header.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/main.css') }}" rel="stylesheet">
+</head>
 <body>
+    <!-- Header -->
     @include('layouts.header')
-    <div class="container p-3 d-flex justify-content-center align-items-center">
-        <div class="col-md-6">
-            @yield('content')
-        </div>
+    <!-- Main Content -->
+    <div class="master-container">
+        @yield('content')
     </div>
-    @include('layouts.footer')
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-3">
+        <div class="container">
+            <p>&copy; {{ date('Y') }} Raffleit. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
-    </script>
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
 
-    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('js/jquery.min.js') }}"></script>
-
-    <script>
-        // $("div.toggle").hide();
-        let toggle = false;
-
-        if ($(window).width() < 961) {
-            // $('.content-container').load('mobile-content.html');
-            $("div.toggle").show();
-            $(".conta").css("display", "none");
-
-        } else {
-            // $('.content-container').load('desktop-content.html');
-            $("div.toggle").hide();
-            $(".conta").css("display", "flex");
-            toggle = false;
-        }
-        $(window).resize(function() {
-            if ($(window).width() < 961) {
-                $("div.toggle").show();
-                $(".conta").css("display", "none");
-
-            } else {
-                $("div.toggle").hide();
-                $(".conta").css("display", "flex");
-                toggle = false;
-
-            }
-        });
-        $('div.toggle').click(function() {
-
-            if (!toggle) {
-                $(".conta").css("display", "block");
-                toggle = true;
-
-            } else {
-                $(".conta").css("display", "none");
-                toggle = false;
-            }
-
-        });
-    </script>
+    <!-- Custom JS -->
+    <script src="{{ asset('js/app.js') }}"></script>
 </body>
-
 </html>
