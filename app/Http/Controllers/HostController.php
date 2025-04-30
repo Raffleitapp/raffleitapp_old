@@ -19,16 +19,25 @@ class HostController extends Controller
     }
 
 
+    // public function goRaffleDetails($id)
+    // {
+    //     if (session()->has('user_id') && session()->get('user_type') == 'host') {
+    //         $data = DB::table("raffle")->where('state_raffle_hosted', $id)->where('user_id', session()->get('user_id'))->first();
+    //         if ($data) {
+    //             return view('raffle-detail', compact('data'));
+    //         } else {
+    //             return redirect('/host/dashboard')->with('error', 'Raffle not found.');
+    //         }
+    //     } else {
+    //         session()->flush();
+    //         return redirect('/login');
+    //     }
+    // }
     public function goRaffleDetails($id)
     {
-        if (session()->has('user_id') && session()->get('user_type') == 'host') {
-            $data = DB::table("raffle")->where('state_raffle_hosted', $id)->where('user_id',session()->get('user_id') )->first();
-            if ($data) {
-                return view('raffle-detail', compact('data'));
-            }
-        } else {
-            session()->flush();
-            return redirect('/login');
+        $data = DB::table("raffle")->where('state_raffle_hosted', $id)->first();
+        if ($data) {
+            return view('raffle-detail', compact('data'));
         }
     }
 

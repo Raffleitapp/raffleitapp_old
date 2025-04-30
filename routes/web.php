@@ -152,7 +152,7 @@ Route::group(['prefix' => 'user'], function () {
 Route::group(['prefix' => 'host'], function () {
     Route::get("dashboard", [HostController::class, 'getDashboard']);
     Route::get("raffle-detail/{id}", [HostController::class, 'goRaffleDetails']);
-
+    // Route::get('raffle_detail/{id}', [RaffleController::class, 'raffleDetails']);
     Route::post("extendRaffle", [RaffleController::class, 'extendDate'])->name("host.extendRaffle");
     Route::get("live-raffle", [HostController::class, 'liveraffle'])->name("host.liive-raffle");
     Route::get("completed", [HostController::class, 'completedraffle'])->name("host.completed");

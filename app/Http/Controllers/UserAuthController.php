@@ -6,13 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-
-// mobile app imports
+use Illuminate\Support\Facades\Log;
 use App\Models\User;
 use Illuminate\Validation\ValidationException;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Log;
 
 class UserAuthController extends Controller
 {
@@ -170,13 +166,11 @@ class UserAuthController extends Controller
         }
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
-        if (session()->has('user_id')) {
-            session()->flush();
-            return redirect('/login');
-        }
-        return redirect('/login');
+        $request->user()->tokens()->delete();
+
+        return response()->json(['message' => 'Successfully logged out'], 200);
     }
 
     public function complete_register()
@@ -228,234 +222,120 @@ class UserAuthController extends Controller
         }
     }
 
-    function save_oranganisation(Request $req)
+    public function saveOrganisation(Request $request)
     {
-        if (session()->has('uid') && (session()->get('user_type') == 'host')) {
-            $validator = Validator::make($req->all(), [
-                'image' => 'max:4000',
-            ]);
-            if ($validator->fails()) {
-                return back()->with('error', $validator->getMessageBag());
-            } else {
+        $validator = Validator::make($request->all(), [
+            'category_id' => 'required|integer',
+            'organisation_name' => 'required|string|max:255',
+            'handle' => 'required|string|max:255',
+            'website' => 'nullable|string|max:255',
+            'description' => 'nullable|string',
+            'image' => 'nullable|file|image|max:2048',
+        ]);
 
-                $file = $req->file('image');
-                $fileName = time() . $file->getClientOriginalName();;
-                // $file->storeAs('uploads', $fileName);
-                // $path = $file->store("public/images");
-                // $imageNames = basename($path);
-                $file->move(public_path('uploads/images'), $fileName);
-
-
-                $data = DB::table('organisation')->insert([
-                    'organisation_name' => $req->title,
-                    'category_id' => $req->description,
-                    'description' => $req->project_type,
-                    'cover_image' => $fileName,
-                    'website' => $req->website,
-                    'handle' => $req->handle,
-                    'status' => 1
-                ]);
-                if ($data) {
-
-                    return  redirect()->back()->with('success', "Organisation successfully created");
-                } else {
-                    return redirect()->back()->with('error', "Something went wrong! Please try again");
-                }
-            }
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
         }
-    }
 
-
-    public function save_organisation(Request $request)
-    {
-        //check the authentication user
-        if (session()->has('user_id') && session()->get('user_type') == 'host') {
-            $validator = Validator::make($request->all(), [
-                'category_id' => 'required',
-                'organisation_name' => 'required',
-
-            ]);
-
-            if ($validator->fails()) {
-                return response()->json([
-                    'code' => 405,
-                    'message' => $validator->errors()
-                ]);
-            }
-
-            if ($request->has('image')) {
+        try {
+            $coverImage = null;
+            if ($request->hasFile('image')) {
                 $file = $request->file('image');
-                $fileName = time() . $file->getClientOriginalName();;
-                // $file->storeAs('uploads', $fileName);
-                // $path = $file->store("public/images");
-                // $imageNames = basename($path);
-                $file->move(public_path('uploads/images'), $fileName);
-                $data = DB::table('organisation')->insertGetId([
-                    'category_id' => $request->category_id,
-                    'organisation_name' => $request->organisation_name,
-                    'cover_image' => $fileName,
-                    'user_id' => session()->get('user_id'),
-                    'handle' => $request->handle,
-                    'website' => $request->website,
-                    'description' => $request->description,
-                    'status' => 1
-                ]);
-
-                if ($data) {
-                    return response()->json([
-                        'code' => 201,
-                        'message' => 'Organisation created successfully',
-                        'data' => $data
-                    ]);
-                } else {
-                    return response()->json([
-                        'code' => 405,
-                        'message' => 'Unable to create organisation'
-                    ]);
-                }
+                $coverImage = time() . '_' . $file->getClientOriginalName();
+                $file->move(public_path('uploads/images'), $coverImage);
             }
-            $data = DB::table('organisation')->insertGetId([
+
+            $organisationId = DB::table('organisation')->insertGetId([
                 'category_id' => $request->category_id,
                 'organisation_name' => $request->organisation_name,
-                'cover_image' => '',
-                'user_id' => session()->get('user_id'),
+                'cover_image' => $coverImage,
+                'user_id' => $request->user()->id,
                 'handle' => $request->handle,
                 'website' => $request->website,
                 'description' => $request->description,
-                'status' => 1
+                'status' => 1,
             ]);
 
-            if ($data) {
-                return response()->json([
-                    'code' => 201,
-                    'message' => 'Organisation created successfully',
-                    'data' => $data
-                ]);
-            } else {
-                return response()->json([
-                    'code' => 405,
-                    'message' => 'Unable to create organisation'
-                ]);
-            }
+            return response()->json([
+                'message' => 'Organisation created successfully',
+                'organisation_id' => $organisationId,
+            ], 201);
+        } catch (\Exception $e) {
+            Log::error('Organisation creation error: ', ['error' => $e->getMessage()]);
+            return response()->json(['error' => 'Unable to create organisation. Please try again later.'], 500);
         }
     }
+
     public function billAddress(Request $request)
     {
-        // Check the authentication user
-        if (session()->has('user_id') && session()->get('user_type') == 'user') {
-            $validator = Validator::make($request->all(), [
-                'first_name' => 'required',
-                'last_name' => 'required',
-                'company_name' => 'required',
-                'region' => 'required',
-                'street_name' => 'required',
-                'town' => 'required',
-                'phone_number' => 'required',
-                'email' => 'required',
-                'zipcode' => 'required',
-            ]);
+        $validator = Validator::make($request->all(), [
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'company_name' => 'nullable|string|max:255',
+            'region' => 'required|string|max:255',
+            'street_name' => 'required|string|max:255',
+            'town' => 'required|string|max:255',
+            'phone_number' => 'required|string|max:15',
+            'email' => 'required|email|max:255',
+            'zipcode' => 'required|string|max:10',
+        ]);
 
-            if ($validator->fails()) {
-                return back()->with('error', "All fields are required");
-            }
-
-            $data = DB::table('billaddress')->insert([
-                'first_name' => $request->input('first_name'),
-                'last_name' => $request->input('last_name'),
-                'company_name' => $request->input('company_name'),
-                'region' => $request->input('region'),
-                'zipcode' => $request->input('zipcode'),
-                'town' => $request->input('town'),
-                'country' => $request->input('country'),
-                'email' => $request->input('email'),
-                'phone_number' => $request->input('phone_number'),
-                'apartment' => $request->input('apartment'),
-                'street_name' => $request->input('street_name'),
-            ]);
-
-            if ($data) {
-                return redirect()->back()->with('success', 'Billing address added successfully');
-            } else {
-                return redirect()->back()->with('error', 'Something went wrong');
-            }
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
         }
-    }
 
-
-    public function createFundraise($id)
-    {
-        $data = DB::table('organisation')->where('id', $id)->first();
-        if ($data) {
-            return view('fundraise');
-        } else {
-            return redirect('/');
-        }
-    }
-
-    public function createRaffle()
-    {
-        if (session()->has('user_id') && (session()->get('user_type') == 'host')) {
-
-            return view('createraffle');
-        } else {
-            return redirect('/login');
-        }
-    }
-
-    public function getStateByCountryId(Request $request)
-    {
-        $data = DB::table('states')->where('country_id', $request->c_id)->orderBy('name', 'asc')->get();
-        if ($data) {
-            return response()->json([
-                'code' => 201,
-                'data' => $data
-            ]);
-        }
-    }
-
-    public function getCityByStateId(Request $request)
-    {
-        $data = DB::table('cities')->where('state_id', $request->s_id)->orderBy('name', 'asc')->get();
-        if ($data) {
-            return response()->json([
-                'code' => 201,
-                'data' => $data
-            ]);
-        }
-    }
-    public function addFundraising(Request $request)
-    {
-        if (session()->has('user_id') && session()->get('user_type') == 'host') {
-
-            $data = DB::table('fundraising_check')->insertGetId([
-                'user_id' => session()->get('user_id'),
-                'name' => $request->name,
-                'CO' => $request->CO,
-                'address' => $request->address,
-                'addressline' => $request->addresslines,
-                'city' => $request->city,
-                'state' => $request->state,
+        try {
+            DB::table('billaddress')->insert([
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'company_name' => $request->company_name,
+                'region' => $request->region,
+                'zipcode' => $request->zipcode,
+                'town' => $request->town,
                 'country' => $request->country,
-                'zip_code' => $request->zip_code,
-                'phone_number' => $request->phone_no,
-
+                'email' => $request->email,
+                'phone_number' => $request->phone_number,
+                'apartment' => $request->apartment,
+                'street_name' => $request->street_name,
             ]);
 
-            if ($data) {
-
-                return response()->json([
-                    'code' => 201,
-                    'message' => 'Fundraising submitted successfully',
-                    'data' => $data
-                ]);
-            } else {
-                return response()->json([
-                    'code' => 405,
-                    'message' => 'Unable to create fundraising check'
-                ]);
-            }
+            return response()->json(['message' => 'Billing address added successfully'], 201);
+        } catch (\Exception $e) {
+            Log::error('Billing address error: ', ['error' => $e->getMessage()]);
+            return response()->json(['error' => 'Unable to add billing address. Please try again later.'], 500);
         }
     }
+
+    public function createFundraise(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'organisation_id' => 'required|integer|exists:organisation,id',
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        try {
+            $fundraiseId = DB::table('fundraising')->insertGetId([
+                'organisation_id' => $request->organisation_id,
+                'name' => $request->name,
+                'description' => $request->description,
+                'status' => 1,
+            ]);
+
+            return response()->json([
+                'message' => 'Fundraise created successfully',
+                'fundraise_id' => $fundraiseId,
+            ], 201);
+        } catch (\Exception $e) {
+            Log::error('Fundraise creation error: ', ['error' => $e->getMessage()]);
+            return response()->json(['error' => 'Unable to create fundraise. Please try again later.'], 500);
+        }
+    }
+
     public function shipAddress(Request $request)
     {
         // Check the authentication user
@@ -578,40 +458,22 @@ class UserAuthController extends Controller
     // mobile app codebase
     public function register(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|string|email|max:255|unique:users,email',
+            'password' => 'required|string|min:8|confirmed',
+            'user_type' => 'required|integer',
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'username' => 'required|string|max:255',
+            'about' => 'required|string|max:255',
+            'image' => 'nullable|string',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
         try {
-            $validator = Validator::make($request->all(), [
-                'email' => 'required|string|email|max:255|unique:users,email',
-                'password' => 'required|string|min:8|confirmed',
-                'device_name' => 'string|max:255|nullable',
-                'user_type' => 'required|integer',
-                'first_name' => 'required|string|max:255',
-                'last_name' => 'required|string|max:255',
-                'username' => 'required|string|max:255',
-                'about' => 'required|string|max:255',
-                // 'image' => 'required|file|image|mimes:jpeg,png,jpg,gif|max:2048'
-                'image' => 'required|string'
-            ]);
-
-            if ($validator->fails()) {
-                return response()->json(['errors' => $validator->errors()], 422);
-            }
-
-            $imagePath = null;
-            if ($request->hasFile('image')) {
-                // Get the file from the request
-                $file = $request->file('image');
-
-                // Generate a unique file name
-                $imageName = 'profile_' . time() . '.' . $file->getClientOriginalExtension();
-
-                // Save the file to the S3 storage
-                $filePath = $file->storeAs('profiles', $imageName, 's3');
-
-                // Get the full URL to the image
-                // $imagePath = Storage::disk('s3')->url($filePath);
-            }
-
-            // Create user with image path
             $user = User::create([
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
@@ -620,130 +482,40 @@ class UserAuthController extends Controller
                 'last_name' => $request->last_name,
                 'username' => $request->username,
                 'about' => $request->about,
-                'image' => $request->image, // Store full S3 URL in the database
+                'image' => $request->image,
             ]);
 
-            // Generate token
-            $deviceName = $request->device_name ?? 'Default Device';
-            $token = $user->createToken($deviceName)->plainTextToken;
+            $token = $user->createToken('API Token')->plainTextToken;
 
             return response()->json([
                 'user' => $user,
-                'token' => $token
+                'token' => $token,
             ], 201);
         } catch (\Exception $e) {
-            Log::error('Error during registration: ', [
-                'error' => $e->getMessage(),
-                'stack_trace' => $e->getTraceAsString(),
-                'request_data' => $request->except(['password', 'password_confirmation'])
-            ]);
-
+            Log::error('Registration error: ', ['error' => $e->getMessage()]);
             return response()->json(['error' => 'An error occurred during registration. Please try again later.'], 500);
         }
     }
-
-
-
-    // public function update_register(Request $request)
-    // {
-    //     // Validate the request data
-    //     $validator = Validator::make($request->all(), [
-
-    //         'first_name' => 'required|string|max:255',
-    //         'last_name' => 'required|string|max:255',
-    //         'username' => 'required|string|max:255|unique:users,username,' . auth()->id(),
-    //         'about' => 'nullable|string|max:1000',
-    //         'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5120'
-    //     ]);
-
-    //     // Return validation errors if any
-    //     if ($validator->fails()) {
-    //         return response()->json(['errors' => $validator->errors()], 422);
-    //     }
-
-    //     try {
-    //         // Verify and authenticate user via token
-    //         if (!Auth::guard('api')->check()) {
-    //             return response()->json(['error' => 'Unauthenticated.'], 401);
-    //         }
-
-    //         $user = Auth::guard('api')->user(); // Get authenticated user
-
-    //         // Handle file upload
-    //         $fileName = null;
-    //         if ($request->hasFile('image')) {
-    //             $file = $request->file('image');
-    //             $fileName = time() . '_' . $file->getClientOriginalName();
-
-    //             // Handle file move with error check
-    //             try {
-    //                 $file->move(public_path('uploads/images'), $fileName);
-    //             } catch (\Exception $e) {
-    //                 \Log::error('File upload error: ' . $e->getMessage());
-    //                 return response()->json([
-    //                     'code' => 500,
-    //                     'message' => 'File upload failed. Please try again.'
-    //                 ], 500);
-    //             }
-    //         }
-
-    //         // Update user details in the database
-    //         $user->first_name = $request->first_name;
-    //         $user->last_name = $request->last_name;
-    //         $user->username = $request->username;
-    //         $user->about = $request->about;
-    //         if ($fileName) {
-    //             $user->image = $fileName; // Update profile picture if uploaded
-    //         }
-    //         $user->reg_status = 1; // Assuming this is a registration status update
-
-    //         $user->save();
-
-    //         // Return success response
-    //         return response()->json([
-    //             'code' => 201,
-    //             'message' => 'Account successfully updated'
-    //         ]);
-    //     } catch (\Exception $e) {
-    //         \Log::error('Error updating user details: ' . $e->getMessage());
-
-    //         // Return error response
-    //         return response()->json([
-    //             'code' => 500,
-    //             'message' => 'Internal server error. Please try again later.'
-    //         ], 500);
-    //     }
-    // }
-
 
     public function login(Request $request)
     {
         $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],
-            'device_name' => ['required']
         ]);
 
         $user = User::where('email', $request->email)->first();
 
         if (!$user || !Hash::check($request->password, $user->password)) {
-            throw ValidationException::withMessages([
-                'email' => ['The provided credentials are incorrect']
-            ]);
+            return response()->json(['error' => 'Invalid email or password'], 401);
         }
 
+        $token = $user->createToken('API Token')->plainTextToken;
+
         return response()->json([
-            'token' => $user->createToken($request->device_name)->plainTextToken
-        ]);
+            'message' => 'Login successful',
+            'token' => $token,
+            'user' => $user,
+        ], 200);
     }
-
-    /**
-     * Log out a user.
-     */
-    // public function logout(Request $request)
-    // {
-    //     $request->user()->tokens()->delete();
-
-    //     return response()->json(['message' => 'Successfully logged out']);
-    // }
 }
