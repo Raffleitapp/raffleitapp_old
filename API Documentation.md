@@ -13,7 +13,7 @@
 
 ## Overview
 
-This document describes the API endpoints, models, controllers, and database migrations for the project. All endpoints are versioned under `/api/v1/` and follow RESTful conventions.
+This document describes the API endpoints, models, controllers, and database migrations for the project. All endpoints are versioned under `/api/` and follow RESTful conventions.
 
 ---
 
@@ -23,11 +23,11 @@ This document describes the API endpoints, models, controllers, and database mig
 
 | Method | Endpoint                      | Description                | Controller           |
 |--------|-------------------------------|----------------------------|----------------------|
-| POST   | /api/v1/users/register        | Register a new user        | UserAuthController   |
-| POST   | /api/v1/users/login           | User login                 | UserAuthController   |
-| POST   | /api/v1/users/logout          | User logout                | UserAuthController   |
-| GET    | /api/v1/users/{id}            | Get user profile           | UserAuthController   |
-| PUT    | /api/v1/users/{id}            | Update user profile        | UserAuthController   |
+| POST   | /api/users/register        | Register a new user        | UserAuthController   |
+| POST   | /api/users/login           | User login                 | UserAuthController   |
+| POST   | /api/users/logout          | User logout                | UserAuthController   |
+| GET    | /api/users/{id}            | Get user profile           | UserAuthController   |
+| PUT    | /api/users/{id}            | Update user profile        | UserAuthController   |
 
 ---
 
@@ -35,42 +35,42 @@ This document describes the API endpoints, models, controllers, and database mig
 
 | Method | Endpoint                      | Description                        | Controller         |
 |--------|-------------------------------|------------------------------------|--------------------|
-| GET    | /api/v1/raffles               | List all raffles                   | RaffleController   |
-| POST   | /api/v1/raffles               | Create a new raffle                | RaffleController   |
-| GET    | /api/v1/raffles/{id}          | Get raffle details                 | RaffleController   |
-| PUT    | /api/v1/raffles/{id}          | Update a raffle                    | RaffleController   |
-| DELETE | /api/v1/raffles/{id}          | Delete a raffle                    | RaffleController   |
-| GET    | /api/v1/raffles/{id}/tickets  | List tickets for a raffle          | RaffleController   |
+| GET    | /api/raffles               | List all raffles                   | RaffleController   |
+| POST   | /api/raffles               | Create a new raffle                | RaffleController   |
+| GET    | /api/raffles/{id}          | Get raffle details                 | RaffleController   |
+| PUT    | /api/raffles/{id}          | Update a raffle                    | RaffleController   |
+| DELETE | /api/raffles/{id}          | Delete a raffle                    | RaffleController   |
+| GET    | /api/raffles/{id}/tickets  | List tickets for a raffle          | RaffleController   |
 
 ---
 
-### Categories
+### Categories (API Endpoints)
 
 | Method | Endpoint                      | Description                        | Controller             |
 |--------|-------------------------------|------------------------------------|------------------------|
-| GET    | /api/v1/categories            | List all categories                | CategoryController     |
-| POST   | /api/v1/categories            | Create a new category              | CategoryController     |
-| DELETE | /api/v1/categories/{id}       | Delete a category                  | CategoryController     |
+| GET    | /api/categories            | List all categories                | CategoryController     |
+| POST   | /api/categories            | Create a new category              | CategoryController     |
+| DELETE | /api/categories/{id}       | Delete a category                  | CategoryController     |
 
 ---
 
-### Organisations
+### Organisations (Database Table)
 
 | Method | Endpoint                      | Description                        | Controller               |
 |--------|-------------------------------|------------------------------------|--------------------------|
-| GET    | /api/v1/organisations         | List all organisations             | OrganisationController   |
-| POST   | /api/v1/organisations         | Create a new organisation          | OrganisationController   |
-| GET    | /api/v1/organisations/{id}    | Get organisation details           | OrganisationController   |
+| GET    | /api/organisations         | List all organisations             | OrganisationController   |
+| POST   | /api/organisations         | Create a new organisation          | OrganisationController   |
+| GET    | /api/organisations/{id}    | Get organisation details           | OrganisationController   |
 
 ---
 
-### Addresses
+### User Addresses
 
 | Method | Endpoint                      | Description                       | Controller           |
 |--------|-------------------------------|------------------------------------|----------------------|
-| GET    | /api/v1/addresses             | List all addresses                 | UserAuthController   |
-| POST   | /api/v1/addresses             | Create a new address               | UserAuthController   |
-| GET    | /api/v1/addresses/{id}        | Get address details                | UserAuthController   |
+| GET    | /api/addresses             | List all addresses                 | UserAuthController   |
+| POST   | /api/addresses             | Create a new address               | UserAuthController   |
+| GET    | /api/addresses/{id}        | Get address details                | UserAuthController   |
 
 ---
 
@@ -78,9 +78,9 @@ This document describes the API endpoints, models, controllers, and database mig
 
 | Method | Endpoint                      | Description                        | Controller           |
 |--------|-------------------------------|------------------------------------|----------------------|
-| POST   | /api/v1/payments/paypal       | Make a PayPal payment              | PayPalController     |
-| POST   | /api/v1/payments/stripe       | Make a Stripe payment              | StripeController     |
-| GET    | /api/v1/payments/history      | Get payment history                | PayPalController     |
+| POST   | /api/payments/paypal       | Make a PayPal payment              | PayPalController     |
+| POST   | /api/payments/stripe       | Make a Stripe payment              | StripeController     |
+| GET    | /api/payments/history      | Get payment history                | PayPalController     |
 
 ---
 
@@ -88,9 +88,9 @@ This document describes the API endpoints, models, controllers, and database mig
 
 | Method | Endpoint                                  | Description                        | Controller         |
 |--------|------------------------------------------|------------------------------------|--------------------|
-| GET    | /api/v1/locations/countries              | List all countries                 | (not shown)        |
-| GET    | /api/v1/locations/states?country_id=     | List states by country             | (not shown)        |
-| GET    | /api/v1/locations/cities?state_id=       | List cities by state               | (not shown)        |
+| GET    | /api/locations/countries              | List all countries                 | LocationController |
+| GET    | /api/locations/states?country_id=     | List states by country             | LocationController |
+| GET    | /api/locations/cities?state_id=       | List cities by state               | LocationController |
 
 ---
 
@@ -98,7 +98,7 @@ This document describes the API endpoints, models, controllers, and database mig
 
 | Method | Endpoint                      | Description                        | Controller           |
 |--------|-------------------------------|------------------------------------|----------------------|
-| POST   | /api/v1/newsletters/subscribe | Subscribe to newsletter            | (not shown)          |
+| POST   | /api/newsletters/subscribe | Subscribe to newsletter            | NewsletterController |
 
 ---
 
@@ -106,7 +106,7 @@ This document describes the API endpoints, models, controllers, and database mig
 
 | Method | Endpoint                      | Description                        | Controller               |
 |--------|-------------------------------|------------------------------------|--------------------------|
-| POST   | /api/v1/fundraising           | Create a fundraising entry         | FundraisingController    |
+| POST   | /api/fundraising           | Create a fundraising entry         | FundraisingController    |
 
 ---
 
@@ -114,7 +114,7 @@ This document describes the API endpoints, models, controllers, and database mig
 
 | Method | Endpoint                      | Description                        | Controller           |
 |--------|-------------------------------|------------------------------------|----------------------|
-| GET    | /api/v1/ticket-prices         | List ticket prices                 | (not shown)          |
+| GET    | /api/ticket-prices         | List ticket prices                 | TicketPriceController |
 
 ---
 
@@ -122,7 +122,7 @@ This document describes the API endpoints, models, controllers, and database mig
 
 | Method | Endpoint                      | Description                        | Controller           |
 |--------|-------------------------------|------------------------------------|----------------------|
-| POST   | /api/v1/images/upload         | Upload an image                    | ImageUploadController|
+| POST   | /api/images/upload         | Upload an image                    | ImageUploadController|
 
 ---
 
@@ -161,23 +161,23 @@ Below is a summary of the main migrations and their key columns.
 
 ---
 
-### Newsletter
+### Newsletters
 
-- **Table:** `newsletter`
+- **Table:** `newsletters`
 - **Columns:** id, email, timestamps
 
 ---
 
-### Category
+### Categories
 
-- **Table:** `category`
+- **Table:** `categories`
 - **Columns:** id, category_name, category_status, timestamps
 
 ---
 
-### Organisation
+### Organisations
 
-- **Table:** `organisation`
+- **Table:** `organisations`
 - **Columns:** id, user_id, organisation_name, cover_image, category_id, nick_name, handle, website, description, status, timestamps
 
 ---
@@ -187,62 +187,55 @@ Below is a summary of the main migrations and their key columns.
 - **Table:** `addresses`
 - **Columns:** id, first_name, last_name, email, company_name, street, apartment, city, user_id, type (1: billing, 2: shipping), zip_code, timestamps
 
-- **Table:** `billaddress`
+- **Table:** `billing_addresses`
 - **Columns:** id, first_name, last_name, company_name, region, street_name, apartment, town, country, zipcode, phone_number, email, timestamps
 
-- **Table:** `shipaddress`
+- **Table:** `shipping_addresses`
 - **Columns:** id, first_name, last_name, company_name, region, street_address, apartment, town, country, zipcode, timestamps
 
 ---
 
-### Raffle
+### Raffles Model
 
-- **Table:** `raffle`
-- **Columns:** id, user_id, organisation_id, fundraising_id, host_name, description, image1-4, target, starting_date, ending_date, state_raffle_hosted, approve_status, timestamps
+- **Table:** `raffles`
+- **Columns:** id, user_id, organisation_id, fundraising_id, host_name, description, image1, image2, image3, image4, target, starting_date, ending_date, state_raffle_hosted, approve_status, timestamps
 
-- **Table:** `raffle_order`
+- **Table:** `raffle_orders`
 - **Columns:** id, raffle_id, amount, date_purchase, user_id, winner_status, timestamps
 
-- **Table:** `raffle_winner`
+- **Table:** `raffle_winners`
 - **Columns:** id, raffle_id, winner_id, host_id, winner_date
 
 ---
 
-### Ticket Price
+### Ticket Prices Model
 
-- **Table:** `ticket_price`
+- **Table:** `ticket_prices`
 - **Columns:** id, raffle_id, one, three, ten, twenty, one_twenty, two_hundred
 
 ---
 
-### Supported Raffle
+### Supported Raffles
 
-- **Table:** `supported_raffle`
+- **Table:** `supported_raffles`
 - **Columns:** id, name, timestamps
 
 ---
 
-### Fundraising Check
+### Fundraising Checks
 
-- **Table:** `fundraising_check`
+- **Table:** `fundraising_checks`
 - **Columns:** id, user_id, name, CO, address, addressline, city, state, country, zip_code, phone_number, timestamps
 
 ---
 
-### Payment History
+### Payment Histories
 
-- **Table:** `payment_history`
+- **Table:** `payment_histories`
 - **Columns:** id, payment_id, user_id, amount, currency, status, payer_email, transaction_id, payment_method, timestamps
 
 - **Table:** `payment_settings`
 - **Columns:** id, payment_name, code_access (json), updated_at
-
----
-
-### Location Data
-
-- **Table:** `location_data`
-- **Columns:** id, user_id, ip_address, created_at
 
 ---
 
@@ -268,115 +261,185 @@ Below is a summary of the main migrations and their key columns.
 - Standardize API responses (success, error, data, message).
 - Add foreign key constraints and indexes in migrations.
 - Use soft deletes where appropriate.
-- Version all APIs under `/api/v1/`.
+- Version all APIs under `/api/`.
 
 ---
 
 ## Controllers
 
 ### UserAuthController
+
 Handles user registration, authentication, profile management, and address operations.
+
 - **Key actions:** Register, login, logout, update profile, manage addresses, create organisation.
 - **Related models:** User, Organisation, Address.
 
 ### RaffleController
+
 Manages all raffle-related operations.
+
 - **Key actions:** Create, list, update, delete raffles; manage raffle tickets.
 - **Related models:** Raffle, RaffleOrder, RaffleWinner, TicketPrice.
 
 ### CategoryController
+
 Handles category management for raffles.
+
 - **Key actions:** List, create, and delete categories.
 - **Related models:** Category.
 
 ### OrganisationController
+
 Manages organisations created by users or hosts.
+
 - **Key actions:** Create and retrieve organisations.
 - **Related models:** Organisation.
 
 ### FundraisingController
+
 Handles creation and validation of fundraising entries.
+
 - **Key actions:** Create fundraising entry.
 - **Related models:** FundraisingCheck.
 
 ### PayPalController
+
 Handles PayPal payment processing and callbacks.
+
 - **Key actions:** Initiate payment, handle success/failure, retrieve payment history.
 - **Related models:** PaymentHistory.
 
 ### StripeController
+
 Handles Stripe payment processing.
+
 - **Key actions:** Initiate Stripe payment.
 - **Related models:** PaymentHistory.
 
 ### ImageUploadController
+
 Handles image uploads for the application.
+
 - **Key actions:** Upload images.
 - **Related models:** (Stores file paths, not directly tied to a model.)
 
 ### AdminRouteController
+
 Handles admin dashboard, user/admin management, category management, raffle approval, and payment settings.
+
 - **Key actions:** Manage users, admins, categories, raffles, and payment settings.
 - **Related models:** User, Category, Organisation, Raffle.
 
 ### HostController
+
 Handles host dashboard and host-specific raffle management.
+
 - **Key actions:** View dashboard, manage raffles.
 - **Related models:** Raffle.
+
+### LocationController
+
+Handles retrieval of countries, states, and cities for address selection.
+
+- **Key actions:** List countries, states, and cities.
+- **Related models:** Country, State, City.
+
+### NewsletterController
+
+Handles newsletter subscriptions.
+
+- **Key actions:** Subscribe to newsletter.
+- **Related models:** Newsletter.
+
+### TicketPriceController
+
+Handles retrieval of ticket prices.
+
+- **Key actions:** List ticket prices.
+- **Related models:** TicketPrice.
 
 ---
 
 ## Models
 
 ### User
+
 Represents application users (admin, host, user).
+
 - **Fields:** first_name, last_name, username, email, password, user_type, about, image, etc.
 
 ### Organisation
+
 Represents organisations created by users/hosts.
+
 - **Fields:** user_id, organisation_name, cover_image, category_id, handle, website, description, status, etc.
 
 ### Category
+
 Represents raffle categories.
+
 - **Fields:** category_name, category_status.
 
 ### Raffle
+
 Represents a raffle event.
+
 - **Fields:** user_id, organisation_id, fundraising_id, host_name, description, images, target, starting_date, ending_date, state_raffle_hosted, approve_status, etc.
 
 ### RaffleOrder
+
 Represents a ticket purchase/order for a raffle.
+
 - **Fields:** raffle_id, amount, date_purchase, user_id, winner_status.
 
 ### RaffleWinner
+
 Represents the winner of a raffle.
+
 - **Fields:** raffle_id, winner_id, host_id, winner_date.
 
 ### TicketPrice
+
 Represents ticket pricing for a raffle.
+
 - **Fields:** raffle_id, one, three, ten, twenty, one_twenty, two_hundred.
 
 ### PaymentHistory
+
 Represents payment transactions.
+
 - **Fields:** payment_id, user_id, amount, currency, status, payer_email, transaction_id, payment_method.
 
 ### BillingAddress
+
 Represents billing addresses for users.
+
 - **Fields:** first_name, last_name, company_name, region, street_name, apartment, town, country, zipcode, phone_number, email.
 
 ### ShippingAddress
+
 Represents shipping addresses for users.
+
 - **Fields:** first_name, last_name, company_name, region, street_address, apartment, town, country, zipcode.
 
 ### FundraisingCheck
+
 Represents fundraising entries.
+
 - **Fields:** user_id, name, CO, address, addressline, city, state, country, zip_code, phone_number.
 
 ### Country / State / City
+
 Represents location data for addresses.
+
 - **Fields:** name, shortname, phonecode (country); name, country_id (state); name, state_id (city).
+
+### Newsletter Model
+
+Represents newsletter subscriptions.
+
+- **Fields:** email.
 
 ---
 
-
-*For further details on request/response formats, authentication, and error handling, see the [API Reference](docs/api_reference.md) (to be created).*
+*For further details on request/response formats, authentication, and error handling, see the [API Reference](docs/api_reference.md) (to be created).
